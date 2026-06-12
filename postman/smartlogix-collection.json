@@ -1,0 +1,978 @@
+{
+  "info": {
+    "name": "SmartLogX API",
+    "description": "API collection for SmartLogX perfume logistics platform",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890"
+  },
+  "variable": [
+    {
+      "key": "token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "description": "Authentication endpoints (BFF - port 8080)",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Register Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/register",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "auth", "register"]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"username\": \"admin\",\n  \"roles\": [\"ROLE_USER\"],\n  \"message\": \"User registered successfully\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Login Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/auth/login",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "auth", "login"]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"token\": \"eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImlhdCI6MTcxMDAwMDAwMCwiZXhwIjoxNzEwMDg2NDAwfQ.example\",\n  \"username\": \"admin\",\n  \"roles\": [\"ROLE_USER\", \"ROLE_ADMIN\"]\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "description": "Product management endpoints (BFF - port 8080, requires Bearer token)",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"]
+            }
+          },
+          "response": [
+            {
+              "name": "Get All Products Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"name\": \"Sauvage\",\n    \"brand\": \"Dior\",\n    \"description\": \"Eau de Parfum 100ml\",\n    \"price\": 120.00,\n    \"stockQuantity\": 50,\n    \"fragrance\": \"Woody\"\n  },\n  {\n    \"id\": 2,\n    \"name\": \"Bleu de Chanel\",\n    \"brand\": \"Chanel\",\n    \"description\": \"Eau de Toilette 100ml\",\n    \"price\": 135.00,\n    \"stockQuantity\": 30,\n    \"fragrance\": \"Aromatic\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "1"]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Product by ID Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "1"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"name\": \"Sauvage\",\n  \"brand\": \"Dior\",\n  \"description\": \"Eau de Parfum 100ml\",\n  \"price\": 120.00,\n  \"stockQuantity\": 50,\n  \"fragrance\": \"Woody\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Product",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"New Perfume\",\n  \"brand\": \"TestBrand\",\n  \"description\": \"Test description\",\n  \"price\": 99.99,\n  \"stockQuantity\": 20,\n  \"fragrance\": \"Floral\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Create Product Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products"]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"New Perfume\",\n  \"brand\": \"TestBrand\",\n  \"description\": \"Test description\",\n  \"price\": 99.99,\n  \"stockQuantity\": 20,\n  \"fragrance\": \"Floral\"\n}"
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 3,\n  \"name\": \"New Perfume\",\n  \"brand\": \"TestBrand\",\n  \"description\": \"Test description\",\n  \"price\": 99.99,\n  \"stockQuantity\": 20,\n  \"fragrance\": \"Floral\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "1"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Perfume\",\n  \"brand\": \"TestBrand\",\n  \"description\": \"Updated\",\n  \"price\": 109.99,\n  \"stockQuantity\": 25,\n  \"fragrance\": \"Floral\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Update Product Success",
+              "originalRequest": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "1"]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Updated Perfume\",\n  \"brand\": \"TestBrand\",\n  \"description\": \"Updated\",\n  \"price\": 109.99,\n  \"stockQuantity\": 25,\n  \"fragrance\": \"Floral\"\n}"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"name\": \"Updated Perfume\",\n  \"brand\": \"TestBrand\",\n  \"description\": \"Updated\",\n  \"price\": 109.99,\n  \"stockQuantity\": 25,\n  \"fragrance\": \"Floral\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Stock",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/1/stock",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "products", "1", "stock"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 30\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Update Stock Success",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/products/1/stock",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "products", "1", "stock"]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quantity\": 30\n}"
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"name\": \"Sauvage\",\n  \"brand\": \"Dior\",\n  \"description\": \"Eau de Parfum 100ml\",\n  \"price\": 120.00,\n  \"stockQuantity\": 30,\n  \"fragrance\": \"Woody\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "description": "Order management endpoints (BFF - port 8080, requires Bearer token)",
+      "item": [
+        {
+          "name": "Get All Orders",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            }
+          },
+          "response": [
+            {
+              "name": "Get All Orders Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "orders"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"customerId\": 1,\n    \"customerName\": \"Juan Pérez\",\n    \"email\": \"juan@test.com\",\n    \"orderType\": \"WEB\",\n    \"status\": \"PENDING\",\n    \"items\": [\n      {\n        \"id\": 1,\n        \"productId\": 1,\n        \"productName\": \"Sauvage\",\n        \"quantity\": 2,\n        \"unitPrice\": 120.00,\n        \"subtotal\": 240.00\n      }\n    ],\n    \"totalAmount\": 240.00,\n    \"createdAt\": \"2026-03-10T10:00:00\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Order by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1"]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Order by ID Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/orders/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "orders", "1"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"customerId\": 1,\n  \"customerName\": \"Juan Pérez\",\n  \"email\": \"juan@test.com\",\n  \"orderType\": \"WEB\",\n  \"status\": \"PENDING\",\n  \"items\": [\n    {\n      \"id\": 1,\n      \"productId\": 1,\n      \"productName\": \"Sauvage\",\n      \"quantity\": 2,\n      \"unitPrice\": 120.00,\n      \"subtotal\": 240.00\n    }\n  ],\n  \"totalAmount\": 240.00,\n  \"createdAt\": \"2026-03-10T10:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Order (WEB)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": 1,\n  \"customerName\": \"Juan Pérez\",\n  \"email\": \"juan@test.com\",\n  \"orderType\": \"WEB\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"productName\": \"Sauvage\",\n      \"quantity\": 2,\n      \"unitPrice\": 120.00\n    }\n  ]\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Create Order WEB Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "orders"]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": 1,\n  \"customerName\": \"Juan Pérez\",\n  \"email\": \"juan@test.com\",\n  \"orderType\": \"WEB\",\n  \"items\": [\n    {\n      \"productId\": 1,\n      \"productName\": \"Sauvage\",\n      \"quantity\": 2,\n      \"unitPrice\": 120.00\n    }\n  ]\n}"
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"customerId\": 1,\n  \"customerName\": \"Juan Pérez\",\n  \"email\": \"juan@test.com\",\n  \"orderType\": \"WEB\",\n  \"status\": \"PENDING\",\n  \"items\": [\n    {\n      \"id\": 1,\n      \"productId\": 1,\n      \"productName\": \"Sauvage\",\n      \"quantity\": 2,\n      \"unitPrice\": 120.00,\n      \"subtotal\": 240.00\n    }\n  ],\n  \"totalAmount\": 240.00,\n  \"createdAt\": \"2026-03-10T10:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Order (MARKETPLACE)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": 2,\n  \"customerName\": \"María López\",\n  \"email\": \"maria@test.com\",\n  \"orderType\": \"MARKETPLACE\",\n  \"items\": [\n    {\n      \"productId\": 2,\n      \"productName\": \"Bleu de Chanel\",\n      \"quantity\": 1,\n      \"unitPrice\": 135.00\n    }\n  ]\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Create Order MARKETPLACE Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/orders",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "orders"]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": 2,\n  \"customerName\": \"María López\",\n  \"email\": \"maria@test.com\",\n  \"orderType\": \"MARKETPLACE\",\n  \"items\": [\n    {\n      \"productId\": 2,\n      \"productName\": \"Bleu de Chanel\",\n      \"quantity\": 1,\n      \"unitPrice\": 135.00\n    }\n  ]\n}"
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 2,\n  \"customerId\": 2,\n  \"customerName\": \"María López\",\n  \"email\": \"maria@test.com\",\n  \"orderType\": \"MARKETPLACE\",\n  \"status\": \"PENDING\",\n  \"items\": [\n    {\n      \"id\": 2,\n      \"productId\": 2,\n      \"productName\": \"Bleu de Chanel\",\n      \"quantity\": 1,\n      \"unitPrice\": 135.00,\n      \"subtotal\": 135.00\n    }\n  ],\n  \"totalAmount\": 135.00,\n  \"createdAt\": \"2026-03-10T11:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Order Status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/orders/1/status?status=CONFIRMED",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "orders", "1", "status"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "CONFIRMED"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update Order Status Success",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/orders/1/status?status=CONFIRMED",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "orders", "1", "status"],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "CONFIRMED"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"customerId\": 1,\n  \"customerName\": \"Juan Pérez\",\n  \"email\": \"juan@test.com\",\n  \"orderType\": \"WEB\",\n  \"status\": \"CONFIRMED\",\n  \"items\": [\n    {\n      \"id\": 1,\n      \"productId\": 1,\n      \"productName\": \"Sauvage\",\n      \"quantity\": 2,\n      \"unitPrice\": 120.00,\n      \"subtotal\": 240.00\n    }\n  ],\n  \"totalAmount\": 240.00,\n  \"createdAt\": \"2026-03-10T10:00:00\"\n}"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Shipments",
+      "description": "Shipment management endpoints (BFF - port 8080, requires Bearer token)",
+      "item": [
+        {
+          "name": "Get All Shipments",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/shipments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "shipments"]
+            }
+          },
+          "response": [
+            {
+              "name": "Get All Shipments Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/shipments",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "shipments"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": 1,\n    \"orderId\": 1,\n    \"carrier\": \"DHL\",\n    \"address\": \"Av. Principal 123\",\n    \"city\": \"Lima\",\n    \"country\": \"Perú\",\n    \"status\": \"PREPARING\",\n    \"trackingNumber\": \"DHL-2026-0001\",\n    \"createdAt\": \"2026-03-10T12:00:00\"\n  }\n]"
+            }
+          ]
+        },
+        {
+          "name": "Get Shipment by Order ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/shipments/order/1",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "shipments", "order", "1"]
+            }
+          },
+          "response": [
+            {
+              "name": "Get Shipment by Order ID Success",
+              "originalRequest": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/shipments/order/1",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "shipments", "order", "1"]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"orderId\": 1,\n  \"carrier\": \"DHL\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Lima\",\n  \"country\": \"Perú\",\n  \"status\": \"PREPARING\",\n  \"trackingNumber\": \"DHL-2026-0001\",\n  \"createdAt\": \"2026-03-10T12:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Create Shipment",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/shipments",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "shipments"]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": 1,\n  \"carrier\": \"DHL\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Lima\",\n  \"country\": \"Perú\"\n}"
+            }
+          },
+          "response": [
+            {
+              "name": "Create Shipment Success",
+              "originalRequest": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  },
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/shipments",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "shipments"]
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": 1,\n  \"carrier\": \"DHL\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Lima\",\n  \"country\": \"Perú\"\n}"
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"orderId\": 1,\n  \"carrier\": \"DHL\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Lima\",\n  \"country\": \"Perú\",\n  \"status\": \"PREPARING\",\n  \"trackingNumber\": \"DHL-2026-0001\",\n  \"createdAt\": \"2026-03-10T12:00:00\"\n}"
+            }
+          ]
+        },
+        {
+          "name": "Update Shipment Status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/shipments/1/status?status=IN_TRANSIT",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "shipments", "1", "status"],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "IN_TRANSIT"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "name": "Update Shipment Status Success",
+              "originalRequest": {
+                "method": "PATCH",
+                "header": [
+                  {
+                    "key": "Authorization",
+                    "value": "Bearer {{token}}"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/shipments/1/status?status=IN_TRANSIT",
+                  "host": ["{{baseUrl}}"],
+                  "path": ["api", "shipments", "1", "status"],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "IN_TRANSIT"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": 1,\n  \"orderId\": 1,\n  \"carrier\": \"DHL\",\n  \"address\": \"Av. Principal 123\",\n  \"city\": \"Lima\",\n  \"country\": \"Perú\",\n  \"status\": \"IN_TRANSIT\",\n  \"trackingNumber\": \"DHL-2026-0001\",\n  \"createdAt\": \"2026-03-10T12:00:00\"\n}"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

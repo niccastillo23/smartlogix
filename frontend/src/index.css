@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@layer base {
+  body {
+    @apply bg-cream-50 text-charcoal-800 font-sans antialiased
+           dark:bg-charcoal-900 dark:text-cream-50;
+    transition: background-color 0.4s ease, color 0.4s ease;
+  }
+  ::selection {
+    @apply bg-gold-200/40 dark:bg-gold-600/30;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-charcoal-800 text-white px-6 py-3 text-sm font-medium tracking-widest uppercase
+           transition-all duration-500 ease-out
+           hover:bg-charcoal-700 active:scale-[0.98]
+           disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:bg-charcoal-800 disabled:active:scale-100
+           dark:bg-gold-500 dark:text-charcoal-900
+           dark:hover:bg-gold-400
+           dark:disabled:bg-charcoal-700 dark:disabled:text-charcoal-500;
+  }
+
+  .btn-outline {
+    @apply border border-charcoal-300 text-charcoal-700 px-6 py-3 text-sm font-medium tracking-widest uppercase
+           transition-all duration-500 ease-out
+           hover:bg-charcoal-800 hover:text-white hover:border-charcoal-800
+           active:scale-[0.98]
+           dark:border-charcoal-600 dark:text-cream-300
+           dark:hover:bg-cream-50 dark:hover:text-charcoal-900 dark:hover:border-cream-50;
+  }
+
+  .btn-ghost {
+    @apply text-charcoal-500 px-4 py-2 text-sm font-medium tracking-wider uppercase
+           transition-all duration-300 ease-out
+           hover:text-charcoal-800
+           dark:text-charcoal-400 dark:hover:text-cream-50;
+  }
+
+  .input-field {
+    @apply w-full px-4 py-3 bg-white border border-ivory-300 text-charcoal-800 text-sm
+           transition-all duration-300 ease-out
+           focus:outline-none focus:border-charcoal-400 focus:ring-1 focus:ring-charcoal-400/20
+           placeholder:text-charcoal-300
+           dark:bg-charcoal-800 dark:border-charcoal-600 dark:text-cream-50
+           dark:focus:border-gold-400 dark:focus:ring-gold-400/20
+           dark:placeholder:text-charcoal-500;
+  }
+
+  .section-title {
+    @apply font-display text-3xl md:text-4xl font-light text-charcoal-800 tracking-wide
+           dark:text-cream-50;
+  }
+
+  .section-subtitle {
+    @apply text-charcoal-400 text-sm font-medium tracking-[0.2em] uppercase
+           dark:text-cream-400;
+  }
+
+  .card-hover {
+    @apply transition-all duration-700 ease-out
+           hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)]
+           hover:-translate-y-1
+           dark:hover:shadow-[0_20px_60px_-15px_rgba(0,0,0,0.4)];
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: theme('colors.ivory.300') transparent;
+  }
+  .scrollbar-thin::-webkit-scrollbar { width: 4px; }
+  .scrollbar-thin::-webkit-scrollbar-track { background: transparent; }
+  .scrollbar-thin::-webkit-scrollbar-thumb { background-color: theme('colors.ivory.300'); border-radius: 2px; }
+
+  .dark .scrollbar-thin {
+    scrollbar-color: theme('colors.charcoal.600') transparent;
+  }
+  .dark .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: theme('colors.charcoal.600');
+  }
+}

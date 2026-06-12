@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="600" height="600" viewBox="0 0 600 600">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#2d1810"/>
+      <stop offset="100%" style="stop-color:#4a2820"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#d4a54a"/>
+      <stop offset="100%" style="stop-color:#e8c06a"/>
+    </linearGradient>
+  </defs>
+  <rect width="600" height="600" fill="url(#bg)"/>
+  <circle cx="300" cy="300" r="160" fill="none" stroke="url(#gold)" stroke-width="1" opacity="0.3"/>
+  <circle cx="300" cy="300" r="120" fill="none" stroke="url(#gold)" stroke-width="0.5" opacity="0.2"/>
+  <circle cx="300" cy="200" r="70" fill="url(#gold)" opacity="0.08"/>
+  <text x="300" y="310" font-family="'Playfair Display', Georgia, serif" font-size="32" font-weight="700" fill="#d4a54a" text-anchor="middle" dominant-baseline="middle">Sauvage Eau de Parfum</text>
+  <text x="300" y="360" font-family="Arial, sans-serif" font-size="14" font-weight="600" fill="#a09080" text-anchor="middle" letter-spacing="4" dominant-baseline="middle">DIOR</text>
+  <text x="300" y="420" font-family="Georgia, serif" font-size="12" font-style="italic" fill="#6a6662" text-anchor="middle" dominant-baseline="middle">Amaderado</text>
+  <rect x="270" y="270" width="60" height="2" fill="url(#gold)" rx="1" opacity="0.4"/>
+</svg>

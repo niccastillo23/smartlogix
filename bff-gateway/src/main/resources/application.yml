@@ -1,0 +1,24 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: bff-gateway
+
+services:
+  inventory:
+    url: http://localhost:8081
+  order:
+    url: http://localhost:8082
+  shipping:
+    url: http://localhost:8083
+
+jwt:
+  secret: SmartLogixSecretKey2024ForJWTTokenGenerationAndValidationMustBe256BitsLong!!
+  expiration: 86400000
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html

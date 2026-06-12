@@ -1,0 +1,10 @@
+INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (1, 'Sauvage Eau de Parfum', 'Dior', 'Fragancia masculina con notas de bergamota y ámbar', 89990, 50, 'Amaderado');
+INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (2, 'Bleu de Chanel', 'Chanel', 'Eau de parfum intenso con notas cítricas y amaderadas', 105990, 40, 'Amaderado Cítrico');
+INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (3, 'La Vie Est Belle', 'Lancôme', 'Perfume femenino dulce con iris y praliné', 79990, 35, 'Floral Dulce');
+INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (4, 'Acqua di Gio Profondo', 'Giorgio Armani', 'Fragancia acuática fresca con notas marinas', 69990, 60, 'Acuático Fresco');
+INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (5, 'Black Orchid', 'Tom Ford', 'Perfume unisex oscuro y sensual con orquídea negra', 149990, 25, 'Oriental Floral');
+INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (6, 'Coco Mademoiselle', 'Chanel', 'Eau de parfum femenino con rosa y pachulí', 109990, 45, 'Floral Oriental');
+INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (7, 'Aventus', 'Creed', 'Fragancia masculina con piña, abedul y almizcle', 299990, 15, 'Frutal Amaderado');
+INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (8, 'Good Girl', 'Carolina Herrera', 'Perfume femenino con jazmín y cacao', 74990, 55, 'Floral Oriental');
+INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (9, '1 Million', 'Paco Rabanne', 'Fragancia masculina especiada con canela y cuero', 59990, 70, 'Especiado Dulce');
+INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (10, 'Flowerbomb', 'Viktor & Rolf', 'Perfume femenino explosivo con rosa y jazmín', 94990, 30, 'Floral Intenso');
