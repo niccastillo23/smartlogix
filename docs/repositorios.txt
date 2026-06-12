@@ -1,66 +1,7 @@
 # SmartLogix - Estructura de Repositorios GitHub
 # ================================================
-# Este archivo define la estructura de repositorios para enlazar a GitHub.
-# Cada componente del proyecto debe tener su propio repositorio independiente.
+# Proyecto: Evaluación Parcial 3 - Arquitectura de Microservicios
 # ================================================
 
-## Repositorio Principal (Monorepo - Opción recomendada para evaluación)
-https://github.com/[TU_USUARIO]/smartlogix
-
-## Repositorios Individuales por Componente
-
-### Backend
-1. https://github.com/[TU_USUARIO]/smartlogix-bff-gateway
-   - BFF Gateway con seguridad JWT
-   - Puerto: 8080
-   - Spring Boot 3.2 + Spring Security
-
-2. https://github.com/[TU_USUARIO]/smartlogix-inventory-service
-   - Microservicio de Inventario (Repository Pattern)
-   - Puerto: 8081
-   - Spring Boot 3.2 + Spring Data JPA + H2
-
-3. https://github.com/[TU_USUARIO]/smartlogix-order-service
-   - Microservicio de Pedidos (Factory Method)
-   - Puerto: 8082
-   - Spring Boot 3.2 + Spring Data JPA + H2
-
-4. https://github.com/[TU_USUARIO]/smartlogix-shipping-service
-   - Microservicio de Envíos (Circuit Breaker)
-   - Puerto: 8083
-   - Spring Boot 3.2 + Spring Data JPA + H2 + Resilience4j
-
-### Frontend
-5. https://github.com/[TU_USUARIO]/smartlogix-frontend
-   - Frontend React + Vite
-   - Puerto: 5173
-   - React 18 + Axios + Vitest
-
-### Documentación
-6. https://github.com/[TU_USUARIO]/smartlogix-docs
-   - Diagramas de arquitectura (Mermaid.js)
-   - Informes de persistencia y pruebas
-   - Colección Postman
-
-## Instrucciones para subir a GitHub
-
-```bash
-# Opción 1: Monorepo (todo en un solo repositorio)
-cd smartlogix
-git init
-git add .
-git commit -m "feat: SmartLogix eCommerce - Arquitectura de microservicios completa"
-git branch -M main
-git remote add origin https://github.com/[TU_USUARIO]/smartlogix.git
-git push -u origin main
-
-# Opción 2: Repositorios individuales
-# Para cada componente:
-cd smartlogix/bff-gateway
-git init
-git add .
-git commit -m "feat: BFF Gateway con JWT"
-git branch -M main
-git remote add origin https://github.com/[TU_USUARIO]/smartlogix-bff-gateway.git
-git push -u origin main
-```
+## Repositorio Principal
+https://github.com/niccastillo23/ev3parcialfullstack
