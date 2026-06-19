@@ -15,6 +15,10 @@ vi.mock("framer-motion", () => ({
       const { initial, animate, exit, ...rest } = props;
       return <p {...rest} data-motion>{children}</p>;
     },
+    h1: ({ children, ...props }) => {
+      const { initial, animate, exit, transition, ...rest } = props;
+      return <h1 {...rest} data-motion>{children}</h1>;
+    },
     h2: ({ children, ...props }) => {
       const { initial, animate, exit, transition, ...rest } = props;
       return <h2 {...rest} data-motion>{children}</h2>;

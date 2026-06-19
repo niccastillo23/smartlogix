@@ -12,7 +12,13 @@ export function AuthProvider({ children }) {
     if (token) {
       try {
         const payload = JSON.parse(atob(token.split(".")[1]));
-        setUser({ username: payload.sub });
+        const now = Math.floor(Date.now() / 1000);
+        if (payload.exp && payload.exp < now) {
+          localStorage.removeItem("token");
+          setToken(null);
+        } else {
+          setUser({ username: payload.sub });
+        }
       } catch { setToken(null); }
     }
     setLoading(false);

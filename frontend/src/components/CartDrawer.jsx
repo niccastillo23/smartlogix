@@ -4,36 +4,38 @@ import { useState, useEffect } from "react";
 import { useCart } from "../context/CartContext";
 import { useCartDrawer } from "../context/CartDrawerContext";
 import { formatPrice } from "../utils/formatPrice";
-import { getGradient, getProductImageBase } from "../utils/productImages";
+import { getProductImageBase } from "../utils/productImages";
+import { MetalButton } from "./ui/liquid-glass-button";
 
-const IMG_EXT = [".webp", ".jpg", ".svg"];
+const IMG_EXT = [".png", ".webp", ".jpg", ".svg"];
 
 function CartItemImage({ item }) {
   const [src, setSrc] = useState(null);
+  const [loaded, setLoaded] = useState(false);
   const [err, setErr] = useState(false);
   const [idx, setIdx] = useState(0);
   const base = getProductImageBase(item);
 
   useEffect(() => {
-    setIdx(0); setErr(false); setSrc(null);
+    setIdx(0); setErr(false); setLoaded(false); setSrc(null);
   }, [item.id]);
 
   useEffect(() => {
-    if (idx < IMG_EXT.length) setSrc(base + IMG_EXT[idx]);
-    else setErr(true);
+    if (idx < IMG_EXT.length) {
+      setLoaded(false);
+      setSrc(base + IMG_EXT[idx]);
+    } else setErr(true);
   }, [idx, base]);
 
-  if (err) {
-    return <span className="text-lg">✦</span>;
-  }
+  if (err) return <span className="text-lg text-charcoal-300">✦</span>;
 
   return (
     <img
-      key={src}
       src={src}
       alt={item.name}
-      className="w-full h-full object-cover"
-      onError={() => setIdx((p) => p + 1)}
+      className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
+      onError={() => { setLoaded(false); setIdx((p) => p + 1); }}
+      onLoad={() => setLoaded(true)}
     />
   );
 }
@@ -96,8 +98,7 @@ function CartDrawer() {
                     className="flex gap-4 py-4 border-b border-ivory-50 dark:border-charcoal-700"
                   >
                     <div
-                      className="w-16 h-16 flex-shrink-0 overflow-hidden"
-                      style={{ background: getGradient(item.fragrance) }}
+                      className="w-16 h-16 flex-shrink-0 overflow-hidden bg-ivory-50 dark:bg-charcoal-700"
                     >
                       <CartItemImage item={item} />
                     </div>
@@ -126,7 +127,7 @@ function CartDrawer() {
                   <span className="font-display text-lg font-semibold text-charcoal-800 dark:text-cream-50">{formatPrice(total)}</span>
                 </div>
                 <p className="text-[11px] text-charcoal-400 dark:text-charcoal-400 tracking-wider">Los costos de envío se calculan al finalizar la compra.</p>
-                <button onClick={handleCheckout} className="btn-primary w-full">Finalizar Compra</button>
+                <MetalButton onClick={handleCheckout} variant="gold" className="w-full">Finalizar Compra</MetalButton>
               </div>
             )}
           </motion.aside>

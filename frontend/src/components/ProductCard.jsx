@@ -1,9 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { formatPrice } from "../utils/formatPrice";
 import { getGradient, getIcon, getProductImageBase } from "../utils/productImages";
+import { LiquidButton } from "./ui/liquid-glass-button";
 
-const EXTENSIONS = [".webp", ".jpg", ".svg"];
+const EXTENSIONS = [".png", ".webp", ".jpg", ".svg"];
 
 const cardVariants = {
   hidden: { opacity: 0, y: 30 },
@@ -17,6 +18,7 @@ const cardVariants = {
 function ProductCard({ product, index = 0, onAddToCart }) {
   const { id, name, brand, price, fragrance, stockQuantity } = product;
   const [imgSrc, setImgSrc] = useState(null);
+  const [loaded, setLoaded] = useState(false);
   const [loadError, setLoadError] = useState(false);
   const [extIndex, setExtIndex] = useState(0);
   const [added, setAdded] = useState(false);
@@ -25,18 +27,27 @@ function ProductCard({ product, index = 0, onAddToCart }) {
   useEffect(() => {
     setExtIndex(0);
     setLoadError(false);
+    setLoaded(false);
     setImgSrc(null);
   }, [id]);
 
   useEffect(() => {
     if (extIndex < EXTENSIONS.length) {
+      setLoaded(false);
       setImgSrc(basePath + EXTENSIONS[extIndex]);
     } else {
       setLoadError(true);
     }
   }, [extIndex, basePath]);
 
-  const handleImgError = () => setExtIndex((p) => p + 1);
+  const handleImgError = () => {
+    setLoaded(false);
+    setExtIndex((p) => p + 1);
+  };
+
+  const handleImgLoad = () => {
+    setLoaded(true);
+  };
 
   const handleAdd = () => {
     onAddToCart(product);
@@ -54,16 +65,18 @@ function ProductCard({ product, index = 0, onAddToCart }) {
       className="group bg-white dark:bg-charcoal-800 border border-ivory-100 dark:border-charcoal-700 overflow-hidden card-hover"
     >
       <div
-        className="relative aspect-square overflow-hidden"
-        style={{ background: getGradient(fragrance) }}
+        className={`aspect-square overflow-hidden ${
+          loadError ? "" : "bg-ivory-50 dark:bg-charcoal-800"
+        }`}
+        style={loadError ? { background: getGradient(fragrance) } : {}}
       >
         {imgSrc && !loadError && (
-          <motion.img
-            key={imgSrc}
+          <img
             src={imgSrc}
             alt={name}
-            className="w-full h-full object-cover"
+            className={`w-full h-full object-cover transition-opacity duration-500 ${loaded ? "opacity-100" : "opacity-0"}`}
             onError={handleImgError}
+            onLoad={handleImgLoad}
           />
         )}
         {loadError && (
@@ -71,28 +84,15 @@ function ProductCard({ product, index = 0, onAddToCart }) {
             <span className="text-5xl">{getIcon(fragrance)}</span>
           </div>
         )}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={handleAdd}
-          disabled={stockQuantity === 0}
-          className={`absolute bottom-4 left-4 right-4 py-3 text-xs tracking-[0.15em] uppercase font-medium transition-all duration-500 ${
-            added
-              ? "bg-emerald-600 text-white"
-              : stockQuantity === 0
-              ? "bg-charcoal-200 text-charcoal-400 cursor-not-allowed"
-              : "bg-white/90 dark:bg-charcoal-900/90 text-charcoal-800 dark:text-cream-50 hover:bg-white dark:hover:bg-charcoal-900 backdrop-blur-sm opacity-0 group-hover:opacity-100"
-          }`}
-        >
-          {added ? "✓ Agregado" : stockQuantity === 0 ? "Sin Stock" : "Agregar al Carrito"}
-        </motion.button>
       </div>
 
-      <div className="p-5">
-        <p className="text-gold-600 dark:text-gold-400 text-[10px] tracking-[0.2em] uppercase font-medium mb-1">{brand}</p>
-        <h3 className="font-display text-lg font-semibold text-charcoal-800 dark:text-cream-50 leading-tight mb-1">{name}</h3>
-        {fragrance && <p className="text-charcoal-400 dark:text-charcoal-400 text-xs italic mb-3">{fragrance}</p>}
+      <div className="p-5 flex flex-col gap-3">
+        <div>
+          <p className="text-gold-600 dark:text-gold-400 text-[10px] tracking-[0.2em] uppercase font-medium mb-1">{brand}</p>
+          <h3 className="font-display text-lg font-semibold text-charcoal-800 dark:text-cream-50 leading-tight mb-1">{name}</h3>
+          {fragrance && <p className="text-charcoal-400 dark:text-charcoal-400 text-xs italic">{fragrance}</p>}
+        </div>
+
         <div className="flex items-center justify-between pt-3 border-t border-ivory-100 dark:border-charcoal-700">
           <span className="font-display text-xl font-bold text-charcoal-800 dark:text-cream-50">{formatPrice(price)}</span>
           <span className={`text-[10px] tracking-wider uppercase font-medium px-3 py-1 ${
@@ -101,6 +101,28 @@ function ProductCard({ product, index = 0, onAddToCart }) {
             {stockQuantity > 0 ? `${stockQuantity} und.` : "Agotado"}
           </span>
         </div>
+
+        <LiquidButton
+          onClick={handleAdd}
+          disabled={stockQuantity === 0}
+          variant="default"
+          size="sm"
+          className={`w-full !text-xs !py-2.5 ${
+            added
+              ? "!bg-emerald-600 !text-white !shadow-none !border-emerald-700 hover:!brightness-110"
+              : stockQuantity === 0
+              ? "!opacity-40 !cursor-not-allowed"
+              : ""
+          }`}
+        >
+          {added ? (
+            <span className="flex items-center justify-center gap-2">✓ Agregado</span>
+          ) : stockQuantity === 0 ? (
+            "Sin Stock"
+          ) : (
+            "Agregar al Carrito"
+          )}
+        </LiquidButton>
       </div>
     </motion.div>
   );

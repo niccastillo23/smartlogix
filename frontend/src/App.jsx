@@ -4,6 +4,7 @@ import { CartProvider } from "./context/CartContext";
 import { CartDrawerProvider } from "./context/CartDrawerContext";
 import { ThemeProvider } from "./context/ThemeContext";
 import Login from "./components/Login";
+import PerfumeShowcase from "./components/ui/perfume-showcase";
 import ProductCatalog from "./components/ProductCatalog";
 import Cart from "./components/Cart";
 import OrderStatus from "./components/OrderStatus";
@@ -19,7 +20,8 @@ function App() {
             <Routes>
               <Route path="/login" element={<Login />} />
               <Route element={<ProtectedRoute><Layout /></ProtectedRoute>}>
-                <Route path="/" element={<ProductCatalog />} />
+                <Route path="/" element={<PerfumeShowcase />} />
+                <Route path="/catalog" element={<ProductCatalog />} />
                 <Route path="/cart" element={<Cart />} />
                 <Route path="/orders" element={<OrderStatus />} />
               </Route>

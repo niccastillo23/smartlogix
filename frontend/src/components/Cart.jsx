@@ -7,27 +7,39 @@ import OrderForm from "./OrderForm";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 import { formatPrice } from "../utils/formatPrice";
-import { getGradient, getProductImageBase } from "../utils/productImages";
+import { getProductImageBase } from "../utils/productImages";
+import { MetalButton, LiquidButton } from "./ui/liquid-glass-button";
 
-const IMG_EXT = [".webp", ".jpg", ".svg"];
+const IMG_EXT = [".png", ".webp", ".jpg", ".svg"];
 
 function CartItemImage({ item }) {
   const [src, setSrc] = useState(null);
+  const [loaded, setLoaded] = useState(false);
   const [err, setErr] = useState(false);
   const [idx, setIdx] = useState(0);
   const base = getProductImageBase(item);
 
   useEffect(() => {
-    setIdx(0); setErr(false); setSrc(null);
+    setIdx(0); setErr(false); setLoaded(false); setSrc(null);
   }, [item.id]);
 
   useEffect(() => {
-    if (idx < IMG_EXT.length) setSrc(base + IMG_EXT[idx]);
-    else setErr(true);
+    if (idx < IMG_EXT.length) {
+      setLoaded(false);
+      setSrc(base + IMG_EXT[idx]);
+    } else setErr(true);
   }, [idx, base]);
 
   if (err) return <span className="text-xl text-charcoal-300">✦</span>;
-  return <img key={src} src={src} alt={item.name} className="w-full h-full object-cover" onError={() => setIdx((p) => p + 1)} />;
+  return (
+    <img
+      src={src}
+      alt={item.name}
+      className={`w-full h-full object-cover transition-opacity duration-300 ${loaded ? "opacity-100" : "opacity-0"}`}
+      onError={() => { setLoaded(false); setIdx((p) => p + 1); }}
+      onLoad={() => setLoaded(true)}
+    />
+  );
 }
 
 function Cart() {
@@ -89,7 +101,7 @@ function Cart() {
       {items.length === 0 && !success && (
         <div className="text-center py-16">
           <p className="text-charcoal-400 text-sm mb-6">Tu carrito está vacío</p>
-          <Link to="/" className="btn-primary">Explorar Colección</Link>
+          <Link to="/"><MetalButton variant="gold">Explorar Colección</MetalButton></Link>
         </div>
       )}
 
@@ -104,8 +116,7 @@ function Cart() {
                 className="flex items-center gap-5 p-5 bg-white dark:bg-charcoal-800 border border-ivory-100 dark:border-charcoal-700"
               >
                 <div
-                  className="w-20 h-20 flex-shrink-0 overflow-hidden"
-                  style={{ background: getGradient(item.fragrance) }}
+                  className="w-20 h-20 flex-shrink-0 overflow-hidden bg-ivory-50 dark:bg-charcoal-700"
                 >
                   <CartItemImage item={item} />
                 </div>
@@ -131,7 +142,7 @@ function Cart() {
               <span className="text-sm text-charcoal-500 dark:text-charcoal-400">Subtotal</span>
               <span className="font-display text-2xl font-bold text-charcoal-800 dark:text-cream-50">{formatPrice(total)}</span>
             </div>
-            <button onClick={() => setShowOrderForm(true)} className="btn-primary w-full">Finalizar Compra</button>
+            <MetalButton onClick={() => setShowOrderForm(true)} variant="gold" className="w-full">Finalizar Compra</MetalButton>
           </div>
         </>
       )}

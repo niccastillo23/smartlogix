@@ -12,6 +12,7 @@ const products = [
   { name: "Good Girl", brand: "Carolina Herrera", frag: "Floral Oriental" },
   { name: "1 Million", brand: "Paco Rabanne", frag: "Especiado Dulce" },
   { name: "Flowerbomb", brand: "Viktor & Rolf", frag: "Floral Intenso" },
+  { name: "Club de Nuit Iconic", brand: "Armaf", frag: "Amaderado Cítrico" },
 ];
 
 const gradients = {

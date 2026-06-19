@@ -50,7 +50,7 @@ describe("ProductCatalog Component", () => {
     expect(await screen.findByText("Bleu")).toBeInTheDocument();
   });
 
-  it("should render hero section", async () => {
+  it("should render the catalog section title", async () => {
     render(
       <MemoryRouter>
         <AuthProvider>
@@ -62,6 +62,6 @@ describe("ProductCatalog Component", () => {
         </AuthProvider>
       </MemoryRouter>
     );
-    expect(await screen.findByText(/elegancia/i)).toBeInTheDocument();
+    expect(await screen.findByText(/nuestra colección/i)).toBeInTheDocument();
   });
 });

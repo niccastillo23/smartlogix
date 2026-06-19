@@ -5,6 +5,7 @@ import { useCartDrawer } from "../context/CartDrawerContext";
 import { useTheme } from "../context/ThemeContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
+import { LiquidButton } from "./ui/liquid-glass-button";
 
 function Header() {
   const { user, logout } = useAuth();
@@ -21,7 +22,8 @@ function Header() {
   }, []);
 
   const links = [
-    { href: "/", label: "Colección" },
+    { href: "/", label: "Inicio" },
+    { href: "/catalog", label: "Colección" },
     { href: "/orders", label: "Pedidos" },
   ];
 
@@ -110,9 +112,9 @@ function Header() {
 
             <div className="hidden md:flex items-center gap-3 pl-4 border-l border-ivory-200 dark:border-charcoal-700">
               <span className="text-xs text-charcoal-400 dark:text-charcoal-400 font-medium">{user?.username}</span>
-              <button onClick={logout} className="text-xs text-charcoal-400 hover:text-charcoal-700 dark:text-charcoal-400 dark:hover:text-cream-50 transition-colors tracking-wider uppercase">
+              <LiquidButton onClick={logout} variant="default" size="sm" className="!px-3 !py-1 text-xs">
                 Salir
-              </button>
+              </LiquidButton>
             </div>
           </div>
         </div>

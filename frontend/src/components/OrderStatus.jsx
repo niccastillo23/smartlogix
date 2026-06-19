@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { getAllOrders } from "../services/orderService";
 import { useAuth } from "../context/AuthContext";
 import { formatPrice } from "../utils/formatPrice";
+import { MetalButton, LiquidButton } from "./ui/liquid-glass-button";
 
 const statusConfig = {
   PENDING: { label: "Pendiente", class: "bg-amber-50 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 border-amber-200 dark:border-amber-800" },
@@ -71,14 +72,14 @@ function OrderStatus() {
       {error && (
         <div className="text-center py-16">
           <p className="text-rose-500 text-sm">{error}</p>
-          <button onClick={fetchOrders} className="btn-outline mt-4">Reintentar</button>
+          <LiquidButton onClick={fetchOrders} variant="outline" size="sm" className="mt-4">Reintentar</LiquidButton>
         </div>
       )}
 
       {!loading && !error && orders.length === 0 && (
         <div className="text-center py-16">
           <p className="text-charcoal-400 text-sm mb-6">Aún no tienes pedidos</p>
-          <Link to="/" className="btn-primary">Ir a Comprar</Link>
+          <Link to="/"><MetalButton variant="gold">Ir a Comprar</MetalButton></Link>
         </div>
       )}
 

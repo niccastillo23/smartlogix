@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
+import { MetalButton } from "./ui/liquid-glass-button";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -81,9 +82,9 @@ function Login() {
             )}
           </AnimatePresence>
 
-          <button type="submit" className="btn-primary w-full">
+          <MetalButton type="submit" variant="primary" className="w-full">
             {isRegister ? "Registrarse" : "Iniciar Sesión"}
-          </button>
+          </MetalButton>
         </form>
 
             <p className="mt-6 text-center text-xs text-charcoal-400 dark:text-charcoal-400">

@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { MetalButton, LiquidButton } from "./ui/liquid-glass-button";
 
 function OrderForm({ onSubmit, onCancel }) {
   const [formData, setFormData] = useState({
@@ -71,8 +72,8 @@ function OrderForm({ onSubmit, onCancel }) {
           </div>
 
           <div className="flex gap-3 pt-2">
-            <button type="button" onClick={onCancel} className="btn-outline flex-1">Cancelar</button>
-            <button type="submit" className="btn-primary flex-1">Confirmar Pedido</button>
+            <LiquidButton type="button" onClick={onCancel} variant="outline" size="lg" className="flex-1">Cancelar</LiquidButton>
+            <MetalButton type="submit" variant="primary" className="flex-1">Confirmar Pedido</MetalButton>
           </div>
         </form>
       </motion.div>

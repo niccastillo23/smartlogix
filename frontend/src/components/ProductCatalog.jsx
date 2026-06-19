@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { getAllProducts } from "../services/productService";
 import ProductCard from "./ProductCard";
-import Hero from "./Hero";
 import { useCart } from "../context/CartContext";
 import { useCartDrawer } from "../context/CartDrawerContext";
+import { LiquidButton } from "./ui/liquid-glass-button";
 
 const container = {
   hidden: {},
@@ -43,8 +43,6 @@ function ProductCatalog() {
 
   return (
     <div>
-      <Hero />
-
       <div className="mb-10">
         <p className="section-subtitle">Catálogo</p>
         <h2 className="section-title mt-1">Nuestra Colección</h2>
@@ -68,7 +66,7 @@ function ProductCatalog() {
       {error && (
         <div className="text-center py-16">
           <p className="text-rose-500 text-sm">{error}</p>
-          <button onClick={fetchProducts} className="btn-outline mt-4">Reintentar</button>
+          <LiquidButton onClick={fetchProducts} variant="outline" size="sm" className="mt-4">Reintentar</LiquidButton>
         </div>
       )}
 
