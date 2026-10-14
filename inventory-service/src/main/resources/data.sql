@@ -9,3 +9,6 @@ INSERT INTO product (id, name, brand, description, price, stock_quantity, fragra
 INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (9, '1 Million', 'Paco Rabanne', 'Fragancia masculina especiada con canela y cuero', 59990, 70, 'Especiado Dulce');
 INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (10, 'Flowerbomb', 'Viktor & Rolf', 'Perfume femenino explosivo con rosa y jazmín', 94990, 30, 'Floral Intenso');
 INSERT INTO product (id, name, brand, description, price, stock_quantity, fragrance) VALUES (11, 'Club de Nuit Iconic', 'Armaf', 'La alternativa árabe al clásico amaderado cítrico. Notas de pomelo y bergamota con un fondo de cedro y almizcle.', 25990, 100, 'Amaderado Cítrico');
+
+-- Ajusta la secuencia de IDs tras insertar filas semilla con id explícito; sin esto el alta de productos falla con clave primaria duplicada.
+ALTER TABLE product ALTER COLUMN id RESTART WITH 100;
