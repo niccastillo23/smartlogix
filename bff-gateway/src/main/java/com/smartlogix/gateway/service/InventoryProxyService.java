@@ -7,6 +7,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.util.UriComponentsBuilder;
+
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 
@@ -42,5 +46,21 @@ public class InventoryProxyService {
 
     public Map<String, Object> updateStock(Long id, Map<String, Object> stockRequest) {
         return restTemplate.patchForObject(inventoryUrl + "/api/products/" + id + "/stock", stockRequest, Map.class);
+    }
+
+    /**
+     * Reenvía una consulta de búsqueda al inventario. Los segmentos de ruta y los parámetros
+     * se codifican por separado, de modo que la entrada del cliente no altera la URL destino.
+     */
+    public List<Map<String, Object>> buscar(String[] segmentos, MultiValueMap<String, String> parametros) {
+        URI destino = UriComponentsBuilder.fromUriString(inventoryUrl)
+                .pathSegment("api", "products")
+                .pathSegment(segmentos)
+                .queryParams(parametros)
+                .build()
+                .encode()
+                .toUri();
+        return restTemplate.exchange(destino, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<Map<String, Object>>>() {}).getBody();
     }
 }
