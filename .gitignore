@@ -23,3 +23,11 @@ Thumbs.db
 # Logs
 *.log
 /tmp/
+
+
+# Reportes de cobertura generados (no versionar)
+coverage/
+
+# Los logs de evidencia (docs/evidencias) sí forman parte de la entrega
+!docs/evidencias/**/*.log
+__pycache__/
