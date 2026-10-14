@@ -7,14 +7,15 @@ spring:
 
 services:
   inventory:
-    url: http://localhost:8081
+    url: ${SERVICES_INVENTORY_URL:http://localhost:8081}
   order:
-    url: http://localhost:8082
+    url: ${SERVICES_ORDER_URL:http://localhost:8082}
   shipping:
-    url: http://localhost:8083
+    url: ${SERVICES_SHIPPING_URL:http://localhost:8083}
 
 jwt:
-  secret: SmartLogixSecretKey2024ForJWTTokenGenerationAndValidationMustBe256BitsLong!!
+  # Obligatorio: definir la variable de entorno JWT_SECRET (mínimo 64 bytes para HS512). Sin valor por defecto.
+  secret: ${JWT_SECRET}
   expiration: 86400000
 
 springdoc:

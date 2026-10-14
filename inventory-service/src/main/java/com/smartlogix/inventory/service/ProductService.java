@@ -1,5 +1,6 @@
 package com.smartlogix.inventory.service;
 
+import com.smartlogix.inventory.exception.ResourceNotFoundException;
 import com.smartlogix.inventory.dto.ProductDTO;
 import com.smartlogix.inventory.dto.StockUpdateRequest;
 import com.smartlogix.inventory.entity.Product;
@@ -25,7 +26,7 @@ public class ProductService {
 
     public ProductDTO getProductById(Long id) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
         return toDTO(product);
     }
 
@@ -69,7 +70,7 @@ public class ProductService {
     @Transactional
     public ProductDTO updateProduct(Long id, ProductDTO dto) {
         Product existing = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
         existing.setName(dto.getName());
         existing.setBrand(dto.getBrand());
         existing.setDescription(dto.getDescription());
@@ -83,7 +84,7 @@ public class ProductService {
     @Transactional
     public ProductDTO updateStock(Long id, StockUpdateRequest request) {
         Product product = productRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Producto no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Producto no encontrado con id: " + id));
         product.setStockQuantity(request.getQuantity());
         Product saved = productRepository.save(product);
         return toDTO(saved);
@@ -92,7 +93,7 @@ public class ProductService {
     @Transactional
     public void deleteProduct(Long id) {
         if (!productRepository.existsById(id)) {
-            throw new RuntimeException("Producto no encontrado con id: " + id);
+            throw new ResourceNotFoundException("Producto no encontrado con id: " + id);
         }
         productRepository.deleteById(id);
     }

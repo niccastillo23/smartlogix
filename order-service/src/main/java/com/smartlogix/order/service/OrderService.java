@@ -1,5 +1,6 @@
 package com.smartlogix.order.service;
 
+import com.smartlogix.order.exception.ResourceNotFoundException;
 import com.smartlogix.order.dto.OrderItemDTO;
 import com.smartlogix.order.dto.OrderRequest;
 import com.smartlogix.order.dto.OrderResponse;
@@ -30,7 +31,7 @@ public class OrderService {
 
     public OrderResponse getOrderById(Long id) {
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pedido no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado con id: " + id));
         return toResponse(order);
     }
 
@@ -57,7 +58,7 @@ public class OrderService {
     @Transactional
     public OrderResponse updateOrderStatus(Long id, String status) {
         Order order = orderRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Pedido no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Pedido no encontrado con id: " + id));
         order.setStatus(status);
         Order saved = orderRepository.save(order);
         return toResponse(saved);
@@ -67,7 +68,7 @@ public class OrderService {
         return switch (orderType.toUpperCase()) {
             case "WEB" -> webOrderFactory;
             case "MARKETPLACE" -> marketplaceOrderFactory;
-            default -> throw new RuntimeException("Tipo de orden no soportado: " + orderType);
+            default -> throw new IllegalArgumentException("Tipo de orden no soportado: " + orderType);
         };
     }
 

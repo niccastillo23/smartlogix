@@ -1,5 +1,6 @@
 package com.smartlogix.shipping.service;
 
+import com.smartlogix.shipping.exception.ResourceNotFoundException;
 import com.smartlogix.shipping.dto.ShippingRequest;
 import com.smartlogix.shipping.dto.ShippingResponse;
 import com.smartlogix.shipping.entity.Shipment;
@@ -27,13 +28,13 @@ public class ShippingService {
 
     public ShippingResponse getShipmentById(Long id) {
         Shipment shipment = shipmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Envío no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Envío no encontrado con id: " + id));
         return toResponse(shipment);
     }
 
     public ShippingResponse getShipmentByOrderId(Long orderId) {
         Shipment shipment = shipmentRepository.findByOrderId(orderId)
-                .orElseThrow(() -> new RuntimeException("Envío no encontrado para orderId: " + orderId));
+                .orElseThrow(() -> new ResourceNotFoundException("Envío no encontrado para orderId: " + orderId));
         return toResponse(shipment);
     }
 
@@ -71,7 +72,7 @@ public class ShippingService {
     @Transactional
     public ShippingResponse updateShipmentStatus(Long id, String status) {
         Shipment shipment = shipmentRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Envío no encontrado con id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Envío no encontrado con id: " + id));
         shipment.setStatus(status);
         Shipment saved = shipmentRepository.save(shipment);
         return toResponse(saved);
