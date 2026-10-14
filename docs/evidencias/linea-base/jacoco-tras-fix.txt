@@ -1,0 +1,8 @@
+inventory-service exit=0
+inventory-service cobertura lineas: 77/92 = 83.7%
+order-service exit=0
+order-service cobertura lineas: 93/111 = 83.8%
+shipping-service exit=0
+shipping-service cobertura lineas: 71/89 = 79.8%
+bff-gateway exit=0
+bff-gateway cobertura lineas: 86/121 = 71.1%

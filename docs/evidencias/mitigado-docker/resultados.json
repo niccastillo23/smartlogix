@@ -1,0 +1,594 @@
+{
+  "etiqueta": "mitigado-docker",
+  "fecha": "2026-10-14",
+  "casos": [
+    {
+      "id": "CP-01",
+      "requisito": "REQ-SEG-01",
+      "titulo": "Autenticación JWT y acceso a endpoints protegidos",
+      "tipo": "Seguridad / funcional",
+      "descripcion": "Registro, login y acceso con token válido; rechazo sin token.",
+      "esperado": "Registro y login devuelven token; GET protegido 200 con token y 401/403 sin token.",
+      "criterio": "Token presente en registro y login; 200 con token; 401 o 403 sin token.",
+      "criticidad_si_falla": "CRITICO",
+      "datos_entrada": "username aleatorio (usrNNN), password 'pass12345'; POST /api/auth/register y /api/auth/login; GET /api/products con y sin token",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "Sin token responde HTTP 401.",
+      "pasos": [
+        {
+          "paso": "Registrar usuario [POST http://localhost:8080/api/auth/register] -> HTTP 200",
+          "ok": true,
+          "detalle": "{\"token\":\"<JWT-REDACTADO>\",\"username\":\"usr1792015868\",\"message\":\"Registro exitoso\"}"
+        },
+        {
+          "paso": "Registro devuelve token",
+          "ok": true,
+          "detalle": "token presente"
+        },
+        {
+          "paso": "Login con mismas credenciales [POST http://localhost:8080/api/auth/login] -> HTTP 200",
+          "ok": true,
+          "detalle": "{\"token\":\"<JWT-REDACTADO>\",\"username\":\"usr1792015868\",\"message\":\"Login exitoso\"}"
+        },
+        {
+          "paso": "GET /api/products con token [GET http://localhost:8080/api/products] -> HTTP 200",
+          "ok": true,
+          "detalle": "[{\"id\":1,\"name\":\"Sauvage Eau de Parfum\",\"brand\":\"Dior\",\"description\":\"Fragancia masculina con notas de bergamota y ámbar\",\"price\":89990.0,\"stockQuantity\":50,\"fragrance\":\"Amaderado\"},{\"id\":2,\"name\":\"Bleu de Chanel\",\"brand\":\"Chanel\",\"description\":\"Eau de parfum intenso con notas cítricas y amaderadas\""
+        },
+        {
+          "paso": "GET /api/products sin token rechazado (HTTP 401)",
+          "ok": true,
+          "detalle": "HTTP 401"
+        }
+      ]
+    },
+    {
+      "id": "CP-02",
+      "requisito": "REQ-SEG-01",
+      "titulo": "Rechazo de credenciales inválidas y registro duplicado",
+      "tipo": "Seguridad / negativo",
+      "descripcion": "Login con clave incorrecta y registro de usuario existente.",
+      "esperado": "Login incorrecto: HTTP 401. Registro duplicado: HTTP 409.",
+      "criterio": "Códigos 401 y 409 con mensaje controlado, sin token.",
+      "criticidad_si_falla": "MODERADO",
+      "datos_entrada": "username del CP-01; password incorrecta 'clave-incorrecta'; registro duplicado con la misma cuenta",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "Login con contraseña incorrecta [POST http://localhost:8080/api/auth/login] -> HTTP 401",
+          "ok": true,
+          "detalle": "{\"message\":\"Credenciales inválidas\",\"timestamp\":\"2026-10-14T22:11:08.381151846\",\"status\":401,\"error\":\"Unauthorized\"}"
+        },
+        {
+          "paso": "Registro de usuario ya existente [POST http://localhost:8080/api/auth/register] -> HTTP 409",
+          "ok": true,
+          "detalle": "{\"message\":\"El usuario ya existe\",\"timestamp\":\"2026-10-14T22:11:08.437684387\",\"status\":409,\"error\":\"Conflict\"}"
+        }
+      ]
+    },
+    {
+      "id": "CP-03",
+      "requisito": "REQ-FUNC-02",
+      "titulo": "Descuento según tipo de orden (Factory Method)",
+      "tipo": "Funcional / caja negra",
+      "descripcion": "Creación de pedidos WEB y MARKETPLACE con el mismo ítem (100 x 2).",
+      "esperado": "WEB: 5 %, total 190,00, STANDARD. MARKETPLACE: 10 %, total 180,00, EXPRESS.",
+      "criterio": "Descuento y total exactos; método de envío correspondiente.",
+      "criticidad_si_falla": "GRAVE",
+      "datos_entrada": "customerId 1, email test@test.com, ítem productId 1 'Sauvage' cantidad 2 precio 100; orderType WEB y MARKETPLACE",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "Pedido WEB: descuento=5.0, total=190.0, envio=STANDARD",
+          "ok": true,
+          "detalle": "HTTP 201; descuento=5.0, total=190.0, envio=STANDARD"
+        },
+        {
+          "paso": "Pedido MARKETPLACE: descuento=10.0, total=180.0, envio=EXPRESS",
+          "ok": true,
+          "detalle": "HTTP 201; descuento=10.0, total=180.0, envio=EXPRESS"
+        }
+      ]
+    },
+    {
+      "id": "CP-04",
+      "requisito": "REQ-FUNC-02",
+      "titulo": "Rechazo de tipo de orden no soportado",
+      "tipo": "Funcional / negativo",
+      "descripcion": "Envío de pedido con orderType INVALIDO.",
+      "esperado": "Rechazo controlado con HTTP 400 y mensaje 'Tipo de orden no soportado'.",
+      "criterio": "HTTP 400; no se crea el pedido.",
+      "criticidad_si_falla": "MODERADO",
+      "datos_entrada": "orderType 'INVALIDO' con el mismo ítem que CP-03",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "Pedido con tipo INVALIDO [POST http://localhost:8080/api/orders] -> HTTP 400",
+          "ok": true,
+          "detalle": "{\"error\":\"Bad Request\",\"message\":\"Tipo de orden no soportado: INVALIDO\",\"timestamp\":\"2026-10-14T22:11:08.457668637\",\"status\":400}"
+        }
+      ]
+    },
+    {
+      "id": "CP-05",
+      "requisito": "REQ-RES-01",
+      "titulo": "Fallback del Circuit Breaker ante fallo del carrier",
+      "tipo": "Resiliencia",
+      "descripcion": "Envío con carrier disponible (DHL) y con carrier caído simulado (FAIL_CARRIER).",
+      "esperado": "DHL: TRK-, sin fallback, entrega +3 días. FAIL_CARRIER: FBK-, fallback=true, entrega +7 días, HTTP 201.",
+      "criterio": "Ambos casos devuelven 201; el fallo no provoca error 5xx.",
+      "criticidad_si_falla": "GRAVE",
+      "datos_entrada": "orderId 999, address 'Calle 123', city 'Santiago', country 'Chile'; carrier 'DHL' y 'FAIL_CARRIER'",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "Carrier DHL: prefijo TRK-, fallback=False, entrega 2026-10-17",
+          "ok": true,
+          "detalle": "HTTP 201; tracking=TRK-65270BAF, fallback=False, entrega=2026-10-17"
+        },
+        {
+          "paso": "Carrier FAIL_CARRIER: prefijo FBK-, fallback=True, entrega 2026-10-21",
+          "ok": true,
+          "detalle": "HTTP 201; tracking=FBK-91B492F2, fallback=True, entrega=2026-10-21"
+        }
+      ]
+    },
+    {
+      "id": "CP-06",
+      "requisito": "REQ-FUNC-03",
+      "titulo": "Búsqueda y filtrado de productos",
+      "tipo": "Funcional / caja negra",
+      "descripcion": "Filtros por marca, fragancia, precio, stock y nombre sobre el catálogo semilla.",
+      "esperado": "Listado completo de 11 productos; cada filtro devuelve solo coincidencias.",
+      "criterio": "Todos los elementos cumplen el criterio; búsqueda por nombre insensible a mayúsculas.",
+      "criticidad_si_falla": "MODERADO",
+      "datos_entrada": "Filtros: brand=Dior, fragrance=Amaderado, price-range 70000-110000, in-stock, search=SAUVAGE",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "Nota: el rango 50-150 de la Ev1 no aplica; los precios están en unidades enteras (p. ej. 89990).",
+      "pasos": [
+        {
+          "paso": "Listar catálogo [GET http://localhost:8080/api/products] -> HTTP 200",
+          "ok": true,
+          "detalle": "[{\"id\":1,\"name\":\"Sauvage Eau de Parfum\",\"brand\":\"Dior\",\"description\":\"Fragancia masculina con notas de bergamota y ámbar\",\"price\":89990.0,\"stockQuantity\":50,\"fragrance\":\"Amaderado\"},{\"id\":2,\"name\":\"Bleu de Chanel\",\"brand\":\"Chanel\",\"description\":\"Eau de parfum intenso con notas cítricas y amaderadas\""
+        },
+        {
+          "paso": "Catálogo contiene al menos los 11 productos semilla (encontrados 12)",
+          "ok": true,
+          "detalle": "12"
+        },
+        {
+          "paso": "Filtro brand/Dior: 1 resultados, todos coinciden",
+          "ok": true,
+          "detalle": "HTTP 200, n=1"
+        },
+        {
+          "paso": "Filtro fragrance/Amaderado: 1 resultados, todos coinciden",
+          "ok": true,
+          "detalle": "HTTP 200, n=1"
+        },
+        {
+          "paso": "Filtro price-range?min=70000&max=110000: 6 resultados, todos coinciden",
+          "ok": true,
+          "detalle": "HTTP 200, n=6"
+        },
+        {
+          "paso": "Filtro in-stock: 12 resultados, todos coinciden",
+          "ok": true,
+          "detalle": "HTTP 200, n=12"
+        },
+        {
+          "paso": "Filtro search?name=SAUVAGE: 1 resultados, todos coinciden",
+          "ok": true,
+          "detalle": "HTTP 200, n=1"
+        }
+      ]
+    },
+    {
+      "id": "CP-07",
+      "requisito": "REQ-VAL-01",
+      "titulo": "Validación de entradas en servicios de negocio",
+      "tipo": "Seguridad / validación",
+      "descripcion": "Envío de datos inválidos directamente a cada microservicio.",
+      "esperado": "HTTP 400 en cada caso, y ningún registro persistido.",
+      "criterio": "Todos los datos inválidos rechazados con 400; el conteo de productos no cambia.",
+      "criticidad_si_falla": "GRAVE",
+      "datos_entrada": "Producto name '' price 100 y price -50; pedido email 'invalido' items []; envío sin carrier",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "Producto con nombre vacío [POST http://localhost:8080/api/products] -> HTTP 400",
+          "ok": true,
+          "detalle": "{\"timestamp\":\"2026-10-14T22:11:08.503081971\",\"message\":\"Datos de entrada inválidos: name: El nombre es obligatorio\",\"error\":\"Bad Request\",\"status\":400}"
+        },
+        {
+          "paso": "Producto con precio negativo [POST http://localhost:8080/api/products] -> HTTP 400",
+          "ok": true,
+          "detalle": "{\"timestamp\":\"2026-10-14T22:11:08.506015679\",\"message\":\"Datos de entrada inválidos: price: El precio debe ser mayor a 0\",\"error\":\"Bad Request\",\"status\":400}"
+        },
+        {
+          "paso": "Ningún producto inválido persistido (antes=12, después=12)",
+          "ok": true,
+          "detalle": ""
+        },
+        {
+          "paso": "Pedido con email inválido e ítems vacíos [POST http://localhost:8080/api/orders] -> HTTP 400",
+          "ok": true,
+          "detalle": "{\"error\":\"Bad Request\",\"message\":\"Datos de entrada inválidos: email: Email inválido; items: Debe incluir al menos un item\",\"timestamp\":\"2026-10-14T22:11:08.513656971\",\"status\":400}"
+        },
+        {
+          "paso": "Envío sin carrier [POST http://localhost:8080/api/shipments] -> HTTP 400",
+          "ok": true,
+          "detalle": "{\"status\":400,\"timestamp\":\"2026-10-14T22:11:08.519602721\",\"message\":\"Datos de entrada inválidos: carrier: El carrier es obligatorio\",\"error\":\"Bad Request\"}"
+        }
+      ]
+    },
+    {
+      "id": "CP-08",
+      "requisito": "REQ-VAL-01",
+      "titulo": "Validación de entradas a través del gateway (BFF)",
+      "tipo": "Seguridad / integración",
+      "descripcion": "Envío de producto inválido por el BFF, con token válido.",
+      "esperado": "HTTP 400 propagado desde el servicio de inventario.",
+      "criterio": "El código de error de validación llega íntegro al cliente.",
+      "criticidad_si_falla": "MODERADO",
+      "datos_entrada": "Producto name '' enviado a través del BFF con token válido",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "Producto con nombre vacío vía BFF [POST http://localhost:8080/api/products] -> HTTP 400",
+          "ok": true,
+          "detalle": "{\"timestamp\":\"2026-10-14T22:11:08.525604887\",\"message\":\"Datos de entrada inválidos: name: El nombre es obligatorio\",\"error\":\"Bad Request\",\"status\":400}"
+        }
+      ]
+    },
+    {
+      "id": "CP-09",
+      "requisito": "REQ-NFR-01",
+      "titulo": "Tiempos de respuesta (lectura y escritura)",
+      "tipo": "No funcional / rendimiento",
+      "descripcion": "20 lecturas vía BFF y 20 escrituras directas en pedidos, medidas en el cliente.",
+      "esperado": "p95 lectura < 500 ms; p95 escritura < 1000 ms.",
+      "criterio": "Percentil 95 dentro del límite; medición en localhost, sin carga concurrente.",
+      "criticidad_si_falla": "MODERADO",
+      "datos_entrada": "20 GET /api/products vía BFF y 20 POST /api/orders (WEB, ítem 1 x 1); medición en cliente",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "Lectura GET /api/products vía BFF: p95=4 ms (media 3 ms)",
+          "ok": true,
+          "detalle": "3.9 ms"
+        },
+        {
+          "paso": "Escritura POST /api/orders: p95=0 ms (media 0 ms)",
+          "ok": true,
+          "detalle": "0.4 ms"
+        }
+      ]
+    },
+    {
+      "id": "CP-10",
+      "requisito": "REQ-SEG-02",
+      "titulo": "Protección de contraseñas en almacenamiento",
+      "tipo": "Seguridad / inspección de código",
+      "descripcion": "Inspección de AuthService: las contraseñas no deben almacenarse en claro.",
+      "esperado": "Las contraseñas se guardan como hash (p. ej. BCrypt) y nunca en texto plano.",
+      "criterio": "No existe asignación de la contraseña en claro; se usa un PasswordEncoder.",
+      "criticidad_si_falla": "GRAVE",
+      "datos_entrada": "Archivo AuthService.java (inspección estática)",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "No se almacena request.getPassword() en claro",
+          "ok": true,
+          "detalle": "no encontrado"
+        },
+        {
+          "paso": "Se utiliza un PasswordEncoder (hash)",
+          "ok": true,
+          "detalle": "PasswordEncoder presente"
+        }
+      ]
+    },
+    {
+      "id": "CP-11",
+      "requisito": "REQ-SEG-03",
+      "titulo": "Errores sin exposición de detalles internos",
+      "tipo": "Seguridad / manejo de errores",
+      "descripcion": "Solicitud con tipo de dato incorrecto en la ruta (id no numérico).",
+      "esperado": "Respuesta de error genérica, sin excepciones ni mensajes del framework.",
+      "criterio": "El cuerpo no contiene texto técnico (p. ej. 'Failed to convert', 'For input string', 'java.', 'org.springframework').",
+      "criticidad_si_falla": "MODERADO",
+      "datos_entrada": "GET /api/orders/abc (id no numérico)",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "Verificación de ausencia de detalle técnico en el cuerpo de error (HTTP 0)",
+          "ok": true,
+          "detalle": "No accesible: [Errno 61] Connection refused"
+        }
+      ]
+    },
+    {
+      "id": "CP-12",
+      "requisito": "REQ-SEG-04",
+      "titulo": "Restricción de orígenes CORS",
+      "tipo": "Seguridad / configuración",
+      "descripcion": "Preflight desde un origen no autorizado y desde uno autorizado.",
+      "esperado": "Origen no autorizado sin Access-Control-Allow-Origin; origen localhost:5173 autorizado.",
+      "criterio": "Solo los orígenes definidos reciben la cabecera de permiso.",
+      "criticidad_si_falla": "MODERADO",
+      "datos_entrada": "OPTIONS /api/products con Origin http://evil.example y http://localhost:5173",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "Origen http://evil.example rechazado (HTTP 403)",
+          "ok": true,
+          "detalle": "ACAO=None"
+        },
+        {
+          "paso": "Origen http://localhost:5173 permitido (HTTP 200)",
+          "ok": true,
+          "detalle": "ACAO=http://localhost:5173"
+        }
+      ]
+    },
+    {
+      "id": "CP-13",
+      "requisito": "REQ-SEG-05",
+      "titulo": "Secreto de firma JWT fuera del código fuente",
+      "tipo": "Seguridad / configuración",
+      "descripcion": "Inspección de application.yml del BFF.",
+      "esperado": "jwt.secret se resuelve desde una variable de entorno (sin valor literal).",
+      "criterio": "El valor del secreto no aparece literal en el repositorio.",
+      "criticidad_si_falla": "GRAVE",
+      "datos_entrada": "bff-gateway/src/main/resources/application.yml (inspección estática)",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "jwt.secret usa placeholder ${...}",
+          "ok": true,
+          "detalle": "placeholder"
+        }
+      ]
+    },
+    {
+      "id": "CP-14",
+      "requisito": "REQ-CAL-01",
+      "titulo": "Cobertura de líneas JaCoCo >= 60 %",
+      "tipo": "No funcional / mantenibilidad",
+      "descripcion": "Lectura de jacoco.csv tras mvn verify en cada servicio.",
+      "esperado": "Cobertura de líneas >= 60 % por servicio.",
+      "criterio": "Cada módulo supera el umbral; el gate de JaCoCo está activo.",
+      "criticidad_si_falla": "MODERADO",
+      "datos_entrada": "target/site/jacoco/jacoco.csv de cada servicio tras mvn verify",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "inventory-service: cobertura de líneas 95.2 %",
+          "ok": true,
+          "detalle": "100/105"
+        },
+        {
+          "paso": "order-service: cobertura de líneas 88.7 %",
+          "ok": true,
+          "detalle": "110/124"
+        },
+        {
+          "paso": "shipping-service: cobertura de líneas 86.3 %",
+          "ok": true,
+          "detalle": "88/102"
+        },
+        {
+          "paso": "bff-gateway: cobertura de líneas 74.3 %",
+          "ok": true,
+          "detalle": "130/175"
+        }
+      ]
+    },
+    {
+      "id": "CP-15",
+      "requisito": "REQ-CAL-02",
+      "titulo": "Sin hallazgos de prioridad 1 en análisis estático (SpotBugs + FindSecBugs)",
+      "tipo": "Análisis estático",
+      "descripcion": "Conteo de hallazgos de prioridad 1 en cada módulo backend.",
+      "esperado": "0 hallazgos de prioridad 1.",
+      "criterio": "Ningún hallazgo de prioridad 1 sin tratamiento documentado.",
+      "criticidad_si_falla": "MODERADO",
+      "datos_entrada": "target/spotbugsXml.xml de cada servicio tras análisis SpotBugs (perfil security)",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "inventory-service: hallazgos prioridad 1 = 0 []",
+          "ok": true,
+          "detalle": "total=12"
+        },
+        {
+          "paso": "order-service: hallazgos prioridad 1 = 0 []",
+          "ok": true,
+          "detalle": "total=24"
+        },
+        {
+          "paso": "shipping-service: hallazgos prioridad 1 = 0 []",
+          "ok": true,
+          "detalle": "total=10"
+        },
+        {
+          "paso": "bff-gateway: hallazgos prioridad 1 = 0 []",
+          "ok": true,
+          "detalle": "total=27"
+        }
+      ]
+    },
+    {
+      "id": "CP-16",
+      "requisito": "REQ-SEG-06",
+      "titulo": "Dependencias del frontend sin vulnerabilidades críticas o altas",
+      "tipo": "Seguridad / SCA",
+      "descripcion": "npm audit sobre el frontend.",
+      "esperado": "0 vulnerabilidades críticas o altas.",
+      "criterio": "Ninguna vulnerabilidad crítica o alta en dependencias de producción ni de desarrollo.",
+      "criticidad_si_falla": "GRAVE",
+      "datos_entrada": "npm audit --json sobre frontend/package-lock.json",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "FALLA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "Críticas=3, altas=6",
+          "ok": false,
+          "detalle": "{'info': 0, 'low': 0, 'moderate': 6, 'high': 6, 'critical': 3, 'total': 15}"
+        }
+      ]
+    },
+    {
+      "id": "CP-17",
+      "requisito": "REQ-DEP-01",
+      "titulo": "Despliegue reproducible en contenedores Docker",
+      "tipo": "Despliegue / operación",
+      "descripcion": "Presencia de Dockerfile por servicio y validación de docker-compose.yml.",
+      "esperado": "Dockerfile en cada servicio y docker-compose.yml válido.",
+      "criterio": "docker compose config sin errores.",
+      "criticidad_si_falla": "MODERADO",
+      "datos_entrada": "Dockerfile por servicio y docker-compose.yml (docker compose config)",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "inventory-service/Dockerfile presente",
+          "ok": true,
+          "detalle": ""
+        },
+        {
+          "paso": "order-service/Dockerfile presente",
+          "ok": true,
+          "detalle": ""
+        },
+        {
+          "paso": "shipping-service/Dockerfile presente",
+          "ok": true,
+          "detalle": ""
+        },
+        {
+          "paso": "bff-gateway/Dockerfile presente",
+          "ok": true,
+          "detalle": ""
+        },
+        {
+          "paso": "docker compose config válido",
+          "ok": true,
+          "detalle": "ok"
+        }
+      ]
+    },
+    {
+      "id": "CP-18",
+      "requisito": "REQ-SEG-07",
+      "titulo": "Aislamiento de los microservicios de negocio",
+      "tipo": "Seguridad / control de acceso",
+      "descripcion": "Acceso directo, sin token, a los puertos de los microservicios (8081, 8082, 8083).",
+      "esperado": "Ninguna petición sin token devuelve datos: el acceso debe ser rechazado o no alcanzable desde fuera de la red interna.",
+      "criterio": "Respuesta distinta de 200 o puerto no accesible desde el host.",
+      "criticidad_si_falla": "CRITICO",
+      "datos_entrada": "GET sin token a http://localhost:8081/api/products, :8082/api/orders/customer/1 y :8083/api/shipments",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "Sin token, los microservicios responden 200 cuando se accede directamente; el control de acceso solo existe en el BFF.",
+      "pasos": [
+        {
+          "paso": "Acceso directo sin token a inventario [GET http://localhost:8081/api/products] -> HTTP 0",
+          "ok": true,
+          "detalle": "No accesible: [Errno 61] Connection refused"
+        },
+        {
+          "paso": "Acceso directo sin token a pedidos (datos de clientes) [GET http://localhost:8082/api/orders/customer/1] -> HTTP 0",
+          "ok": true,
+          "detalle": "No accesible: [Errno 61] Connection refused"
+        },
+        {
+          "paso": "Acceso directo sin token a envíos [GET http://localhost:8083/api/shipments] -> HTTP 0",
+          "ok": true,
+          "detalle": "No accesible: [Errno 61] Connection refused"
+        }
+      ]
+    },
+    {
+      "id": "CP-19",
+      "requisito": "REQ-FUNC-04",
+      "titulo": "Alta de producto con persistencia y asignación de ID",
+      "tipo": "Funcional / caja negra",
+      "descripcion": "Alta de un producto nuevo a través del BFF con token válido, sobre la base con datos semilla.",
+      "esperado": "HTTP 201 con id asignado; el producto aparece en el catálogo.",
+      "criterio": "Código 201, id no nulo y producto recuperable por GET.",
+      "criticidad_si_falla": "GRAVE",
+      "datos_entrada": "name 'Producto CP19 <marca temporal>', brand 'Prueba', price 10.5, stockQuantity 5, fragrance 'Test'; token del CP-01",
+      "responsable": "Equipo SmartLogix (ejecución automatizada con docs/pruebas/ejecutar_casos.py)",
+      "fecha": "2026-10-14",
+      "resultado": "PASA",
+      "observado": "",
+      "pasos": [
+        {
+          "paso": "POST /api/products vía BFF -> HTTP 201",
+          "ok": true,
+          "detalle": "{\"id\":101,\"name\":\"Producto CP19 1792015869\",\"brand\":\"Prueba\",\"description\":\"alta de prueba\",\"price\":10.5,\"stockQuantity\":5,\"fragrance\":\"Test\"}"
+        },
+        {
+          "paso": "El producto recibe un id asignado",
+          "ok": true,
+          "detalle": "id=101"
+        },
+        {
+          "paso": "El producto se recupera por id (HTTP 200)",
+          "ok": true,
+          "detalle": ""
+        }
+      ]
+    }
+  ]
+}

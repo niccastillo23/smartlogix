@@ -1,0 +1,181 @@
+
+ RUN  v1.6.1 /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend
+      Coverage enabled with v8
+
+ ✓ src/__tests__/shippingService.test.js  (4 tests) 7ms
+ ✓ src/__tests__/productService.test.js  (5 tests) 7ms
+ ✓ src/__tests__/orderService.test.js  (4 tests) 7ms
+ ✓ src/__tests__/authService.test.js  (4 tests) 8ms
+stderr | src/__tests__/ShipmentTracking.test.jsx > ShipmentTracking Component > should render without crashing when no orderId
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/__tests__/ProductCatalog.test.jsx > ProductCatalog Component > should render the catalog title
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/__tests__/OrderStatus.test.jsx > OrderStatus Component > should render the title
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+Warning: An update to OrderStatus inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at OrderStatus (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/components/OrderStatus.jsx:26:53)
+    at AuthProvider (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/context/AuthContext.jsx:8:25)
+    at Router (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router/dist/umd/react-router.development.js:1203:17)
+    at MemoryRouter (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router/dist/umd/react-router.development.js:1097:7)
+Warning: An update to OrderStatus inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at OrderStatus (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/components/OrderStatus.jsx:26:53)
+    at AuthProvider (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/context/AuthContext.jsx:8:25)
+    at Router (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router/dist/umd/react-router.development.js:1203:17)
+    at MemoryRouter (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router/dist/umd/react-router.development.js:1097:7)
+
+stderr | src/__tests__/ProductCard.test.jsx > ProductCard Component > should render product name
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/__tests__/ShipmentTracking.test.jsx  (4 tests) 80ms
+ ✓ src/__tests__/ProductCatalog.test.jsx  (3 tests) 121ms
+ ✓ src/__tests__/ProductCard.test.jsx  (7 tests) 106ms
+ ✓ src/__tests__/OrderStatus.test.jsx  (5 tests) 178ms
+ ✓ src/__tests__/OrderForm.test.jsx  (5 tests) 589ms
+stderr | src/__tests__/ProtectedRoute.test.jsx > ProtectedRoute Component > should redirect to login when not authenticated
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/__tests__/Cart.test.jsx > Cart Component > should render cart title
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/__tests__/ProtectedRoute.test.jsx  (1 test) 35ms
+ ✓ src/__tests__/Cart.test.jsx  (3 tests) 66ms
+stderr | src/__tests__/Login.test.jsx > Login Component > should render login form with username and password fields
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+stderr | src/__tests__/Login.test.jsx > Login Component > should show register form when toggle is clicked
+Warning: An update to Login inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at Login (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/components/Login.jsx:14:57)
+    at AuthProvider (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/context/AuthContext.jsx:8:25)
+    at Router (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router/dist/umd/react-router.development.js:1203:17)
+    at BrowserRouter (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router-dom/dist/umd/react-router-dom.development.js:688:7)
+Warning: An update to Login inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at Login (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/components/Login.jsx:14:57)
+    at AuthProvider (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/context/AuthContext.jsx:8:25)
+    at Router (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router/dist/umd/react-router.development.js:1203:17)
+    at BrowserRouter (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router-dom/dist/umd/react-router-dom.development.js:688:7)
+Warning: An update to Login inside a test was not wrapped in act(...).
+
+When testing, code that causes React state updates should be wrapped into act(...):
+
+act(() => {
+  /* fire events that update state */
+});
+/* assert on the output */
+
+This ensures that you're testing the behavior the user would see in the browser. Learn more at https://reactjs.org/link/wrap-tests-with-act
+    at Login (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/components/Login.jsx:14:57)
+    at AuthProvider (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/context/AuthContext.jsx:8:25)
+    at Router (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router/dist/umd/react-router.development.js:1203:17)
+    at BrowserRouter (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router-dom/dist/umd/react-router-dom.development.js:688:7)
+
+ ✓ src/__tests__/Login.test.jsx  (5 tests) 170ms
+stderr | src/__tests__/PerfumeShowcase.test.jsx > PerfumeShowcase Component > should render without crashing
+Warning: React does not recognize the `layoutId` prop on a DOM element. If you intentionally want it to appear in the DOM as a custom attribute, spell it as lowercase `layoutid` instead. If you accidentally passed it from a parent component, remove it from the DOM element.
+    at div
+    at div (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/__tests__/setup.jsx:4:13)
+    at button
+    at button (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/__tests__/setup.jsx:76:16)
+    at div
+    at div (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/__tests__/setup.jsx:4:13)
+    at div
+    at Switcher (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/components/ui/perfume-showcase.jsx:455:21)
+    at div
+    at PerfumeShowcase (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/components/ui/perfume-showcase.jsx:520:61)
+    at AuthProvider (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/src/context/AuthContext.jsx:8:25)
+    at Router (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router/dist/umd/react-router.development.js:1203:17)
+    at MemoryRouter (/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend/node_modules/react-router/dist/umd/react-router.development.js:1097:7)
+⚠️ React Router Future Flag Warning: React Router will begin wrapping state updates in `React.startTransition` in v7. You can use the `v7_startTransition` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_starttransition.
+⚠️ React Router Future Flag Warning: Relative route resolution within Splat routes is changing in v7. You can use the `v7_relativeSplatPath` future flag to opt-in early. For more information, see https://reactrouter.com/v6/upgrading/future#v7_relativesplatpath.
+
+ ✓ src/__tests__/PerfumeShowcase.test.jsx  (5 tests) 129ms
+
+ Test Files  13 passed (13)
+      Tests  55 passed (55)
+   Start at  18:40:51
+   Duration  2.15s (transform 431ms, setup 1.31s, collect 2.03s, tests 1.50s, environment 6.07s, prepare 1.44s)
+
+ % Coverage report from v8
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   68.52 |    69.07 |   62.66 |   68.52 |                   
+ src               |       0 |        0 |       0 |       0 |                   
+  App.jsx          |       0 |        0 |       0 |       0 | 1-37              
+ src/components    |   56.47 |    74.33 |      50 |   56.47 |                   
+  Cart.jsx         |   36.47 |       20 |      20 |   36.47 | ...97,109-147,152 
+  CartDrawer.jsx   |       0 |        0 |       0 |       0 | 1-140             
+  Header.jsx       |       0 |        0 |       0 |       0 | 1-126             
+  Hero.jsx         |       0 |        0 |       0 |       0 | 1-47              
+  Layout.jsx       |       0 |        0 |       0 |       0 | 1-24              
+  Login.jsx        |   76.47 |       80 |      40 |   76.47 | 17-32,72-75,78-81 
+  OrderForm.jsx    |     100 |    83.33 |     100 |     100 | 24                
+  OrderStatus.jsx  |   96.96 |    85.71 |     100 |   96.96 | 32,73-76          
+  ProductCard.jsx  |   84.73 |       65 |      20 |   84.73 | ...,83-85,112,119 
+  ...ctCatalog.jsx |   88.42 |    73.33 |   66.66 |   88.42 | ...42,67-70,74-76 
+  ...ctedRoute.jsx |   76.92 |    66.66 |     100 |   76.92 | 9-11              
+  ...tTracking.jsx |     100 |     90.9 |     100 |     100 | 23,51             
+ src/components/ui |   99.24 |    53.44 |   66.66 |   99.24 |                   
+  ...ss-button.jsx |   99.06 |    51.61 |   63.63 |   99.06 | 171,210           
+  ...-showcase.jsx |   99.36 |    55.55 |      70 |   99.36 | 82,103            
+ src/context       |   55.94 |       80 |      75 |   55.94 |                   
+  AuthContext.jsx  |   60.37 |       75 |     100 |   60.37 | ...28-33,37,41-43 
+  CartContext.jsx  |   74.41 |      100 |   66.66 |   74.41 | 10-13,16-20,24,28 
+  ...erContext.jsx |     100 |      100 |     100 |     100 |                   
+  ThemeContext.jsx |       0 |        0 |       0 |       0 | 1-31              
+ src/lib           |     100 |      100 |     100 |     100 |                   
+  utils.js         |     100 |      100 |     100 |     100 |                   
+ src/services      |   82.53 |      100 |     100 |   82.53 |                   
+  api.js           |   59.25 |      100 |     100 |   59.25 | 8-12,18-23        
+  authService.js   |     100 |      100 |     100 |     100 |                   
+  orderService.js  |     100 |      100 |     100 |     100 |                   
+  ...uctService.js |     100 |      100 |     100 |     100 |                   
+  ...ingService.js |     100 |      100 |     100 |     100 |                   
+ src/utils         |   88.88 |    66.66 |      50 |   88.88 |                   
+  formatPrice.js   |     100 |       50 |     100 |     100 | 3                 
+  productImages.js |    87.5 |      100 |   33.33 |    87.5 | 28-30,33-34       
+-------------------|---------|----------|---------|---------|-------------------

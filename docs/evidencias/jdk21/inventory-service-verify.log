@@ -1,0 +1,131 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< com.smartlogix:inventory-service >------------------
+[INFO] Building inventory-service 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ inventory-service ---
+[INFO] Deleting /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target
+[INFO] 
+[INFO] --- jacoco:0.8.15:prepare-agent (default) @ inventory-service ---
+[INFO] argLine set to -javaagent:/Users/nico/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ inventory-service ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ inventory-service ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 9 source files with javac [debug release 21] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ inventory-service ---
+[INFO] skip non existing resourceDirectory /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ inventory-service ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 3 source files with javac [debug release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ inventory-service ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.smartlogix.inventory.ProductRepositoryTest
+18:30:33.279 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.smartlogix.inventory.ProductRepositoryTest]: ProductRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:30:33.338 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.smartlogix.inventory.InventoryServiceApplication for test class com.smartlogix.inventory.ProductRepositoryTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-10-14T18:30:33.539-03:00  INFO 28837 --- [inventory-service] [           main] c.s.inventory.ProductRepositoryTest      : Starting ProductRepositoryTest using Java 21.0.12.1 with PID 28837 (started by nico in /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service)
+2026-10-14T18:30:33.540-03:00  INFO 28837 --- [inventory-service] [           main] c.s.inventory.ProductRepositoryTest      : No active profile set, falling back to 1 default profile: "default"
+2026-10-14T18:30:33.694-03:00  INFO 28837 --- [inventory-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-14T18:30:33.716-03:00  INFO 28837 --- [inventory-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 18 ms. Found 1 JPA repository interface.
+2026-10-14T18:30:33.734-03:00  INFO 28837 --- [inventory-service] [           main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2026-10-14T18:30:33.787-03:00  INFO 28837 --- [inventory-service] [           main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:a25f7112-107f-4d1e-83fe-1a3dbe0455ca;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2026-10-14T18:30:33.966-03:00  INFO 28837 --- [inventory-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-14T18:30:33.999-03:00  INFO 28837 --- [inventory-service] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-10-14T18:30:34.015-03:00  INFO 28837 --- [inventory-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-14T18:30:34.118-03:00  INFO 28837 --- [inventory-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-14T18:30:34.141-03:00  WARN 28837 --- [inventory-service] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-14T18:30:34.524-03:00  INFO 28837 --- [inventory-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create table product (id bigint generated by default as identity, brand varchar(100) not null, created_at timestamp(6), description varchar(500), fragrance varchar(50), name varchar(150) not null, price numeric(10,2) not null, stock_quantity integer not null, updated_at timestamp(6), primary key (id))
+2026-10-14T18:30:34.552-03:00  INFO 28837 --- [inventory-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-14T18:30:34.678-03:00  INFO 28837 --- [inventory-service] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-14T18:30:34.853-03:00  INFO 28837 --- [inventory-service] [           main] c.s.inventory.ProductRepositoryTest      : Started ProductRepositoryTest in 1.483 seconds (process running for 1.978)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/Users/nico/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.13/byte-buddy-agent-1.14.13.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0 where p1_0.stock_quantity>0
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0 where upper(p1_0.name) like upper(?) escape '\'
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0 where p1_0.price between ? and ?
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0 where p1_0.fragrance=?
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0 where p1_0.brand=?
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.020 s -- in com.smartlogix.inventory.ProductRepositoryTest
+[INFO] Running com.smartlogix.inventory.ProductServiceTest
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.183 s -- in com.smartlogix.inventory.ProductServiceTest
+[INFO] Running com.smartlogix.inventory.ProductControllerTest
+2026-10-14T18:30:35.408-03:00  INFO 28837 --- [inventory-service] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smartlogix.inventory.ProductControllerTest]: ProductControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T18:30:35.418-03:00  INFO 28837 --- [inventory-service] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smartlogix.inventory.InventoryServiceApplication for test class com.smartlogix.inventory.ProductControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-10-14T18:30:35.447-03:00  INFO 28837 --- [inventory-service] [           main] c.s.inventory.ProductControllerTest      : Starting ProductControllerTest using Java 21.0.12.1 with PID 28837 (started by nico in /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service)
+2026-10-14T18:30:35.447-03:00  INFO 28837 --- [inventory-service] [           main] c.s.inventory.ProductControllerTest      : No active profile set, falling back to 1 default profile: "default"
+2026-10-14T18:30:36.110-03:00  INFO 28837 --- [inventory-service] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T18:30:36.111-03:00  INFO 28837 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T18:30:36.112-03:00  INFO 28837 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-10-14T18:30:36.126-03:00  INFO 28837 --- [inventory-service] [           main] c.s.inventory.ProductControllerTest      : Started ProductControllerTest in 0.701 seconds (process running for 3.25)
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.055 s -- in com.smartlogix.inventory.ProductControllerTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 31, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.15:report (report) @ inventory-service ---
+[INFO] Loading execution data file /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/jacoco.exec
+[INFO] Analyzed bundle 'inventory-service' with 6 classes
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ inventory-service ---
+[INFO] Building jar: /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/inventory-service-1.0.0.jar
+[INFO] 
+[INFO] --- spring-boot:3.2.5:repackage (repackage) @ inventory-service ---
+[INFO] Replacing main artifact /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/inventory-service-1.0.0.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/inventory-service-1.0.0.jar.original
+[INFO] 
+[INFO] --- jacoco:0.8.15:check (check) @ inventory-service ---
+[INFO] Loading execution data file /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/jacoco.exec
+[INFO] Analyzed bundle 'inventory-service' with 6 classes
+[INFO] All coverage checks have been met.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  5.120 s
+[INFO] Finished at: 2026-10-14T18:30:36-03:00
+[INFO] ------------------------------------------------------------------------

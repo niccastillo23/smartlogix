@@ -1,0 +1,39 @@
+npm warn ERESOLVE overriding peer dependency
+npm error code ERESOLVE
+npm error ERESOLVE could not resolve
+npm error
+npm error While resolving: vitest@5.0.4
+npm error Found: vite@5.4.21
+npm error node_modules/vite
+npm error   peerOptional vite@"^6.0.0 || ^7.0.0 || ^8.0.0" from @vitest/mocker@5.0.4
+npm error   node_modules/vitest/node_modules/@vitest/mocker
+npm error     @vitest/mocker@"5.0.4" from vitest@5.0.4
+npm error     node_modules/vitest
+npm error       dev vitest@"^5" from the root project
+npm error       1 more (@vitest/coverage-v8)
+npm error
+npm error Could not resolve dependency:
+npm error peer vite@"^6.4.0 || ^7.0.0 || ^8.0.0" from vitest@5.0.4
+npm error node_modules/vitest
+npm error   dev vitest@"^5" from the root project
+npm error   peer vitest@"5.0.4" from @vitest/coverage-v8@5.0.4
+npm error   node_modules/@vitest/coverage-v8
+npm error     dev @vitest/coverage-v8@"^5" from the root project
+npm error     1 more (vitest)
+npm error
+npm error Conflicting peer dependency: vite@8.3.4
+npm error node_modules/vite
+npm error   peer vite@"^6.4.0 || ^7.0.0 || ^8.0.0" from vitest@5.0.4
+npm error   node_modules/vitest
+npm error     dev vitest@"^5" from the root project
+npm error     peer vitest@"5.0.4" from @vitest/coverage-v8@5.0.4
+npm error     node_modules/@vitest/coverage-v8
+npm error       dev @vitest/coverage-v8@"^5" from the root project
+npm error       1 more (vitest)
+npm error
+npm error Fix the upstream dependency conflict, or retry this command with --force or --legacy-peer-deps to accept an incorrect (and potentially broken) dependency resolution.
+npm error
+npm error
+npm error For a full report see:
+npm error /Users/nico/.npm/_logs/2026-10-14T21_39_07_258Z-eresolve-report.txt
+npm error A complete log of this run can be found in: /Users/nico/.npm/_logs/2026-10-14T21_39_07_258Z-debug-0.log

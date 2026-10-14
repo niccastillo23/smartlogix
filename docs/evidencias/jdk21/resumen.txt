@@ -1,0 +1,16 @@
+inventory-service verify exit=0
+[INFO] Tests run: 31, Failures: 0, Errors: 0, Skipped: 0
+inventory-service spotbugs exit=0
+inventory-service cobertura lineas: 77/92 = 83.7%
+order-service verify exit=0
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
+order-service spotbugs exit=0
+order-service cobertura lineas: 93/111 = 83.8%
+shipping-service verify exit=0
+[INFO] Tests run: 19, Failures: 0, Errors: 0, Skipped: 0
+shipping-service spotbugs exit=0
+shipping-service cobertura lineas: 71/89 = 79.8%
+bff-gateway verify exit=0
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0
+bff-gateway spotbugs exit=0
+bff-gateway cobertura lineas: 86/121 = 71.1%

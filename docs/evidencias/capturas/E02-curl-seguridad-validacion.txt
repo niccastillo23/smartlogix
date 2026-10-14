@@ -1,0 +1,14 @@
+$ curl -i http://localhost:8080/api/products        (sin token)
+HTTP/1.1 401 
+{"status":401,"error":"Unauthorized","message":"Token JWT requerido"}
+$ curl -i http://localhost:8080/api/products -H 'Authorization: Bearer <token>'
+HTTP 200
+
+$ curl -i -X POST http://localhost:8080/api/orders  (orderType INVALIDO, con token)
+HTTP/1.1 400 
+{"error":"Bad Request","message":"Tipo de orden no soportado: INVALIDO","timestamp":"2026-10-14T22:15:05.403790428","status":400}
+$ curl -i -X POST http://localhost:8080/api/products  (nombre vacio, con token)
+HTTP/1.1 400 
+{"timestamp":"2026-10-14T22:15:05.417633678","message":"Datos de entrada inválidos: name: El nombre es obligatorio","error":"Bad Request","status":400}
+$ curl -i http://localhost:8081/api/products   (acceso directo al microservicio desde el host)
+HTTP 000 (000 = puerto no publicado)

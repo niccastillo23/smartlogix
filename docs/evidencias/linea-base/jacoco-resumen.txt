@@ -1,0 +1,4 @@
+inventory-service: no jacoco.csv
+order-service: no jacoco.csv
+shipping-service: no jacoco.csv
+bff-gateway: no jacoco.csv

@@ -1,0 +1,6 @@
+SERVICE             STATE     PORTS
+bff-gateway         running   0.0.0.0:8080->8080/tcp, [::]:8080->8080/tcp
+frontend            running   0.0.0.0:5173->80/tcp, [::]:5173->80/tcp
+inventory-service   running   0.0.0.0:8081->8081/tcp, [::]:8081->8081/tcp
+order-service       running   0.0.0.0:8082->8082/tcp, [::]:8082->8082/tcp
+shipping-service    running   0.0.0.0:8083->8083/tcp, [::]:8083->8083/tcp

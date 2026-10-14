@@ -1,0 +1,23 @@
+$ python3 docs/pruebas/ejecutar_casos.py mitigado-docker   (stack Docker)
+
+CASO   REQUISITO     RESULTADO  CRITICIDAD  TITULO
+--------------------------------------------------------------------------------------------------------------
+CP-01  REQ-SEG-01    PASA       CRITICO     Autenticación JWT y acceso a endpoints protegidos
+CP-02  REQ-SEG-01    PASA       MODERADO    Rechazo de credenciales inválidas y registro duplicado
+CP-03  REQ-FUNC-02   PASA       GRAVE       Descuento según tipo de orden (Factory Method)
+CP-04  REQ-FUNC-02   PASA       MODERADO    Rechazo de tipo de orden no soportado
+CP-05  REQ-RES-01    PASA       GRAVE       Fallback del Circuit Breaker ante fallo del carrier
+CP-06  REQ-FUNC-03   PASA       MODERADO    Búsqueda y filtrado de productos
+CP-07  REQ-VAL-01    PASA       GRAVE       Validación de entradas en servicios de negocio
+CP-08  REQ-VAL-01    PASA       MODERADO    Validación de entradas a través del gateway (BFF)
+CP-09  REQ-NFR-01    PASA       MODERADO    Tiempos de respuesta (lectura y escritura)
+CP-10  REQ-SEG-02    PASA       GRAVE       Protección de contraseñas en almacenamiento
+CP-11  REQ-SEG-03    PASA       MODERADO    Errores sin exposición de detalles internos
+CP-12  REQ-SEG-04    PASA       MODERADO    Restricción de orígenes CORS
+CP-13  REQ-SEG-05    PASA       GRAVE       Secreto de firma JWT fuera del código fuente
+CP-14  REQ-CAL-01    PASA       MODERADO    Cobertura de líneas JaCoCo >= 60 %
+CP-15  REQ-CAL-02    PASA       MODERADO    Sin hallazgos de prioridad 1 en análisis estático (SpotBugs + FindSecB
+CP-16  REQ-SEG-06    FALLA      GRAVE       Dependencias del frontend sin vulnerabilidades críticas o altas
+CP-17  REQ-DEP-01    PASA       MODERADO    Despliegue reproducible en contenedores Docker
+--------------------------------------------------------------------------------------------------------------
+Totales: {'PASA': 16, 'FALLA': 1}

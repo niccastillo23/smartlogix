@@ -1,0 +1,54 @@
+
+ RUN  v5.0.4 /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/frontend
+      Coverage enabled with v8
+
+
+ Test Files  13 passed (13)
+      Tests  55 passed (55)
+   Start at  18:39:36
+   Duration  2.20s (environment 50%, import 14%, tests 12%, setup 12%, transform 9%, worker 3%)
+
+    Isolate  13 workers spawned · ~603ms startup each (spawn + environment, per file)
+             at least ~268ms faster with isolate: false — reuses workers across files instead of one per file
+
+[34m % [39m[2mCoverage report from [22m[33mv8[39m
+-------------------|---------|----------|---------|---------|-------------------
+File               | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s 
+-------------------|---------|----------|---------|---------|-------------------
+All files          |   51.77 |    52.77 |   46.66 |   54.56 |                   
+ src               |       0 |      100 |       0 |       0 |                   
+  App.jsx          |       0 |      100 |       0 |       0 | 15                
+ src/components    |   49.38 |     59.6 |    42.1 |   50.23 |                   
+  Cart.jsx         |      18 |    41.17 |    6.25 |   20.93 | ...,54-79,112-152 
+  CartDrawer.jsx   |       0 |        0 |       0 |       0 | 10-116            
+  Header.jsx       |       0 |        0 |       0 |       0 | 11-52             
+  Hero.jsx         |       0 |      100 |       0 |       0 | 4                 
+  Layout.jsx       |       0 |        0 |       0 |       0 | 6-9               
+  Login.jsx        |      48 |    57.14 |      40 |   43.47 | 17-30,55-64       
+  OrderForm.jsx    |     100 |       50 |     100 |     100 | 24                
+  OrderStatus.jsx  |   96.15 |    88.46 |     100 |   95.65 | 32                
+  ProductCard.jsx  |   68.75 |       75 |   33.33 |   73.33 | ...44-45,49,53-55 
+  ...ctCatalog.jsx |   85.71 |    78.57 |   83.33 |   85.71 | 33,40-41          
+  ...ctedRoute.jsx |   83.33 |       75 |     100 |      75 | 10                
+  ...tTracking.jsx |   95.23 |    88.88 |     100 |     100 | 23,51             
+ src/components/ui |   81.35 |    59.09 |   70.37 |   85.45 |                   
+  ...ss-button.jsx |      75 |    58.33 |   66.66 |   81.81 | 200,202-204       
+  ...-showcase.jsx |   85.71 |       60 |   73.33 |   87.87 | 103,137,231,258   
+ src/context       |   36.04 |    13.63 |   26.66 |   41.66 |                   
+  AuthContext.jsx  |      40 |    16.66 |      50 |      40 | ...28-33,37,41-43 
+  CartContext.jsx  |   41.93 |       20 |   21.42 |   54.54 | 10-12,16-20,24,28 
+  ...erContext.jsx |      75 |      100 |      50 |     100 |                   
+  ThemeContext.jsx |       0 |        0 |       0 |       0 | 3-31              
+ src/services      |   52.38 |        0 |   72.72 |   52.38 |                   
+  api.js           |   23.07 |        0 |       0 |   23.07 | 8-12,16-23        
+ src/utils         |   66.66 |    16.66 |      50 |   72.72 |                   
+  formatPrice.js   |      75 |       50 |     100 |     100 | 3                 
+  productImages.js |    62.5 |        0 |   33.33 |    62.5 | 28-33             
+-------------------|---------|----------|---------|---------|-------------------
+
+=============================== Coverage summary ===============================
+Statements   : 51.77% ( 219/423 )
+Branches     : 52.77% ( 133/252 )
+Functions    : 46.66% ( 70/150 )
+Lines        : 54.56% ( 203/372 )
+================================================================================

@@ -1,0 +1,10 @@
+$ mvn -B clean verify   (JDK 21, cada servicio)
+
+inventory-service    Tests run: 37   Failures/Errors: 0   BUILD SUCCESS
+order-service        Tests run: 26   Failures/Errors: 0   BUILD SUCCESS
+shipping-service     Tests run: 25   Failures/Errors: 0   BUILD SUCCESS
+bff-gateway          Tests run: 24   Failures/Errors: 0   BUILD SUCCESS
+TOTAL backend        Tests run: 112
+
+$ npx vitest run --coverage   (frontend)
+Test Files  13 passed (13) | Tests  55 passed (55) | All files 68.52 % statements

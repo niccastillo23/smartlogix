@@ -1,0 +1,134 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ---------------------< com.smartlogix:bff-gateway >---------------------
+[INFO] Building bff-gateway 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ bff-gateway ---
+[INFO] Deleting /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway/target
+[INFO] 
+[INFO] --- jacoco:0.8.15:prepare-agent (default) @ bff-gateway ---
+[INFO] argLine set to -javaagent:/Users/nico/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway/target/jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ bff-gateway ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ bff-gateway ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 16 source files with javac [debug release 21] to target/classes
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by lombok.permit.Permit
+WARNING: Please consider reporting this to the maintainers of class lombok.permit.Permit
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway/src/main/java/com/smartlogix/gateway/service/OrderProxyService.java: Some input files use unchecked or unsafe operations.
+[INFO] /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway/src/main/java/com/smartlogix/gateway/service/OrderProxyService.java: Recompile with -Xlint:unchecked for details.
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ bff-gateway ---
+[INFO] skip non existing resourceDirectory /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ bff-gateway ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 4 source files with javac [debug release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ bff-gateway ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.smartlogix.gateway.JwtUtilTest
+18:28:25.824 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.smartlogix.gateway.JwtUtilTest]: JwtUtilTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:28:25.879 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.smartlogix.gateway.BffGatewayApplication for test class com.smartlogix.gateway.JwtUtilTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-10-14T18:28:26.087-03:00  INFO 27836 --- [bff-gateway] [           main] com.smartlogix.gateway.JwtUtilTest       : Starting JwtUtilTest using Java 25.0.2 with PID 27836 (started by nico in /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway)
+2026-10-14T18:28:26.088-03:00  INFO 27836 --- [bff-gateway] [           main] com.smartlogix.gateway.JwtUtilTest       : No active profile set, falling back to 1 default profile: "default"
+2026-10-14T18:28:26.595-03:00  WARN 27836 --- [bff-gateway] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 5a872807-27f6-4f37-bcc4-99ebfe768b80
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-14T18:28:26.703-03:00  INFO 27836 --- [bff-gateway] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@406cc81b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@64ef9b9a, org.springframework.security.web.context.SecurityContextHolderFilter@22025464, org.springframework.security.web.header.HeaderWriterFilter@5c883b3f, org.springframework.web.filter.CorsFilter@264340f0, org.springframework.security.web.authentication.logout.LogoutFilter@eb5471c, com.smartlogix.gateway.filter.JwtAuthFilter@7640a191, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3a034950, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@331eb953, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@504a9352, org.springframework.security.web.session.SessionManagementFilter@12e8ea81, org.springframework.security.web.access.ExceptionTranslationFilter@77732366, org.springframework.security.web.access.intercept.AuthorizationFilter@23c0fcf0]
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (file:/Users/nico/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.20/tomcat-embed-core-10.1.20.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2026-10-14T18:28:26.826-03:00  INFO 27836 --- [bff-gateway] [           main] com.smartlogix.gateway.JwtUtilTest       : Started JwtUtilTest in 0.878 seconds (process running for 1.398)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/Users/nico/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.13/byte-buddy-agent-1.14.13.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by net.bytebuddy.dynamic.loading.ClassInjector$UsingUnsafe$Dispatcher$CreationAction (file:/Users/nico/.m2/repository/net/bytebuddy/byte-buddy/1.14.13/byte-buddy-1.14.13.jar)
+WARNING: Please consider reporting this to the maintainers of class net.bytebuddy.dynamic.loading.ClassInjector$UsingUnsafe$Dispatcher$CreationAction
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.548 s -- in com.smartlogix.gateway.JwtUtilTest
+[INFO] Running com.smartlogix.gateway.AuthControllerTest
+2026-10-14T18:28:27.295-03:00  INFO 27836 --- [bff-gateway] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smartlogix.gateway.AuthControllerTest]: AuthControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T18:28:27.302-03:00  INFO 27836 --- [bff-gateway] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smartlogix.gateway.BffGatewayApplication for test class com.smartlogix.gateway.AuthControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-10-14T18:28:27.314-03:00  INFO 27836 --- [bff-gateway] [           main] c.smartlogix.gateway.AuthControllerTest  : Starting AuthControllerTest using Java 25.0.2 with PID 27836 (started by nico in /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway)
+2026-10-14T18:28:27.314-03:00  INFO 27836 --- [bff-gateway] [           main] c.smartlogix.gateway.AuthControllerTest  : No active profile set, falling back to 1 default profile: "default"
+2026-10-14T18:28:27.493-03:00  WARN 27836 --- [bff-gateway] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 50a3f725-bd85-45c6-8061-c7cedc5f85ee
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-14T18:28:27.505-03:00  INFO 27836 --- [bff-gateway] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@4b0e0dd5, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@608c36a6, org.springframework.security.web.context.SecurityContextHolderFilter@5240654, org.springframework.security.web.header.HeaderWriterFilter@4b0fdbd7, org.springframework.web.filter.CorsFilter@efc5686, org.springframework.security.web.csrf.CsrfFilter@3a5b73cb, org.springframework.security.web.authentication.logout.LogoutFilter@6a651151, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@69438db0, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@8108420, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@4907b755, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@315edc50, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6400e810, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3d74313a, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@72dc7b05, org.springframework.security.web.access.ExceptionTranslationFilter@26b78c2, org.springframework.security.web.access.intercept.AuthorizationFilter@456c528c]
+2026-10-14T18:28:27.520-03:00  INFO 27836 --- [bff-gateway] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T18:28:27.520-03:00  INFO 27836 --- [bff-gateway] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T18:28:27.520-03:00  INFO 27836 --- [bff-gateway] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-10-14T18:28:27.525-03:00  INFO 27836 --- [bff-gateway] [           main] c.smartlogix.gateway.AuthControllerTest  : Started AuthControllerTest in 0.22 seconds (process running for 2.096)
+[INFO] Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.335 s -- in com.smartlogix.gateway.AuthControllerTest
+[INFO] Running com.smartlogix.gateway.AuthServiceTest
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.031 s -- in com.smartlogix.gateway.AuthServiceTest
+[INFO] Running com.smartlogix.gateway.JwtAuthFilterTest
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.003 s -- in com.smartlogix.gateway.JwtAuthFilterTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 16, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.15:report (report) @ bff-gateway ---
+[INFO] Loading execution data file /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway/target/jacoco.exec
+[INFO] Analyzed bundle 'bff-gateway' with 17 classes
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ bff-gateway ---
+[INFO] Building jar: /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway/target/bff-gateway-1.0.0.jar
+[INFO] 
+[INFO] --- spring-boot:3.2.5:repackage (repackage) @ bff-gateway ---
+[INFO] Replacing main artifact /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway/target/bff-gateway-1.0.0.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway/target/bff-gateway-1.0.0.jar.original
+[INFO] 
+[INFO] --- jacoco:0.8.15:check (check) @ bff-gateway ---
+[INFO] Loading execution data file /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/bff-gateway/target/jacoco.exec
+[INFO] Analyzed bundle 'bff-gateway' with 17 classes
+[INFO] All coverage checks have been met.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.697 s
+[INFO] Finished at: 2026-10-14T18:28:27-03:00
+[INFO] ------------------------------------------------------------------------

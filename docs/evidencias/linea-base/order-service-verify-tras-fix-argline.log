@@ -1,0 +1,97 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.smartlogix:order-service >--------------------
+[INFO] Building order-service 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ order-service ---
+[INFO] Deleting /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/order-service/target
+[INFO] 
+[INFO] --- jacoco:0.8.15:prepare-agent (default) @ order-service ---
+[INFO] argLine set to -javaagent:/Users/nico/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/order-service/target/jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ order-service ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 0 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ order-service ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 14 source files with javac [debug release 21] to target/classes
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by lombok.permit.Permit
+WARNING: Please consider reporting this to the maintainers of class lombok.permit.Permit
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ order-service ---
+[INFO] skip non existing resourceDirectory /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/order-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ order-service ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 3 source files with javac [debug release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ order-service ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.smartlogix.order.OrderServiceTest
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/Users/nico/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.13/byte-buddy-agent-1.14.13.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::objectFieldOffset has been called by net.bytebuddy.dynamic.loading.ClassInjector$UsingUnsafe$Dispatcher$CreationAction (file:/Users/nico/.m2/repository/net/bytebuddy/byte-buddy/1.14.13/byte-buddy-1.14.13.jar)
+WARNING: Please consider reporting this to the maintainers of class net.bytebuddy.dynamic.loading.ClassInjector$UsingUnsafe$Dispatcher$CreationAction
+WARNING: sun.misc.Unsafe::objectFieldOffset will be removed in a future release
+[INFO] Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.519 s -- in com.smartlogix.order.OrderServiceTest
+[INFO] Running com.smartlogix.order.OrderFactoryTest
+[INFO] Tests run: 4, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.001 s -- in com.smartlogix.order.OrderFactoryTest
+[INFO] Running com.smartlogix.order.OrderControllerTest
+18:28:18.487 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.smartlogix.order.OrderControllerTest]: OrderControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+18:28:18.542 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.smartlogix.order.OrderServiceApplication for test class com.smartlogix.order.OrderControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-10-14T18:28:18.725-03:00  INFO 27737 --- [order-service] [           main] c.smartlogix.order.OrderControllerTest   : Starting OrderControllerTest using Java 25.0.2 with PID 27737 (started by nico in /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/order-service)
+2026-10-14T18:28:18.725-03:00  INFO 27737 --- [order-service] [           main] c.smartlogix.order.OrderControllerTest   : No active profile set, falling back to 1 default profile: "default"
+2026-10-14T18:28:19.206-03:00  INFO 27737 --- [order-service] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T18:28:19.206-03:00  INFO 27737 --- [order-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T18:28:19.207-03:00  INFO 27737 --- [order-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-14T18:28:19.216-03:00  INFO 27737 --- [order-service] [           main] c.smartlogix.order.OrderControllerTest   : Started OrderControllerTest in 0.65 seconds (process running for 1.622)
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.951 s -- in com.smartlogix.order.OrderControllerTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 20, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.15:report (report) @ order-service ---
+[INFO] Loading execution data file /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/order-service/target/jacoco.exec
+[INFO] Analyzed bundle 'order-service' with 9 classes
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ order-service ---
+[INFO] Building jar: /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/order-service/target/order-service-1.0.0.jar
+[INFO] 
+[INFO] --- spring-boot:3.2.5:repackage (repackage) @ order-service ---
+[INFO] Replacing main artifact /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/order-service/target/order-service-1.0.0.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/order-service/target/order-service-1.0.0.jar.original
+[INFO] 
+[INFO] --- jacoco:0.8.15:check (check) @ order-service ---
+[INFO] Loading execution data file /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/order-service/target/jacoco.exec
+[INFO] Analyzed bundle 'order-service' with 9 classes
+[INFO] All coverage checks have been met.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  3.358 s
+[INFO] Finished at: 2026-10-14T18:28:19-03:00
+[INFO] ------------------------------------------------------------------------

@@ -1,0 +1,8 @@
+inventory-service spotbugs exit=0
+inventory-service cobertura lineas: 80/105 = 76.2%
+order-service spotbugs exit=0
+order-service cobertura lineas: 96/124 = 77.4%
+shipping-service spotbugs exit=0
+shipping-service cobertura lineas: 74/102 = 72.5%
+bff-gateway spotbugs exit=0
+bff-gateway cobertura lineas: 93/155 = 60.0%
