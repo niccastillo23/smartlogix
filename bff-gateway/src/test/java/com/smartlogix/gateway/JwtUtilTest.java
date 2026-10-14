@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @TestPropertySource(properties = {
-        "jwt.secret=SmartLogixSecretKey2024ForJWTTokenGenerationAndValidationMustBe256BitsLong!!",
+        "jwt.secret=test-only-secret-not-for-production-0123456789-0123456789-0123456789",
         "jwt.expiration=86400000"
 })
 class JwtUtilTest {
