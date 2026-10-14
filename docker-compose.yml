@@ -1,0 +1,35 @@
+# Despliegue reproducible de SmartLogix (ISY1102 - Evaluación Parcial 3).
+# Uso: copiar .env.example a .env, definir JWT_SECRET y ejecutar: docker compose up -d --build
+services:
+  inventory-service:
+    build: ./inventory-service
+    # Sin "ports": el servicio solo es accesible dentro de la red de compose (solo el BFF lo invoca).
+
+  order-service:
+    build: ./order-service
+    # Sin "ports": el servicio solo es accesible dentro de la red de compose (solo el BFF lo invoca).
+
+  shipping-service:
+    build: ./shipping-service
+    # Sin "ports": el servicio solo es accesible dentro de la red de compose (solo el BFF lo invoca).
+
+  bff-gateway:
+    build: ./bff-gateway
+    ports:
+      - "8080:8080"
+    environment:
+      JWT_SECRET: ${JWT_SECRET:?Defina JWT_SECRET en el archivo .env}
+      SERVICES_INVENTORY_URL: http://inventory-service:8081
+      SERVICES_ORDER_URL: http://order-service:8082
+      SERVICES_SHIPPING_URL: http://shipping-service:8083
+    depends_on:
+      - inventory-service
+      - order-service
+      - shipping-service
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "5173:80"
+    depends_on:
+      - bff-gateway
