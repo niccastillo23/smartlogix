@@ -2,7 +2,7 @@
 
 Sistema de comercio electrónico de perfumes con arquitectura de microservicios: Spring Boot 3.2 (Java 21), React 18 y Docker.
 
-Proyecto del caso semestral de **ISY1102 - Seguridad y calidad en el desarrollo de software**. Además del código, el repositorio contiene el plan de pruebas, las evidencias de ejecución y el informe de la Evaluación Parcial 3.
+Proyecto del caso semestral de **ISY1102 - Seguridad y calidad en el desarrollo de software**. Además del código, el repositorio contiene el plan de pruebas, las evidencias de ejecución y el informe del Encargo 2.
 
 ## Arquitectura
 
@@ -101,7 +101,7 @@ cd frontend && npm audit
 
 ## Documentación
 
-- `docs/informe/Informe_EP3_ISY1102_SmartLogix.pdf` - informe de seguridad y calidad (Evaluación Parcial 3): criterios, plan de pruebas, casos, ejecución, incidentes y análisis ético y normativo.
+- `docs/informe/Informe_EP3_ISY1102_SmartLogix.pdf` - informe de seguridad y calidad (Encargo 2): criterios, plan de pruebas, casos, ejecución, incidentes y análisis ético y normativo.
 - `docs/evidencias/` - resultados de ejecución (JSON y texto), logs de compilación y capturas.
 - `docs/pruebas/ejecutar_casos.py` - ejecutor reproducible de los casos de prueba.
 - `docs/informe/generar_informe.py` y `publicar_informe.sh` - regeneran el informe a partir de las evidencias (`publicar_informe.sh` requiere Microsoft Word en macOS).

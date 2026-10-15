@@ -1,5 +1,5 @@
 #!/bin/bash
-# Pipeline de publicación del informe EP3:
+# Pipeline de publicación del informe (Encargo 2):
 #  1) regenera el .docx desde las evidencias,
 #  2) actualiza el índice (campo TOC) con Microsoft Word,
 #  3) exporta el PDF definitivo.

@@ -1,4 +1,4 @@
-# Despliegue reproducible de SmartLogix (ISY1102 - Evaluación Parcial 3).
+# Despliegue reproducible de SmartLogix (ISY1102 - Encargo 2).
 # Uso: copiar .env.example a .env, definir JWT_SECRET y ejecutar: docker compose up -d --build
 services:
   inventory-service:

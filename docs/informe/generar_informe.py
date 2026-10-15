@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Genera el informe EP3 (ISY1102) en formato Word a partir de las evidencias del repositorio.
+Genera el informe del Encargo 2 (ISY1102) en formato Word a partir de las evidencias del repositorio.
 Las cifras se leen de los artefactos generados (JaCoCo, SpotBugs, Surefire, npm audit y
 resultados de docs/pruebas/ejecutar_casos.py), no se escriben a mano.
 
@@ -121,13 +121,13 @@ REQUISITOS = [
     ("REQ-CAL-01", "Cobertura de líneas JaCoCo >= 60 % en cada servicio backend.",
      "Ev1 §2.1 (mantenibilidad)", ["CP-14"], "No funcional / mantenibilidad"),
     ("REQ-CAL-02", "Sin hallazgos de prioridad 1 en el análisis estático (SpotBugs + FindSecBugs).",
-     "Pauta EP3, IL 2.3; criterio de aceptación propio", ["CP-15"], "Análisis estático"),
+     "Pauta del Encargo 2, IL 2.3; criterio de aceptación propio", ["CP-15"], "Análisis estático"),
     ("REQ-SEG-07", "Los microservicios de negocio solo son accesibles a través del BFF autenticado.",
      "Ev1 §2.2 (control de acceso); hallazgo de revisión de arquitectura; OWASP A01", ["CP-18"], "Seguridad / control de acceso"),
     ("REQ-FUNC-04", "Alta de producto con persistencia y asignación de identificador.",
      "Ev1 §3.2 (pruebas funcionales de CRUD de productos, prioridad alta)", ["CP-19"], "Funcional"),
     ("REQ-DEP-01", "Despliegue reproducible en contenedores Docker.",
-     "Pauta EP3 (imágenes Docker del software)", ["CP-17"], "Despliegue"),
+     "Pauta del Encargo 2 (imágenes Docker del software)", ["CP-17"], "Despliegue"),
 ]
 
 # ----------------------------------------------------------------- incidentes
@@ -196,6 +196,10 @@ INCIDENTES = [
      "bff-gateway/.../controller/ProductController.java (versión base: solo listado, detalle, alta, actualización y stock)", "MODERADO",
      "La búsqueda solo es accesible si se llama directamente al servicio, lo que el control de acceso ya no permite.",
      "CERRADO", "Endpoints de búsqueda en el BFF con codificación segura de segmentos y parámetros (InventoryProxyServiceTest, 3 pruebas)."),
+    ("INC-18", "UI-03 (captura)", "REQ-SEG-01", "Un inicio de sesión con credenciales incorrectas no muestra el mensaje de error: la página se recarga, el formulario queda vacío y el usuario no sabe por qué falló.",
+     "frontend/src/services/api.js (interceptor): ante HTTP 401 ejecuta window.location.href = '/login', incluso en /api/auth/login", "MODERADO",
+     "Mala retroalimentación en el acceso; el usuario puede repetir intentos sin entender el motivo, y el mensaje controlado del BFF nunca llega a la interfaz.",
+     "ABIERTO", "Excluir /api/auth/** del redireccionamiento global en el interceptor, para que el formulario reciba el error. Verificable con UI-03."),
     ("INC-14", "Observación visual", "REQ-CAL-01", "La pantalla de inicio se presenta como 'PERFUMERÍA', mientras el título HTML es 'SmartLogix'.",
      "Captura E07 (docs/evidencias/capturas)", "LEVE",
      "Inconsistencia de marca; no afecta la funcionalidad.",
@@ -350,6 +354,14 @@ def nueva_seccion(doc, horizontal):
     return sec
 
 
+def sin_partir_filas(tbl):
+    """Evita que una fila (imagen + leyenda) se corte entre páginas."""
+    for fila in tbl.rows:
+        trpr = fila._tr.get_or_add_trPr()
+        cs = OxmlElement("w:cantSplit")
+        trpr.append(cs)
+
+
 def pie_pagina(doc):
     for sec in doc.sections[:1]:
         p = sec.footer.paragraphs[0]
@@ -391,7 +403,7 @@ def construir():
         doc.add_paragraph()
     datos = [
         ("Asignatura: ", "ISY1102 - Seguridad y calidad en el desarrollo de software"),
-        ("Evaluación: ", "Evaluación Parcial Nº3 (encargo)"),
+        ("Evaluación: ", "Encargo 2 (ISY1102)"),
         ("Carrera: ", "[completar]"),
         ("Sección: ", "004V"),
         ("Docente: ", "Manuel Reyes Ferrada"),
@@ -666,6 +678,53 @@ def construir():
             "sin token, 401; con token válido, 200; tipo de orden inválido, 400 con mensaje controlado; producto con nombre vacío, 400 "
             "indicando el campo.")
 
+    titulo(doc, "5.2.2 Evidencia del flujo en el navegador", 3)
+    parrafo(doc, "Las capturas siguientes se generaron automáticamente con Playwright y Chromium sobre el frontend desplegado en "
+            "Docker. Cada una corresponde a un paso del flujo de usuario. El script es docs/informe/generar_evidencia_visual.py.")
+    ui = [("UI-01", "Acceso a /catalog sin sesión: la aplicación redirige a /login (REQ-SEG-01)."),
+          ("UI-02", "Registro de un usuario nuevo con mensaje de confirmación (REQ-SEG-01)."),
+          ("UI-03", "Inicio de sesión con clave incorrecta: el formulario se recarga vacío y no muestra el error (INC-18)."),
+          ("UI-04", "Inicio de sesión correcto y llegada a la página principal (REQ-SEG-01)."),
+          ("UI-05", "Catálogo con los productos obtenidos a través del BFF y con token (REQ-FUNC-03).")]
+    for i in range(0, len(ui), 2):
+        tbl = doc.add_table(rows=2, cols=2)
+        tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
+        for k, (codigo, leyenda) in enumerate(ui[i:i + 2]):
+            cel = tbl.rows[0].cells[k]
+            cel.text = ""
+            pic = cel.paragraphs[0]
+            pic.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            pic.add_run().add_picture(os.path.join(EVID, "capturas", f"{codigo}-" + {
+                "UI-01": "acceso-protegido-redirige-login", "UI-02": "registro-exitoso",
+                "UI-03": "credenciales-incorrectas", "UI-04": "inicio-sesion-pagina-principal",
+                "UI-05": "catalogo-productos"}[codigo] + ".png"), width=Cm(11.5))
+            cap = tbl.rows[1].cells[k]
+            cap.text = ""
+            cp = cap.paragraphs[0]
+            cp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            fuente(cp.add_run(f"Figura {codigo}. {leyenda}"), tam=9, cursiva=True)
+        sin_partir_filas(tbl)
+        doc.add_paragraph().paragraph_format.line_spacing = 1.0
+
+    titulo(doc, "5.2.3 Evidencia por caso de prueba", 3)
+    parrafo(doc, f"Cada uno de los {len(FINAL)} casos tiene una tarjeta con sus datos de entrada, el resultado esperado, el criterio de "
+            "aceptación y cada verificación ejecutada con su resultado observado. Las tarjetas se generan a partir de "
+            "docs/evidencias/mitigado-docker/resultados.json.")
+    casos_ids = list(FINAL.keys())
+    for i in range(0, len(casos_ids), 2):
+        tbl = doc.add_table(rows=1, cols=2)
+        tbl.alignment = WD_TABLE_ALIGNMENT.CENTER
+        for k, cid in enumerate(casos_ids[i:i + 2]):
+            cel = tbl.rows[0].cells[k]
+            cel.text = ""
+            pp = cel.paragraphs[0]
+            pp.alignment = WD_ALIGN_PARAGRAPH.CENTER
+            ruta = os.path.join(EVID, "capturas", f"{cid}-tarjeta.png")
+            if os.path.exists(ruta):
+                pp.add_run().add_picture(ruta, width=Cm(11.8))
+        sin_partir_filas(tbl)
+        doc.add_paragraph().paragraph_format.line_spacing = 1.0
+
     titulo(doc, "5.3 Incidentes identificados y criticidad", 2)
     parrafo(doc, "Escala de criticidad, según la plantilla de la asignatura: CRÍTICO (impide el funcionamiento o compromete "
             "credenciales o datos; requiere remediación inmediata), GRAVE (afecta funcionalidades importantes o la cadena de "
@@ -713,7 +772,8 @@ def construir():
             "Las mitigaciones cerraron los incidentes críticos INC-01 (credenciales en claro) e INC-02 (secreto JWT literal), y "
             "corrigieron el manejo de errores, la validación del gateway, el gate de cobertura, el alta de productos y el despliegue. "
             "El acceso directo a los microservicios (INC-15, crítico) se mitigó a nivel de red, pero no a nivel de aplicación. "
-            "Los incidentes abiertos restantes son INC-09 (GRAVE), INC-12, INC-13 (MODERADO) e INC-14 (LEVE).")
+            "Los incidentes abiertos restantes son INC-09 (GRAVE), INC-12, INC-13 e INC-18 (MODERADO) e INC-14 (LEVE). INC-18 se "
+            "detectó al generar la evidencia visual: el error de login no llega a la interfaz.")
     vinetas(doc, [
         "R1. Rotar el secreto JWT y reescribir el historial de git si el repositorio es público.",
         "R2. Actualizar la cadena de herramientas del frontend (vitest, vite, tailwind) y revalidar la cobertura antes de declarar cerrado INC-09.",

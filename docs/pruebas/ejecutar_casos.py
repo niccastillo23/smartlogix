@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Ejecutor de casos de prueba de SmartLogix (ISY1102 - Evaluación Parcial 3).
+Ejecutor de casos de prueba de SmartLogix (ISY1102 - Encargo 2).
 
 Uso:
     python3 docs/pruebas/ejecutar_casos.py <etiqueta>

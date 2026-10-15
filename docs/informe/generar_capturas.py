@@ -74,15 +74,15 @@ def main():
     e03 += [f"{'TOTAL backend':<20} Tests run: {tot}", "",
             "$ npx vitest run --coverage   (frontend)",
             "Test Files  13 passed (13) | Tests  55 passed (55) | All files 68.52 % statements"]
-    render(e03, "SmartLogix - pruebas unitarias y cobertura - ISY1102 EP3", "E03-pruebas")
+    render(e03, "SmartLogix - pruebas unitarias y cobertura - ISY1102 Encargo 2", "E03-pruebas")
 
     # E04: versión final
     l4, t4 = tabla_casos(os.path.join(RAIZ, "docs/evidencias/mitigado-docker/resultados.json"), "", "python3 docs/pruebas/ejecutar_casos.py mitigado-docker   (stack Docker)")
-    render(l4, "SmartLogix - ejecución final (stack Docker) - ISY1102 EP3", "E04-casos")
+    render(l4, "SmartLogix - ejecución final (stack Docker) - ISY1102 Encargo 2", "E04-casos")
 
     # E05: línea base
     l5, _ = tabla_casos(os.path.join(RAIZ, "docs/evidencias/baseline-codigo-original/resultados.json"), "", "python3 docs/pruebas/ejecutar_casos.py baseline-codigo-original   (commit 2d7685f)")
-    render(l5, "SmartLogix - línea base (commit 2d7685f) - ISY1102 EP3", "E05-casos")
+    render(l5, "SmartLogix - línea base (commit 2d7685f) - ISY1102 Encargo 2", "E05-casos")
     print("capturas generadas en", CAP)
 
 
