@@ -2,7 +2,9 @@
 
 Sistema de comercio electrónico de perfumes con arquitectura de microservicios: Spring Boot 3.2 (Java 21), React 18 y Docker.
 
-Proyecto del caso semestral de **ISY1102 - Seguridad y calidad en el desarrollo de software**. Además del código, el repositorio contiene el plan de pruebas, las evidencias de ejecución y el informe del Encargo 2.
+Proyecto del caso semestral de **ISY1102 - Seguridad y calidad en el desarrollo de software**. Además del código, el repositorio contiene el plan de pruebas, las evidencias de ejecución y los informes de los Encargos 2 y 3.
+
+---
 
 ## Arquitectura
 
@@ -14,14 +16,25 @@ Proyecto del caso semestral de **ISY1102 - Seguridad y calidad en el desarrollo 
 | **Order Service** | Spring Boot 3.2, JPA, H2 | 8082 | Factory Method |
 | **Shipping Service** | Spring Boot 3.2, JPA, H2, Resilience4j | 8083 | Circuit Breaker |
 
-El frontend llama a `/api`. En desarrollo lo reenvía Vite al BFF; en Docker lo reenvía nginx. Los microservicios solo son accesibles dentro de la red de Docker, y el BFF es el único punto de entrada autenticado.
+El frontend llama a `/api`: en desarrollo lo reenvía Vite al BFF y en Docker lo reenvía nginx. El BFF es el único punto de entrada. Los microservicios no publican puertos fuera de la red de Docker y validan un JWT firmado en cada petición.
+
+### Patrones de diseño
+
+1. **Repository** (Inventory): `ProductRepository` con consultas JPQL personalizadas.
+2. **Factory Method** (Orders): `OrderFactory`, con `WebOrderFactory` (descuento 5 %, envío STANDARD) y `MarketplaceOrderFactory` (descuento 10 %, envío EXPRESS).
+3. **Circuit Breaker** (Shipping): Resilience4j con fallback en `ExternalCarrierService` (tracking `FBK-`, entrega en 7 días).
+4. **API Gateway / BFF**: autenticación JWT, proxy a los microservicios y traducción de errores.
+
+---
 
 ## Requisitos
 
-- Java 21 (JDK 25 funciona para compilar y probar, pero SpotBugs 4.8 no lee sus clases: los análisis estáticos deben ejecutarse con JDK 21)
-- Maven 3.9+
-- Node.js 18+ y npm 9+
-- Docker y Docker Compose (para el despliegue completo)
+- Java 21. JDK 25 sirve para compilar y probar, pero SpotBugs 4.8 no lee sus clases: los análisis estáticos deben ejecutarse con JDK 21.
+- Maven 3.9 o superior.
+- Node.js 18 o superior, y npm 9 o superior.
+- Docker y Docker Compose, para el despliegue completo.
+
+---
 
 ## Despliegue con Docker (recomendado)
 
@@ -49,6 +62,8 @@ cd bff-gateway       && mvn spring-boot:run    # 8080 (después de los anteriore
 
 cd frontend && npm install && npm run dev      # 5173
 ```
+
+---
 
 ## Pruebas
 
@@ -84,14 +99,14 @@ Con los servicios en ejecución (Docker o local):
 python3 docs/pruebas/ejecutar_casos.py <etiqueta>
 ```
 
-El script ejecuta 23 casos (`CP-01` a `CP-23`) contra el BFF con un token real, y escribe los resultados en `docs/evidencias/<etiqueta>/`. Cada caso registra requisito, datos de entrada, resultado esperado, criterio de aceptación, criticidad, responsable y fecha. Los tokens JWT se redactan antes de guardar la evidencia.
+El script ejecuta 23 casos (`CP-01` a `CP-23`) contra el BFF con un token real y escribe los resultados en `docs/evidencias/<etiqueta>/`. Cada caso registra requisito, datos de entrada, resultado esperado, criterio de aceptación, criticidad, responsable y fecha. Los tokens JWT se redactan antes de guardar la evidencia.
 
-Resultado de la última ejecución sobre el stack Docker (rama `v2`): **22 de 23 casos aprobados**. El caso que falla (CP-16) corresponde a un riesgo residual documentado (ver "Estado de seguridad").
+Resultado de la última ejecución sobre el stack Docker (rama `v2`): **22 de 23 casos aprobados**. El caso que falla (CP-16) corresponde a un riesgo residual documentado (ver [Estado de seguridad](#estado-de-seguridad)).
 
 ### Análisis estático y dependencias
 
 ```bash
-# Backend (con JDK 21): SpotBugs + FindSecBugs, filtro documentado en bff-gateway/spotbugs-exclude.xml
+# Backend (con JDK 21): SpotBugs + FindSecBugs; filtros documentados en <servicio>/spotbugs-exclude.xml
 cd <servicio> && mvn -Psecurity com.github.spotbugs:spotbugs-maven-plugin:4.8.6.6:spotbugs
 
 # Frontend: ESLint con reglas de seguridad y auditoría de dependencias
@@ -99,35 +114,43 @@ cd frontend && npx eslint "src/**/*.{js,jsx}"
 cd frontend && npm audit
 ```
 
+---
+
 ## Automatización, DAST y CI/CD
 
-- **Pipeline:** `.github/workflows/ci.yml` se ejecuta en cada push a `main` y `v2` y en cada pull request. Jobs: backend (un job por servicio, con pruebas, JaCoCo y SpotBugs), frontend (pruebas, ESLint y `npm audit --omit=dev`), E2E y API sobre Docker, y DAST con OWASP ZAP baseline. Las puertas que bloquean el merge son: prioridad 1 de SpotBugs, critical/high en producción y alertas de riesgo alto de ZAP.
-- **Secreto requerido:** `JWT_SECRET` en *Settings → Secrets and variables → Actions*.
-- **E2E y API:** `e2e/` con Playwright (5 flujos de interfaz, 6 pruebas de API):
+### Pipeline de integración continua
 
-  ```bash
-  cd e2e && npm ci && npx playwright install chromium
-  npx playwright test   # con el stack en ejecución
-  ```
+`.github/workflows/ci.yml` se ejecuta en cada push a `main` y `v2` y en cada pull request. Sus jobs son:
 
-- **DAST:** `docs/seguridad/ejecutar_zap.sh <etiqueta>` ejecuta ZAP contra el stack local (solo `localhost`).
-- **SAST con SonarQube:** configuración en `docs/seguridad/sonarqube/` (análisis local en Docker; no se publican credenciales).
+- **Backend** (un job por servicio): pruebas, JaCoCo y SpotBugs.
+- **Frontend**: pruebas, ESLint y `npm audit --omit=dev`.
+- **E2E y API sobre Docker**: Playwright contra el stack levantado.
+- **DAST**: OWASP ZAP baseline sobre el frontend desplegado.
+
+Las puertas que bloquean el merge son: prioridad 1 de SpotBugs, critical o high en producción, y alertas de riesgo alto de ZAP.
+
+El pipeline requiere el secreto `JWT_SECRET` en *Settings → Secrets and variables → Actions*.
+
+### Pruebas E2E y de API
+
+Suite en `e2e/` con Playwright: 5 flujos de interfaz y 6 pruebas de API.
+
+```bash
+cd e2e && npm ci && npx playwright install chromium
+npx playwright test   # con el stack en ejecución
+```
+
+### DAST y SAST
+
+- **DAST:** `docs/seguridad/ejecutar_zap.sh <etiqueta>` ejecuta OWASP ZAP contra el stack local (solo `localhost`).
+- **SAST con SonarQube:** configuración en `docs/seguridad/sonarqube/`. El análisis corre en un servidor local en Docker y no se publican credenciales.
 - **Diagrama de controles:** `docs/seguridad/diagramas/pipeline.html`.
 
-## Documentación
-
-- `docs/informe/Informe_Encargo3_ISY1102_SmartLogix.pdf` - informe del Encargo 3: pruebas de seguridad (DAST, SAST, SCA), automatización, CI/CD, incidentes, plan de mantenimiento y análisis ético y normativo.
-- `docs/informe/Informe_EP3_ISY1102_SmartLogix.pdf` - informe del Encargo 2: criterios, plan de pruebas, casos, ejecución, incidentes y análisis ético y normativo.
-- `docs/evidencias/` - resultados de ejecución (JSON y texto), logs de compilación y capturas.
-- `docs/pruebas/ejecutar_casos.py` - ejecutor reproducible de los casos de prueba.
-- `docs/informe/generar_informe.py` y `publicar_informe.sh` - regeneran el informe a partir de las evidencias (`publicar_informe.sh` requiere Microsoft Word en macOS).
-- `docs/diagrama-arquitectura.md`, `docs/descripcion-persistencia.md`, `docs/swagger-api.md` - arquitectura, persistencia y uso de Swagger.
-- `docs/TESTING.md` y `docs/informe-pruebas.md` - guías de pruebas de versiones anteriores; sus cifras no están actualizadas.
-- `postman/smartlogix-collection.json` - colección Postman.
+---
 
 ## Estado de seguridad
 
-Hallazgos del análisis, con su estado en la rama `v2`. El detalle completo (criticidad, ubicación, tratamiento y evidencia) está en el informe del Encargo 3 (`docs/informe/`).
+Hallazgos del análisis, con su estado en la rama `v2`. El detalle completo (criticidad, ubicación, tratamiento y evidencia) está en el informe del Encargo 3.
 
 | Estado | Hallazgo |
 |---|---|
@@ -149,9 +172,24 @@ Hallazgos del análisis, con su estado en la rama `v2`. El detalle completo (cri
 
 Los datos son de demostración: H2 en memoria y usuarios que se pierden al reiniciar el BFF.
 
-## Patrones de diseño
+---
 
-1. **Repository** (Inventory): `ProductRepository` con consultas JPQL personalizadas.
-2. **Factory Method** (Orders): `OrderFactory` → `WebOrderFactory` (5 %, STANDARD) / `MarketplaceOrderFactory` (10 %, EXPRESS).
-3. **Circuit Breaker** (Shipping): Resilience4j con fallback en `ExternalCarrierService` (tracking `FBK-`, entrega en 7 días).
-4. **API Gateway / BFF**: autenticación JWT, proxy a los microservicios y traducción de errores.
+## Documentación
+
+### Informes
+
+- `docs/informe/Informe_Encargo3_ISY1102_SmartLogix.pdf`: Encargo 3. Pruebas de seguridad (DAST, SAST, SCA), automatización, CI/CD, incidentes, plan de mantenimiento y análisis ético y normativo.
+- `docs/informe/Informe_EP3_ISY1102_SmartLogix.pdf`: Encargo 2. Criterios, plan de pruebas, casos, ejecución, incidentes y análisis ético y normativo.
+
+### Evidencias y scripts
+
+- `docs/evidencias/`: resultados de ejecución (JSON y texto), logs de compilación, métricas y capturas.
+- `docs/pruebas/ejecutar_casos.py`: ejecutor reproducible de los casos de prueba.
+- `docs/informe/generar_informe_encargo3.py`: genera el informe del Encargo 3 a partir de las evidencias.
+- `docs/informe/generar_informe.py` y `publicar_informe.sh`: generan y publican el informe del Encargo 2 (`publicar_informe.sh` requiere Microsoft Word en macOS).
+
+### Referencias técnicas
+
+- `docs/diagrama-arquitectura.md`, `docs/descripcion-persistencia.md` y `docs/swagger-api.md`: arquitectura, persistencia y uso de Swagger.
+- `docs/TESTING.md` y `docs/informe-pruebas.md`: guías de pruebas de versiones anteriores. Sus cifras no están actualizadas.
+- `postman/smartlogix-collection.json`: colección Postman.
