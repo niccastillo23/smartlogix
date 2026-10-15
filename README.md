@@ -27,6 +27,18 @@ El frontend llama a `/api`: en desarrollo lo reenvía Vite al BFF y en Docker lo
 
 ---
 
+## Evolución del proyecto
+
+El caso se desarrolló en tres entregas de la asignatura ISY1102, cada una sobre el mismo código y con un alcance mayor.
+
+| Entrega | Alcance | Resultados principales |
+|---|---|---|
+| **Encargo 1** (Evaluación Parcial 1) | Arquitectura de microservicios, plan de pruebas inicial y criterios de calidad (ISO/IEC 25010, OWASP y Ley 19.628). | Plan de pruebas con cobertura objetivo de JaCoCo ≥ 60 %. |
+| **Encargo 2** | Auditoría sobre el código real, despliegue en Docker y remediación. | Batería de 19 casos: 5/19 aprobados en la línea base y 18/19 en la versión mitigada. Cifrado de contraseñas con BCrypt, secreto JWT fuera del código y gate de JaCoCo activo. Registro de 18 incidentes. |
+| **Encargo 3** | Pruebas de seguridad, automatización y CI/CD. | Batería ampliada a 23 casos: 17/23 en la línea base y 22/23 en la versión final. 11 pruebas E2E y de API con Playwright (11/11, 6,8 s). DAST con OWASP ZAP, SAST con SpotBugs, ESLint y SonarQube, SCA con `npm audit`, pipeline en GitHub Actions y plan de mantenimiento. Registro de 24 incidentes (INC-01 a INC-25, sin el INC-17, documentado en el Encargo 2). |
+
+Los informes de cada entrega están en `docs/informe/` (ver [Documentación](#documentación)).
+
 ## Requisitos
 
 - Java 21. JDK 25 sirve para compilar y probar, pero SpotBugs 4.8 no lee sus clases: los análisis estáticos deben ejecutarse con JDK 21.
