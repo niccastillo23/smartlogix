@@ -4,6 +4,7 @@ import com.smartlogix.gateway.dto.LoginRequest;
 import com.smartlogix.gateway.dto.LoginResponse;
 import com.smartlogix.gateway.service.AuthService;
 import com.smartlogix.gateway.exception.InvalidCredentialsException;
+import com.smartlogix.gateway.exception.TooManyLoginAttemptsException;
 import com.smartlogix.gateway.exception.UserAlreadyExistsException;
 import java.lang.reflect.Field;
 import java.util.Map;
@@ -92,5 +93,30 @@ class AuthServiceTest {
 
         assertNotEquals("password123", almacenado);
         assertTrue(almacenado.startsWith("$2"), "Se esperaba hash BCrypt");
+    }
+
+    @Test
+    void login_tresFallosSeguidos_bloqueaElUsuarioTemporalmente() {
+        when(jwtUtil.generateToken(anyString())).thenReturn("token");
+        authService.register(new LoginRequest("victima", "clave-real"));
+        for (int i = 0; i < AuthService.MAX_INTENTOS_FALLIDOS; i++) {
+            assertThrows(InvalidCredentialsException.class,
+                    () -> authService.login(new LoginRequest("victima", "clave-mala")));
+        }
+        // Aunque la clave sea correcta, el bloqueo ya está activo.
+        assertThrows(TooManyLoginAttemptsException.class,
+                () -> authService.login(new LoginRequest("victima", "clave-real")));
+    }
+
+    @Test
+    void login_exitosoReseteaLosFallos() {
+        when(jwtUtil.generateToken(anyString())).thenReturn("token");
+        authService.register(new LoginRequest("usuario3", "clave-real"));
+        for (int i = 0; i < AuthService.MAX_INTENTOS_FALLIDOS - 1; i++) {
+            assertThrows(InvalidCredentialsException.class,
+                    () -> authService.login(new LoginRequest("usuario3", "mala")));
+        }
+        assertNotNull(authService.login(new LoginRequest("usuario3", "clave-real")));
+        assertNotNull(authService.login(new LoginRequest("usuario3", "clave-real")));
     }
 }
