@@ -141,6 +141,8 @@ jobs:
       - name: OWASP ZAP baseline sobre el frontend
         run: |
           mkdir -p zap
+          # El contenedor de ZAP escribe como otro usuario: el directorio de reportes debe ser escribible.
+          chmod 777 zap
           docker run --rm --network host -v "$PWD/zap":/zap/wrk/:rw ghcr.io/zaproxy/zaproxy:stable \
             zap-baseline.py -t http://localhost:5173/ -r baseline.html -J baseline.json -I -m 3 || true
       - name: Puerta de calidad DAST (bloquea alertas de riesgo alto)
