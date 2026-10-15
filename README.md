@@ -62,11 +62,11 @@ cd <servicio> && JWT_SECRET=<valor> mvn clean verify
 
 | Servicio | Pruebas | Cobertura de líneas |
 |---|---|---|
-| Inventory Service | 38 | 95,2 % |
-| Order Service | 26 | 88,7 % |
-| Shipping Service | 25 | 86,3 % |
-| BFF Gateway | 32 | 74,3 % |
-| **Total** | **121** | |
+| Inventory Service | 41 | 95,1 % |
+| Order Service | 29 | 93,8 % |
+| Shipping Service | 28 | 92,8 % |
+| BFF Gateway | 36 | 77,1 % |
+| **Total** | **134** | |
 
 ### Unitarias (frontend)
 
@@ -84,9 +84,9 @@ Con los servicios en ejecución (Docker o local):
 python3 docs/pruebas/ejecutar_casos.py <etiqueta>
 ```
 
-El script ejecuta 19 casos (`CP-01` a `CP-19`) contra el BFF con un token real, y escribe los resultados en `docs/evidencias/<etiqueta>/`. Cada caso registra requisito, datos de entrada, resultado esperado, criterio de aceptación, criticidad, responsable y fecha. Los tokens JWT se redactan antes de guardar la evidencia.
+El script ejecuta 23 casos (`CP-01` a `CP-23`) contra el BFF con un token real, y escribe los resultados en `docs/evidencias/<etiqueta>/`. Cada caso registra requisito, datos de entrada, resultado esperado, criterio de aceptación, criticidad, responsable y fecha. Los tokens JWT se redactan antes de guardar la evidencia.
 
-Resultado de la última ejecución sobre el stack Docker: **18 de 19 casos aprobados**. El caso que falla (CP-16) corresponde a un riesgo residual documentado (ver "Estado de seguridad").
+Resultado de la última ejecución sobre el stack Docker (rama `v2`): **22 de 23 casos aprobados**. El caso que falla (CP-16) corresponde a un riesgo residual documentado (ver "Estado de seguridad").
 
 ### Análisis estático y dependencias
 
@@ -99,9 +99,25 @@ cd frontend && npx eslint "src/**/*.{js,jsx}"
 cd frontend && npm audit
 ```
 
+## Automatización, DAST y CI/CD
+
+- **Pipeline:** `.github/workflows/ci.yml` se ejecuta en cada push a `main` y `v2` y en cada pull request. Jobs: backend (un job por servicio, con pruebas, JaCoCo y SpotBugs), frontend (pruebas, ESLint y `npm audit --omit=dev`), E2E y API sobre Docker, y DAST con OWASP ZAP baseline. Las puertas que bloquean el merge son: prioridad 1 de SpotBugs, critical/high en producción y alertas de riesgo alto de ZAP.
+- **Secreto requerido:** `JWT_SECRET` en *Settings → Secrets and variables → Actions*.
+- **E2E y API:** `e2e/` con Playwright (5 flujos de interfaz, 6 pruebas de API):
+
+  ```bash
+  cd e2e && npm ci && npx playwright install chromium
+  npx playwright test   # con el stack en ejecución
+  ```
+
+- **DAST:** `docs/seguridad/ejecutar_zap.sh <etiqueta>` ejecuta ZAP contra el stack local (solo `localhost`).
+- **SAST con SonarQube:** configuración en `docs/seguridad/sonarqube/` (análisis local en Docker; no se publican credenciales).
+- **Diagrama de controles:** `docs/seguridad/diagramas/pipeline.html`.
+
 ## Documentación
 
-- `docs/informe/Informe_EP3_ISY1102_SmartLogix.pdf` - informe de seguridad y calidad (Encargo 2): criterios, plan de pruebas, casos, ejecución, incidentes y análisis ético y normativo.
+- `docs/informe/Informe_Encargo3_ISY1102_SmartLogix.pdf` - informe del Encargo 3: pruebas de seguridad (DAST, SAST, SCA), automatización, CI/CD, incidentes, plan de mantenimiento y análisis ético y normativo.
+- `docs/informe/Informe_EP3_ISY1102_SmartLogix.pdf` - informe del Encargo 2: criterios, plan de pruebas, casos, ejecución, incidentes y análisis ético y normativo.
 - `docs/evidencias/` - resultados de ejecución (JSON y texto), logs de compilación y capturas.
 - `docs/pruebas/ejecutar_casos.py` - ejecutor reproducible de los casos de prueba.
 - `docs/informe/generar_informe.py` y `publicar_informe.sh` - regeneran el informe a partir de las evidencias (`publicar_informe.sh` requiere Microsoft Word en macOS).
@@ -111,21 +127,25 @@ cd frontend && npm audit
 
 ## Estado de seguridad
 
-Hallazgos del análisis, con su estado al momento del informe. El detalle completo (criticidad, ubicación y tratamiento) está en la sección 5.3 del informe.
+Hallazgos del análisis, con su estado en la rama `v2`. El detalle completo (criticidad, ubicación, tratamiento y evidencia) está en el informe del Encargo 3 (`docs/informe/`).
 
 | Estado | Hallazgo |
 |---|---|
 | Corregido | Contraseñas almacenadas en texto plano (ahora BCrypt) |
 | Corregido | Secreto JWT literal en `application.yml` (ahora `${JWT_SECRET}`) |
-| Corregido | Microservicios accesibles directamente desde la red del host (ya no se publican puertos) |
-| Corregido | Gate de cobertura JaCoCo inactivo por `argLine` |
-| Corregido | Alta de productos con HTTP 500 por secuencia de IDs |
-| Abierto | 3 vulnerabilidades críticas y 6 altas en herramientas de desarrollo del frontend (vitest, vite, tailwind). Corregirlas exige saltos de versión mayor |
-| Abierto | Los microservicios no validan el JWT por sí mismos; dependen de la red y del BFF |
-| Abierto | El token JWT se guarda en `localStorage` |
-| Abierto | El endpoint de login no limita intentos |
-| Abierto | El secreto JWT original aparece en el historial de git: debe considerarse expuesto y rotarse |
-| Riesgo aceptado | Advertencia CSRF de SpotBugs en `SecurityConfig`: la API usa Bearer y sesiones stateless |
+| Corregido | Microservicios accesibles sin token desde la red (ahora validan JWT firmado en cada servicio) |
+| Corregido | Bloqueo de intentos de login tras 5 fallos (HTTP 429) |
+| Corregido | PATCH a través del BFF (503) y parámetro obligatorio ausente (500, ahora 400) |
+| Corregido | Valor de `status` concatenado en la URL del BFF (ahora codificado) |
+| Corregido | Error de login que no se mostraba en la interfaz |
+| Corregido | Ausencia de CSP y cabeceras de aislamiento (ahora en nginx) |
+| Corregido | Gate de cobertura JaCoCo inactivo por `argLine`; alta de productos con HTTP 500 |
+| Abierto | Secreto JWT original en el historial de git: debe considerarse expuesto y rotarse (SEG-01) |
+| Abierto | Token JWT en `localStorage` (SEG-02) |
+| Abierto | Duplicación de código entre microservicios: el quality gate de SonarQube falla (SEG-03) |
+| Abierto | Dependencias de build del frontend con vulnerabilidades críticas y altas (vitest, vite, tailwind) (SEG-05) |
+| Riesgo residual | `style-src 'unsafe-inline'` en la CSP por los estilos en línea de los componentes (SEG-04) |
+| Riesgo aceptado | CSRF deshabilitado (4 issues S4502 de SonarQube y prioridad 1 de SpotBugs): API stateless con Bearer, sin cookies |
 
 Los datos son de demostración: H2 en memoria y usuarios que se pierden al reiniciar el BFF.
 

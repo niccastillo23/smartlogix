@@ -1,0 +1,24 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+bff-gateway,com.smartlogix.gateway.filter,JwtAuthFilter,0,39,1,5,0,10,1,3,0,1
+bff-gateway,com.smartlogix.gateway.config,RestTemplateConfig,11,18,0,0,2,4,1,2,1,2
+bff-gateway,com.smartlogix.gateway.config,SecurityConfig,11,142,0,0,4,23,1,10,1,10
+bff-gateway,com.smartlogix.gateway.config,JwtUtil,1,65,1,1,0,19,1,6,0,6
+bff-gateway,com.smartlogix.gateway.config,GlobalExceptionHandler,41,77,0,2,8,19,6,10,6,9
+bff-gateway,com.smartlogix.gateway.config,OpenApiConfig,0,38,0,0,0,12,0,2,0,2
+bff-gateway,com.smartlogix.gateway,BffGatewayApplication,5,3,0,0,2,1,1,1,1,1
+bff-gateway,com.smartlogix.gateway.exception,InvalidCredentialsException,0,4,0,0,0,2,0,1,0,1
+bff-gateway,com.smartlogix.gateway.exception,TooManyLoginAttemptsException,0,4,0,0,0,2,0,1,0,1
+bff-gateway,com.smartlogix.gateway.exception,UserAlreadyExistsException,0,4,0,0,0,2,0,1,0,1
+bff-gateway,com.smartlogix.gateway.service,InventoryProxyService,76,35,0,0,7,9,5,1,5,1
+bff-gateway,com.smartlogix.gateway.service,ShippingProxyService.new ParameterizedTypeReference() {...},3,0,0,0,1,0,1,0,1,0
+bff-gateway,com.smartlogix.gateway.service,OrderProxyService.new ParameterizedTypeReference() {...},3,0,0,0,1,0,1,0,1,0
+bff-gateway,com.smartlogix.gateway.service,ShippingProxyService,41,49,0,0,4,7,3,1,3,1
+bff-gateway,com.smartlogix.gateway.service,InventoryProxyService.new ParameterizedTypeReference() {...},3,0,0,0,1,0,1,0,1,0
+bff-gateway,com.smartlogix.gateway.service,InventoryProxyService.new ParameterizedTypeReference() {...},0,3,0,0,0,1,0,1,0,1
+bff-gateway,com.smartlogix.gateway.service,AuthService.Intentos,0,9,0,0,0,1,0,1,0,1
+bff-gateway,com.smartlogix.gateway.service,AuthService,6,144,2,14,2,34,2,12,0,6
+bff-gateway,com.smartlogix.gateway.service,OrderProxyService,41,49,0,0,4,7,3,1,3,1
+bff-gateway,com.smartlogix.gateway.controller,ShippingController,26,0,0,0,4,0,4,0,4,0
+bff-gateway,com.smartlogix.gateway.controller,ProductController,33,96,0,0,5,10,5,5,5,5
+bff-gateway,com.smartlogix.gateway.controller,OrderController,26,0,0,0,4,0,4,0,4,0
+bff-gateway,com.smartlogix.gateway.controller,AuthController,0,12,0,0,0,2,0,2,0,2

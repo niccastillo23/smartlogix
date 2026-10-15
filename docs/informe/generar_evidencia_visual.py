@@ -17,7 +17,7 @@ from playwright.sync_api import sync_playwright
 
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 CAP = os.path.join(RAIZ, "docs", "evidencias", "capturas")
-RESULTADOS = os.path.join(RAIZ, "docs", "evidencias", os.environ.get("ETIQUETA_RESULTADOS", "v2-encargo3"), "resultados.json")
+RESULTADOS = os.path.join(RAIZ, "docs", "evidencias", os.environ.get("ETIQUETA_RESULTADOS", "v2-final"), "resultados.json")
 FRONT = "http://localhost:5173"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
