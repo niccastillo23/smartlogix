@@ -4,11 +4,14 @@ import com.smartlogix.gateway.config.JwtUtil;
 import com.smartlogix.gateway.dto.LoginRequest;
 import com.smartlogix.gateway.dto.LoginResponse;
 import com.smartlogix.gateway.exception.InvalidCredentialsException;
+import com.smartlogix.gateway.exception.TooManyLoginAttemptsException;
 import com.smartlogix.gateway.exception.UserAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,11 +24,21 @@ public class AuthService {
     /** usuario -> hash BCrypt de la contraseña (nunca el valor en claro). */
     private final Map<String, String> users = new ConcurrentHashMap<>();
 
+    /** Límite de intentos fallidos por usuario (mitigación de fuerza bruta, INC-13). */
+    public static final int MAX_INTENTOS_FALLIDOS = 5;
+    static final Duration VENTANA_BLOQUEO = Duration.ofMinutes(15);
+    private final Map<String, Intentos> intentosFallidos = new ConcurrentHashMap<>();
+
+    private record Intentos(int fallos, Instant desde) { }
+
     public LoginResponse login(LoginRequest request) {
+        verificarBloqueo(request.getUsername());
         String storedHash = users.get(request.getUsername());
         if (storedHash == null || !passwordEncoder.matches(request.getPassword(), storedHash)) {
+            registrarFallo(request.getUsername());
             throw new InvalidCredentialsException();
         }
+        intentosFallidos.remove(request.getUsername());
         String token = jwtUtil.generateToken(request.getUsername());
         return LoginResponse.builder()
                 .token(token)
@@ -46,5 +59,28 @@ public class AuthService {
                 .username(request.getUsername())
                 .message("Registro exitoso")
                 .build();
+    }
+
+    private void verificarBloqueo(String usuario) {
+        Intentos i = intentosFallidos.get(usuario);
+        if (i == null) {
+            return;
+        }
+        if (Instant.now().isAfter(i.desde().plus(VENTANA_BLOQUEO))) {
+            intentosFallidos.remove(usuario);
+            return;
+        }
+        if (i.fallos() >= MAX_INTENTOS_FALLIDOS) {
+            throw new TooManyLoginAttemptsException();
+        }
+    }
+
+    private void registrarFallo(String usuario) {
+        intentosFallidos.compute(usuario, (k, previo) -> {
+            if (previo == null || Instant.now().isAfter(previo.desde().plus(VENTANA_BLOQUEO))) {
+                return new Intentos(1, Instant.now());
+            }
+            return new Intentos(previo.fallos() + 1, previo.desde());
+        });
     }
 }

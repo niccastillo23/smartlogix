@@ -1,0 +1,293 @@
+ Image smartlogix-inventory-service Building 
+ Image smartlogix-order-service Building 
+ Image smartlogix-shipping-service Building 
+ Image smartlogix-bff-gateway Building 
+ Image smartlogix-frontend Building 
+#1 [internal] load local bake definitions
+#1 reading from stdin 2.74kB done
+#1 DONE 0.0s
+
+#2 [shipping-service internal] load build definition from Dockerfile
+#2 transferring dockerfile: 519B done
+#2 DONE 0.0s
+
+#3 [order-service internal] load build definition from Dockerfile
+#3 transferring dockerfile: 516B done
+#3 DONE 0.0s
+
+#4 [frontend internal] load build definition from Dockerfile
+#4 transferring dockerfile: 386B done
+#4 DONE 0.0s
+
+#5 [inventory-service internal] load build definition from Dockerfile
+#5 transferring dockerfile: 520B done
+#5 DONE 0.0s
+
+#6 [bff-gateway internal] load build definition from Dockerfile
+#6 transferring dockerfile: 514B done
+#6 DONE 0.0s
+
+#7 [bff-gateway internal] load metadata for docker.io/library/maven:3.9-eclipse-temurin-21
+#7 ...
+
+#8 [frontend internal] load metadata for docker.io/library/nginx:1.27-alpine
+#8 DONE 0.8s
+
+#7 [shipping-service internal] load metadata for docker.io/library/maven:3.9-eclipse-temurin-21
+#7 DONE 0.8s
+
+#9 [frontend internal] load metadata for docker.io/library/node:20-alpine
+#9 DONE 0.8s
+
+#10 [frontend internal] load .dockerignore
+#10 transferring context: 70B done
+#10 DONE 0.0s
+
+#11 [frontend build 1/6] FROM docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293
+#11 resolve docker.io/library/node:20-alpine@sha256:fb4cd12c85ee03686f6af5362a0b0d56d50c58a04632e6c0fb8363f609372293 done
+#11 DONE 0.0s
+
+#12 [frontend internal] load build context
+#12 transferring context: 6.10kB done
+#12 DONE 0.0s
+
+#13 [frontend stage-1 1/3] FROM docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10
+#13 resolve docker.io/library/nginx:1.27-alpine@sha256:65645c7bb6a0661892a8b03b89d0743208a18dd2f3f17a54ef4b76fb8e2f2a10 done
+#13 CACHED
+
+#14 [frontend build 3/6] COPY package.json package-lock.json ./
+#14 CACHED
+
+#15 [frontend build 2/6] WORKDIR /app
+#15 CACHED
+
+#16 [frontend build 4/6] RUN npm ci
+#16 CACHED
+
+#17 [shipping-service internal] load metadata for docker.io/library/eclipse-temurin:21-jre
+#17 DONE 0.8s
+
+#18 [inventory-service internal] load .dockerignore
+#18 transferring context: 48B done
+#18 DONE 0.0s
+
+#19 [frontend build 5/6] COPY . .
+#19 DONE 0.0s
+
+#20 [order-service internal] load .dockerignore
+#20 transferring context: 48B done
+#20 DONE 0.0s
+
+#21 [frontend stage-1 2/3] COPY nginx.conf /etc/nginx/conf.d/default.conf
+#21 DONE 0.0s
+
+#22 [bff-gateway internal] load .dockerignore
+#22 transferring context: 48B done
+#22 DONE 0.0s
+
+#23 [shipping-service internal] load .dockerignore
+#23 transferring context: 48B done
+#23 DONE 0.0s
+
+#24 [shipping-service build 1/6] FROM docker.io/library/maven:3.9-eclipse-temurin-21@sha256:99e61abcff91a9b1333463bd8451fb18495d6eba9250ac66a338b518f8278320
+#24 resolve docker.io/library/maven:3.9-eclipse-temurin-21@sha256:99e61abcff91a9b1333463bd8451fb18495d6eba9250ac66a338b518f8278320 done
+#24 DONE 0.0s
+
+#25 [order-service stage-1 1/4] FROM docker.io/library/eclipse-temurin:21-jre@sha256:ccbad9e7cb84c27092b12c40a4143e5733e050db9c3784d84f632dcf423fb2ef
+#25 resolve docker.io/library/eclipse-temurin:21-jre@sha256:ccbad9e7cb84c27092b12c40a4143e5733e050db9c3784d84f632dcf423fb2ef 0.0s done
+#25 DONE 0.0s
+
+#26 [shipping-service internal] load build context
+#26 transferring context: 2.64kB done
+#26 DONE 0.0s
+
+#27 [inventory-service internal] load build context
+#27 transferring context: 2.70kB done
+#27 DONE 0.0s
+
+#28 [order-service internal] load build context
+#28 transferring context: 2.90kB done
+#28 DONE 0.0s
+
+#29 [bff-gateway internal] load build context
+#29 transferring context: 3.25kB done
+#29 DONE 0.0s
+
+#30 [shipping-service build 5/6] COPY src ./src
+#30 CACHED
+
+#31 [shipping-service build 6/6] RUN mvn -B -q -DskipTests package
+#31 CACHED
+
+#32 [shipping-service build 4/6] RUN mvn -B -q dependency:go-offline
+#32 CACHED
+
+#33 [shipping-service build 3/6] COPY pom.xml .
+#33 CACHED
+
+#34 [shipping-service stage-1 4/4] COPY --from=build /app/target/shipping-service-1.0.0.jar app.jar
+#34 CACHED
+
+#35 [inventory-service build 4/6] RUN mvn -B -q dependency:go-offline
+#35 CACHED
+
+#36 [inventory-service build 6/6] RUN mvn -B -q -DskipTests package
+#36 CACHED
+
+#37 [inventory-service build 5/6] COPY src ./src
+#37 CACHED
+
+#38 [inventory-service build 3/6] COPY pom.xml .
+#38 CACHED
+
+#39 [inventory-service stage-1 4/4] COPY --from=build /app/target/inventory-service-1.0.0.jar app.jar
+#39 CACHED
+
+#40 [bff-gateway build 3/6] COPY pom.xml .
+#40 CACHED
+
+#41 [bff-gateway build 6/6] RUN mvn -B -q -DskipTests package
+#41 CACHED
+
+#42 [bff-gateway build 5/6] COPY src ./src
+#42 CACHED
+
+#43 [bff-gateway build 4/6] RUN mvn -B -q dependency:go-offline
+#43 CACHED
+
+#44 [bff-gateway stage-1 4/4] COPY --from=build /app/target/bff-gateway-1.0.0.jar app.jar
+#44 CACHED
+
+#45 [order-service stage-1 3/4] RUN useradd --system --uid 10001 --no-create-home appuser
+#45 CACHED
+
+#46 [order-service build 2/6] WORKDIR /app
+#46 CACHED
+
+#47 [order-service build 3/6] COPY pom.xml .
+#47 CACHED
+
+#48 [order-service build 6/6] RUN mvn -B -q -DskipTests package
+#48 CACHED
+
+#49 [order-service build 4/6] RUN mvn -B -q dependency:go-offline
+#49 CACHED
+
+#50 [order-service build 5/6] COPY src ./src
+#50 CACHED
+
+#51 [order-service stage-1 2/4] WORKDIR /app
+#51 CACHED
+
+#52 [order-service stage-1 4/4] COPY --from=build /app/target/order-service-1.0.0.jar app.jar
+#52 CACHED
+
+#53 [inventory-service] exporting to image
+#53 exporting layers done
+#53 exporting manifest sha256:e802e6f92c40bce28fe505cc161e9d65b6fc5fa6948823fa9108f6b0f2903e8b done
+#53 exporting config sha256:70991f22b294509736f6275402ca15809438f628328de68d5391c00bedd1899d done
+#53 exporting attestation manifest sha256:09b3e889fd32b10dbefe3988e9958758c10ff8d82f456480fa162b5233a40d8e 0.0s done
+#53 exporting manifest list sha256:a1dc3a26275334da697ac3e7231b825d5eb46d80102f1bf0509aae1703843864
+#53 exporting manifest list sha256:a1dc3a26275334da697ac3e7231b825d5eb46d80102f1bf0509aae1703843864 done
+#53 naming to docker.io/library/smartlogix-inventory-service:latest done
+#53 unpacking to docker.io/library/smartlogix-inventory-service:latest done
+#53 DONE 0.1s
+
+#54 [order-service] exporting to image
+#54 exporting layers done
+#54 exporting manifest sha256:58255022057036910a21ac30e7cb1bd79fdc165f9eec213a1888706c33c09662 done
+#54 exporting config sha256:b54b0f4e0af3e559588336d1e435cc74df585456f38250ee3ba892c1a8fdd508 done
+#54 exporting attestation manifest sha256:4e12b5866f85f7d4a3822d7aca79c7970ad923dc1ae69462523a698224a7aa47 0.0s done
+#54 exporting manifest list sha256:32ef19b68b0327ada42c631093ea59d720e6da81c7e24fc703540f076c7ebd68 done
+#54 naming to docker.io/library/smartlogix-order-service:latest done
+#54 unpacking to docker.io/library/smartlogix-order-service:latest done
+#54 DONE 0.1s
+
+#55 [bff-gateway] exporting to image
+#55 exporting layers done
+#55 exporting manifest sha256:def2f3a4c94e4ccedb68be7120f5b29fbccfc2ddab5f29ec27ecba0b5cea506c done
+#55 exporting config sha256:4105d39f332080186aada0e9778ef32c715d1353cf85f86d88b868a4f2ba1052 done
+#55 exporting attestation manifest sha256:f5b47fede3c4898dac2f1aef4f07bf8af4a35688d0d9512336fada781bbe6b5f 0.0s done
+#55 exporting manifest list sha256:a286fdc6c955e161e4926c6fc42067dfabad9bbf458e2746a3ae7686cfedb5a1 done
+#55 naming to docker.io/library/smartlogix-bff-gateway:latest done
+#55 unpacking to docker.io/library/smartlogix-bff-gateway:latest done
+#55 DONE 0.1s
+
+#56 [shipping-service] exporting to image
+#56 exporting layers done
+#56 exporting manifest sha256:46a5a4c4a88558f92fe49b479d22e53f070ad3bf90a5c2c268b69702aa66c4e6 done
+#56 exporting config sha256:8169a657ab499d2ec9769c05ed9d17060b099cbfa242da71e7ad8e9f891fc3c1 done
+#56 exporting attestation manifest sha256:362a853ee82f99e51764cdacc1f65d95ca82c14387b351d67b9396de03ce3c3d 0.0s done
+#56 exporting manifest list sha256:d98b1cf4d29ab6584adb38c2511d89bddd2780fec4d917dcb1cc6e08ea999ef2 done
+#56 naming to docker.io/library/smartlogix-shipping-service:latest done
+#56 unpacking to docker.io/library/smartlogix-shipping-service:latest done
+#56 DONE 0.1s
+
+#57 [bff-gateway] resolving provenance for metadata file
+#57 DONE 0.0s
+
+#58 [inventory-service] resolving provenance for metadata file
+#58 DONE 0.0s
+
+#59 [shipping-service] resolving provenance for metadata file
+#59 DONE 0.0s
+
+#60 [order-service] resolving provenance for metadata file
+#60 DONE 0.0s
+
+#61 [frontend build 6/6] RUN npm run build
+#61 0.158 
+#61 0.158 > smartlogix-frontend@1.0.0 build
+#61 0.158 > vite build
+#61 0.158 
+#61 0.256 vite v5.4.21 building for production...
+#61 0.399 transforming...
+#61 1.544 ✓ 2266 modules transformed.
+#61 1.658 rendering chunks...
+#61 1.661 computing gzip size...
+#61 1.668 dist/index.html                   0.41 kB │ gzip:   0.28 kB
+#61 1.668 dist/assets/index-BTyD8-Hd.css   50.05 kB │ gzip:   8.69 kB
+#61 1.668 dist/assets/index-B7o4oZAy.js   431.88 kB │ gzip: 138.67 kB
+#61 1.668 ✓ built in 1.40s
+#61 DONE 1.7s
+
+#62 [frontend stage-1 3/3] COPY --from=build /app/dist /usr/share/nginx/html
+#62 DONE 0.0s
+
+#63 [frontend] exporting to image
+#63 exporting layers 0.1s done
+#63 exporting manifest sha256:666297676be8a28fce902767dd2657569b1ff0dd2a34057fdc54fb087a90b167 done
+#63 exporting config sha256:67e06d0a5a8c99c0c2f625f066dd3e0ff1f85876017322dd6009c3b563bcd7b0 done
+#63 exporting attestation manifest sha256:5597c934c012145500b62303e3d73c983573d84a78027dd3bde26b6f71880b3c done
+#63 exporting manifest list sha256:bab0b9d66fd6728ae3e9d0146c01ff05b2b86536dadc146325405d99d12bd6a6 done
+#63 naming to docker.io/library/smartlogix-frontend:latest done
+#63 unpacking to docker.io/library/smartlogix-frontend:latest 0.0s done
+#63 DONE 0.1s
+
+#64 [frontend] resolving provenance for metadata file
+#64 DONE 0.0s
+ Image smartlogix-inventory-service Built 
+ Image smartlogix-order-service Built 
+ Image smartlogix-shipping-service Built 
+ Image smartlogix-bff-gateway Built 
+ Image smartlogix-frontend Built 
+ Container smartlogix-inventory-service-1 Recreate 
+ Container smartlogix-order-service-1 Recreate 
+ Container smartlogix-shipping-service-1 Recreate 
+ Container smartlogix-shipping-service-1 Recreated 
+ Container smartlogix-order-service-1 Recreated 
+ Container smartlogix-inventory-service-1 Recreated 
+ Container smartlogix-bff-gateway-1 Recreate 
+ Container smartlogix-bff-gateway-1 Recreated 
+ Container smartlogix-frontend-1 Recreate 
+ Container smartlogix-frontend-1 Recreated 
+ Container smartlogix-order-service-1 Starting 
+ Container smartlogix-inventory-service-1 Starting 
+ Container smartlogix-shipping-service-1 Starting 
+ Container smartlogix-shipping-service-1 Started 
+ Container smartlogix-inventory-service-1 Started 
+ Container smartlogix-order-service-1 Started 
+ Container smartlogix-bff-gateway-1 Starting 
+ Container smartlogix-bff-gateway-1 Started 
+ Container smartlogix-frontend-1 Starting 
+ Container smartlogix-frontend-1 Started 

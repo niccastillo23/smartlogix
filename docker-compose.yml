@@ -3,14 +3,20 @@
 services:
   inventory-service:
     build: ./inventory-service
+    environment:
+      JWT_SECRET: ${JWT_SECRET:?Defina JWT_SECRET en el archivo .env}
     # Sin "ports": el servicio solo es accesible dentro de la red de compose (solo el BFF lo invoca).
 
   order-service:
     build: ./order-service
+    environment:
+      JWT_SECRET: ${JWT_SECRET:?Defina JWT_SECRET en el archivo .env}
     # Sin "ports": el servicio solo es accesible dentro de la red de compose (solo el BFF lo invoca).
 
   shipping-service:
     build: ./shipping-service
+    environment:
+      JWT_SECRET: ${JWT_SECRET:?Defina JWT_SECRET en el archivo .env}
     # Sin "ports": el servicio solo es accesible dentro de la red de compose (solo el BFF lo invoca).
 
   bff-gateway:

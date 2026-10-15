@@ -21,7 +21,9 @@ function OrderStatus() {
   const [error, setError] = useState("");
   const { logout, user } = useAuth();
 
-  useEffect(() => { fetchOrders(); }, []);
+  useEffect(() => {
+    fetchOrders().catch(() => setError("No se pudieron cargar los pedidos."));
+  }, []);
 
   const fetchOrders = async () => {
     try {

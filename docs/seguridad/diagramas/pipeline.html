@@ -1,0 +1,65 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+body{margin:0;background:#fff;font-family:Arial,Helvetica,sans-serif;color:#1d1d1f;width:1500px}
+h1{font-size:24px;margin:24px 32px 4px}.sub{font-size:14px;color:#555;margin:0 32px 18px}
+.row{display:flex;align-items:stretch;gap:0;margin:0 32px}
+.stage{flex:1;border:2px solid #2b5797;border-radius:10px;padding:12px;margin:0 6px;background:#f5f8fc;min-height:300px}
+.stage h2{font-size:15px;margin:0 0 8px;color:#2b5797}
+.ctl{background:#fff;border:1px solid #9bb3d6;border-radius:6px;padding:6px 8px;margin:6px 0;font-size:12px;line-height:1.35}
+.gate{border:2px dashed #b3261e;background:#fff5f4;border-color:#b3261e}
+.gate h2{color:#b3261e}
+.arrow{align-self:center;font-size:30px;color:#2b5797;min-width:22px;text-align:center}
+.legend{margin:20px 32px 0;font-size:13px}
+.tag{display:inline-block;background:#e8f0e8;border:1px solid #6a9a6a;border-radius:4px;padding:1px 6px;margin-right:6px;font-size:11px}
+.norm{margin:16px 32px 24px;font-size:12px;color:#333;border-top:1px solid #ccc;padding-top:10px}
+</style></head><body>
+<h1>Pipeline de integración continua y controles de seguridad automatizados</h1>
+<p class="sub">SmartLogix · GitHub Actions (.github/workflows/ci.yml) · se ejecuta en cada push a main/v2 y en cada pull request</p>
+<div class="row">
+ <div class="stage"><h2>1. Commit / PR</h2>
+  <div class="ctl">Control de versiones con Git y revisión por pull request</div>
+  <div class="ctl">Secretos fuera del repositorio: JWT_SECRET en GitHub Secrets; .env ignorado</div>
+  <div class="ctl">Revisión de secretos; rotación pendiente del secreto antiguo (INC-02)</div>
+  <span class="tag">Ley 21.719 art. 14 quinquies (confidencialidad)</span></div>
+ <div class="arrow">→</div>
+ <div class="stage"><h2>2. Backend (4 módulos)</h2>
+  <div class="ctl">Pruebas unitarias e integración: JUnit 5, Mockito, MockMvc (134 pruebas)</div>
+  <div class="ctl">Cobertura JaCoCo ≥ 60 % de líneas por módulo</div>
+  <div class="ctl">SpotBugs + FindSecBugs: sin hallazgos de prioridad 1 sin tratamiento documentado</div>
+  <span class="tag">OWASP A06, A08</span></div>
+ <div class="arrow">→</div>
+ <div class="stage"><h2>3. Frontend</h2>
+  <div class="ctl">Vitest + RTL: 55 pruebas, cobertura de statements</div>
+  <div class="ctl">ESLint con eslint-plugin-security</div>
+  <div class="ctl">npm audit --omit=dev: bloquea critical/high en producción</div>
+  <div class="ctl">Build de producción de Vite</div>
+  <span class="tag">OWASP A06</span></div>
+ <div class="arrow">→</div>
+ <div class="stage gate"><h2>Puerta A: calidad</h2>
+  <div class="ctl">Falla si hay pruebas en rojo, cobertura &lt; 60 %, prioridad 1 de SpotBugs o vulnerabilidad crítica/alta en producción</div>
+  <div class="ctl">Bloquea el merge a main</div>
+  <span class="tag">Ley 21.719 art. 14 quinquies (verificación periódica)</span></div>
+ <div class="arrow">→</div>
+ <div class="stage"><h2>4. Stack en Docker</h2>
+  <div class="ctl">docker compose build de los 5 contenedores (Dockerfile multi-etapa, usuario no root)</div>
+  <div class="ctl">Microservicios sin puertos publicados; JWT obligatorio entre servicios</div>
+  <div class="ctl">Espera de disponibilidad extremo a extremo (esperar_stack.sh)</div>
+  <span class="tag">OWASP A01, A05</span></div>
+ <div class="arrow">→</div>
+ <div class="stage"><h2>5. E2E y API</h2>
+  <div class="ctl">Playwright: 5 flujos de interfaz (UI-01 a UI-05) y 6 pruebas de API</div>
+  <div class="ctl">Valida el control de acceso, el error de login y el bloqueo por intentos</div>
+  <div class="ctl">Reporte HTML y JSON como artefacto del pipeline</div></div>
+ <div class="arrow">→</div>
+ <div class="stage"><h2>6. DAST</h2>
+  <div class="ctl">OWASP ZAP baseline sobre el frontend desplegado</div>
+  <div class="ctl">Cabeceras de seguridad: CSP, COOP, CORP, Permissions-Policy</div>
+  <span class="tag">OWASP A05</span></div>
+ <div class="arrow">→</div>
+ <div class="stage gate"><h2>Puerta B: seguridad</h2>
+  <div class="ctl">Falla si ZAP reporta alertas de riesgo alto</div>
+  <div class="ctl">Bloquea el merge y conserva el reporte</div>
+  <div class="ctl">Análisis SonarQube local (ver docs/seguridad/sonarqube)</div></div>
+</div>
+<div class="legend"><span class="tag">Etiqueta normativa</span> Criterio de la asignatura y de la normativa aplicable que cada control verifica. Los controles SAST con SonarQube se ejecutan en un servidor local y no bloquean el pipeline remoto.</div>
+<div class="norm"><b>Trazabilidad:</b> cada puerta corresponde a un requisito del Encargo 2 (REQ-CAL-01, REQ-CAL-02, REQ-SEG-06, REQ-DEP-01) y a un caso de la batería ejecutable (CP-14, CP-15, CP-16, CP-17) y de las pruebas E2E.</div>
+</body></html>

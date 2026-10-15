@@ -23,7 +23,7 @@ import time
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 ETIQUETA = sys.argv[1] if len(sys.argv) > 1 else "ejecucion"
@@ -94,6 +94,10 @@ DATOS_ENTRADA = {
     "CP-16": "npm audit --json sobre frontend/package-lock.json",
     "CP-17": "Dockerfile por servicio y docker-compose.yml (docker compose config)",
     "CP-18": "GET sin token a http://localhost:8081/api/products, :8082/api/orders/customer/1 y :8083/api/shipments",
+    "CP-20": "GET sin token a http://inventory-service:8081/api/products desde un contenedor curl en la red smartlogix_default",
+    "CP-21": "usuario nuevo; 5 POST /api/auth/login con clave 'mala-clave' y luego con 'pass12345'",
+    "CP-22": "pedido WEB (productId 1, cantidad 1); PATCH /api/orders/{id}/status?status=SHIPPED",
+    "CP-23": "GET /api/products/price-range?max=150 (sin min)",
     "CP-19": "name 'Producto CP19 <marca temporal>', brand 'Prueba', price 10.5, stockQuantity 5, fragrance 'Test'; token del CP-01",
 }
 
@@ -219,7 +223,10 @@ def cp05_circuit_breaker(token):
     for carrier, prefijo, fallback, dias in [("DHL", "TRK-", False, 3), ("FAIL_CARRIER", "FBK-", True, 7)]:
         st, _, txt = peticion("POST", f"{BFF}/api/shipments", {**base, "carrier": carrier}, token)
         d = json_de(txt) or {}
-        esperada = (hoy + timedelta(days=dias)).isoformat()
+        # La fecha de referencia es la del propio servidor (createdAt), no la del cliente: el servidor
+        # puede operar en otra zona horaria (p. ej. UTC en Docker) y cambiar de día antes que el cliente.
+        base_fecha = datetime.fromisoformat(d["createdAt"]).date() if d.get("createdAt") else hoy
+        esperada = (base_fecha + timedelta(days=dias)).isoformat()
         ok = st == 201 and str(d.get("trackingNumber", "")).startswith(prefijo) \
             and d.get("circuitBreakerFallback") is fallback and d.get("estimatedDelivery") == esperada
         c.paso(f"Carrier {carrier}: prefijo {prefijo}, fallback={fallback}, entrega {esperada}", ok,
@@ -461,6 +468,61 @@ def cp19_alta_producto(token):
     return c
 
 
+def cp20_servicio_sin_token_en_red_interna():
+    c = Caso("CP-20", "REQ-SEG-08", "Microservicio rechaza peticiones sin token desde la red interna",
+             "Seguridad / defensa en profundidad",
+             "Petición directa a inventory-service desde otro contenedor de la red de Compose, sin token.",
+             "HTTP 401: el microservicio no confía en que la petición provenga del BFF.",
+             "Código 401 (o 403) sin datos del catálogo.", "GRAVE")
+    cmd = ["docker", "run", "--rm", "--network", "smartlogix_default", "curlimages/curl", "-s",
+           "-o", "/dev/null", "-w", "%{http_code}", "http://inventory-service:8081/api/products"]
+    r = subprocess.run(cmd, capture_output=True, text=True, timeout=120)
+    st = r.stdout.strip() or "sin respuesta"
+    c.paso(f"GET http://inventory-service:8081/api/products sin token (red interna) -> HTTP {st}", st in ("401", "403"), r.stderr[:160])
+    return c
+
+
+def cp21_bloqueo_tras_intentos_fallidos():
+    c = Caso("CP-21", "REQ-SEG-09", "Bloqueo temporal tras intentos fallidos de inicio de sesión",
+             "Seguridad / autenticación",
+             "Cinco contraseñas incorrectas seguidas y luego la contraseña correcta.",
+             "Los fallos responden 401; tras el quinto, el acceso queda bloqueado (429) aunque la clave sea correcta.",
+             "Respuesta 429 con mensaje controlado tras el límite.", "MODERADO")
+    user = f"bloq{int(time.time())}"
+    peticion("POST", f"{BFF}/api/auth/register", {"username": user, "password": "pass12345"})
+    for i in range(5):
+        st, _, _ = peticion("POST", f"{BFF}/api/auth/login", {"username": user, "password": "mala-clave"})
+        c.paso(f"Intento fallido {i + 1} -> HTTP {st}", st == 401, "")
+    st, _, txt = peticion("POST", f"{BFF}/api/auth/login", {"username": user, "password": "pass12345"})
+    c.paso(f"Login con clave correcta tras 5 fallos -> HTTP {st}", st == 429, txt[:160])
+    return c
+
+
+def cp22_patch_estado_via_bff(token):
+    c = Caso("CP-22", "REQ-FUNC-05", "Actualización de estado de pedido a través del BFF", "Funcional / integración",
+             "Crear un pedido WEB y actualizar su estado con PATCH a través del BFF.",
+             "HTTP 200 y el estado queda SHIPPED.",
+             "Código 200; el estado devuelto coincide con el enviado.", "GRAVE")
+    st, _, txt = peticion("POST", f"{BFF}/api/orders", {"customerId": 3, "customerName": "Estado", "email": "estado@test.com",
+                          "orderType": "WEB", "items": [{"productId": 1, "productName": "Sauvage", "quantity": 1, "unitPrice": 100}]}, token)
+    oid = (json_de(txt) or {}).get("id")
+    c.paso(f"Crear pedido de prueba -> HTTP {st}, id={oid}", st == 201 and oid is not None, "")
+    if oid is not None:
+        st2, _, txt2 = peticion("PATCH", f"{BFF}/api/orders/{oid}/status?status=SHIPPED", None, token)
+        c.paso(f"PATCH /api/orders/{oid}/status?status=SHIPPED -> HTTP {st2}", st2 == 200 and (json_de(txt2) or {}).get("status") == "SHIPPED", txt2[:160])
+    return c
+
+
+def cp23_parametro_obligatorio(token):
+    c = Caso("CP-23", "REQ-VAL-02", "Parámetro obligatorio ausente devuelve 400", "Funcional / negativo",
+             "Búsqueda por rango de precio sin el parámetro min.",
+             "HTTP 400 con mensaje que indica el parámetro ausente.",
+             "Código 400 (no 500).", "MODERADO")
+    st, _, txt = peticion("GET", f"{BFF}/api/products/price-range?max=150", None, token)
+    c.paso(f"GET /api/products/price-range?max=150 -> HTTP {st}", st == 400, txt[:160])
+    return c
+
+
 def main():
     usuario = f"usr{int(time.time())}"
     casos = [cp01_autenticacion_jwt(usuario)]
@@ -483,6 +545,10 @@ def main():
     casos.append(cp17_contenedores())
     casos.append(cp18_acceso_directo_servicios())
     casos.append(cp19_alta_producto(token))
+    casos.append(cp20_servicio_sin_token_en_red_interna())
+    casos.append(cp21_bloqueo_tras_intentos_fallidos())
+    casos.append(cp22_patch_estado_via_bff(token))
+    casos.append(cp23_parametro_obligatorio(token))
 
     resultados = [c.dict() for c in casos]
     with open(os.path.join(SALIDA, "resultados.json"), "w", encoding="utf-8") as f:

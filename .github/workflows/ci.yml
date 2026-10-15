@@ -1,0 +1,164 @@
+# Pipeline de integración continua de SmartLogix (Encargo 3).
+# Puertas de calidad que bloquean el merge:
+#   1. Backend: pruebas unitarias e integración (JaCoCo >= 60 % de líneas) y SpotBugs + FindSecBugs sin hallazgos de prioridad 1.
+#   2. Frontend: pruebas, ESLint de seguridad y npm audit de dependencias de producción (critical/high).
+#   3. Stack en Docker: pruebas E2E y de API (Playwright) contra los contenedores reales.
+#   4. DAST: OWASP ZAP baseline sobre el frontend desplegado; bloquea si hay alertas de riesgo alto.
+# El análisis con SonarQube se ejecuta en un servidor local (ver docs/seguridad/sonarqube); el job
+# de abajo se activa solo si el repositorio define el secreto SONAR_TOKEN y la variable SONAR_HOST_URL.
+name: ci
+
+on:
+  push:
+    branches: [main, v2]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  backend:
+    name: Backend (${{ matrix.servicio }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        servicio: [bff-gateway, inventory-service, order-service, shipping-service]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "21"
+          cache: maven
+      - name: Pruebas y cobertura (JaCoCo)
+        working-directory: ${{ matrix.servicio }}
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        run: mvn -B clean verify
+      - name: Análisis estático (SpotBugs + FindSecBugs, prioridad 1 = fallo)
+        working-directory: ${{ matrix.servicio }}
+        run: |
+          mvn -B -Psecurity com.github.spotbugs:spotbugs-maven-plugin:4.8.6.6:spotbugs
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET, sys
+          bugs = ET.parse("target/spotbugsXml.xml").getroot().findall("BugInstance")
+          p1 = [b.get("type") for b in bugs if b.get("priority") == "1"]
+          print(f"hallazgos={len(bugs)} prioridad1={p1}")
+          sys.exit(1 if p1 else 0)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: backend-${{ matrix.servicio }}
+          path: |
+            ${{ matrix.servicio }}/target/site/jacoco/
+            ${{ matrix.servicio }}/target/spotbugsXml.xml
+            ${{ matrix.servicio }}/target/surefire-reports/
+
+  frontend:
+    name: Frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: frontend/package-lock.json
+      - run: npm ci
+      - name: Pruebas unitarias y cobertura
+        run: npm run test:coverage
+      - name: ESLint con reglas de seguridad
+        run: npx eslint "src/**/*.{js,jsx}"
+      - name: Dependencias de producción (bloquea critical/high)
+        run: npm audit --omit=dev --audit-level=high
+      - name: Auditoría completa (informativa)
+        run: npm audit || true
+      - name: Compilación de producción
+        run: npm run build
+
+  e2e:
+    name: E2E y API sobre Docker
+    runs-on: ubuntu-latest
+    needs: [backend, frontend]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Configurar secreto del entorno
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        run: printf "JWT_SECRET=%s\n" "$JWT_SECRET" > .env
+      - name: Levantar el stack
+        run: |
+          docker compose up -d --build
+          ./docs/pruebas/esperar_stack.sh 240
+      - name: Instalar Playwright
+        working-directory: e2e
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+      - name: Ejecutar pruebas E2E y de API
+        working-directory: e2e
+        run: npx playwright test
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: e2e-reportes
+          path: e2e/reports/
+      - name: Registros de los contenedores
+        if: failure()
+        run: docker compose logs --tail=200
+      - name: Apagar el stack
+        if: always()
+        run: docker compose down -v
+
+  dast:
+    name: DAST (OWASP ZAP baseline)
+    runs-on: ubuntu-latest
+    needs: [e2e]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configurar secreto del entorno
+        env:
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        run: printf "JWT_SECRET=%s\n" "$JWT_SECRET" > .env
+      - name: Levantar el stack
+        run: |
+          docker compose up -d --build
+          ./docs/pruebas/esperar_stack.sh 240
+      - name: OWASP ZAP baseline sobre el frontend
+        run: |
+          mkdir -p zap
+          # El contenedor de ZAP escribe como otro usuario: el directorio de reportes debe ser escribible.
+          chmod 777 zap
+          docker run --rm --network host -v "$PWD/zap":/zap/wrk/:rw ghcr.io/zaproxy/zaproxy:stable \
+            zap-baseline.py -t http://localhost:5173/ -r baseline.html -J baseline.json -I -m 3 || true
+      - name: Puerta de calidad DAST (bloquea alertas de riesgo alto)
+        run: |
+          python3 - <<'PY'
+          import json, sys
+          d = json.load(open("zap/baseline.json"))
+          altas = [a["name"] for s in d.get("site", []) for a in s.get("alerts", []) if a.get("riskcode") == "3"]
+          print("alertas de riesgo alto:", altas)
+          sys.exit(1 if altas else 0)
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: zap-reportes
+          path: zap/
+      - name: Apagar el stack
+        if: always()
+        run: docker compose down -v

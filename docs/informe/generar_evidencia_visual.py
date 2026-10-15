@@ -17,7 +17,7 @@ from playwright.sync_api import sync_playwright
 
 RAIZ = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 CAP = os.path.join(RAIZ, "docs", "evidencias", "capturas")
-RESULTADOS = os.path.join(RAIZ, "docs", "evidencias", "mitigado-docker", "resultados.json")
+RESULTADOS = os.path.join(RAIZ, "docs", "evidencias", os.environ.get("ETIQUETA_RESULTADOS", "v2-final"), "resultados.json")
 FRONT = "http://localhost:5173"
 CHROME = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome"
 
@@ -70,6 +70,27 @@ def flujo_navegador():
         pg.wait_for_timeout(1500)
         rutas["UI-05"] = os.path.join(CAP, "UI-05-catalogo-productos.png")
         pg.screenshot(path=rutas["UI-05"])
+
+        # UI-06: tras cinco intentos fallidos, el sexto (con la clave correcta) muestra el bloqueo temporal
+        otro = usuario + "x"
+        pg.goto(f"{FRONT}/login")
+        pg.get_by_role("button", name="Registrarse").last.click()
+        pg.fill("#username", otro)
+        pg.fill("#password", clave)
+        pg.locator("button[type=submit]").click()
+        pg.get_by_text("Registro exitoso").wait_for(timeout=15000)
+        for _ in range(5):
+            pg.fill("#username", otro)
+            pg.fill("#password", "clave-incorrecta")
+            pg.locator("button[type=submit]").click()
+            pg.wait_for_timeout(900)
+        pg.fill("#username", otro)
+        pg.fill("#password", clave)
+        pg.locator("button[type=submit]").click()
+        pg.get_by_text("Demasiados intentos").wait_for(timeout=15000)
+        pg.wait_for_timeout(500)
+        rutas["UI-06"] = os.path.join(CAP, "UI-06-bloqueo-tras-intentos-fallidos.png")
+        pg.screenshot(path=rutas["UI-06"])
 
         nav.close()
     return rutas
@@ -129,6 +150,7 @@ def main():
     os.makedirs(CAP, exist_ok=True)
     rutas = flujo_navegador()
     print("capturas de navegador:", len(rutas))
+    # Los flujos que fallaban en la base (INC-18) se capturan tal como quedan en esta versión.
     casos = json.load(open(RESULTADOS, encoding="utf-8"))["casos"]
     tarjetas(casos)
     print("tarjetas de casos:", len(casos))

@@ -15,7 +15,10 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+    // Los errores de autenticación (login) no deben forzar una redirección: el formulario debe mostrar el mensaje.
+    // axios recibe la ruta relativa a baseURL ("/api"), p. ej. "/auth/login".
+    const esAutenticacion = /(^|\/)auth\//.test(error.config?.url || "");
+    if (!esAutenticacion && error.response && (error.response.status === 401 || error.response.status === 403)) {
       localStorage.removeItem("token");
       localStorage.removeItem("username");
       window.location.href = "/login";

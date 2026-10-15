@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
+import org.springframework.web.util.UriComponentsBuilder;
+import java.net.URI;
 import java.util.Map;
 
 @Service
@@ -36,6 +38,13 @@ public class OrderProxyService {
     }
 
     public Map<String, Object> updateOrderStatus(Long id, String status) {
-        return restTemplate.patchForObject(orderUrl + "/api/orders/" + id + "/status?status=" + status, null, Map.class);
+        // El valor se codifica como parámetro: no puede alterar la ruta ni añadir parámetros (INC-22).
+        URI destino = UriComponentsBuilder.fromUriString(orderUrl)
+                .pathSegment("api", "orders", String.valueOf(id), "status")
+                .queryParam("status", "{status}")
+                .buildAndExpand(status)
+                .encode()
+                .toUri();
+        return restTemplate.patchForObject(destino, null, Map.class);
     }
 }

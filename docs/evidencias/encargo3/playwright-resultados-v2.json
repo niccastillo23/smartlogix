@@ -1,0 +1,557 @@
+{
+  "config": {
+    "argv": [
+      "/usr/local/bin/node",
+      "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/node_modules/.bin/playwright",
+      "test"
+    ],
+    "configFile": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/playwright.config.js",
+    "rootDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/tests",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "FRONT_URL": "http://localhost:5173",
+      "API_URL": "http://localhost:8080",
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "FRONT_URL": "http://localhost:5173",
+          "API_URL": "http://localhost:8080",
+          "actualWorkers": 1
+        },
+        "id": "ui",
+        "name": "ui",
+        "testDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/ui\\.spec\\.js/"
+        ],
+        "timeout": 45000
+      },
+      {
+        "outputDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "FRONT_URL": "http://localhost:5173",
+          "API_URL": "http://localhost:8080",
+          "actualWorkers": 1
+        },
+        "id": "api",
+        "name": "api",
+        "testDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "/api\\.spec\\.js/"
+        ],
+        "timeout": 45000
+      }
+    ],
+    "filteredProjects": [
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "FRONT_URL": "http://localhost:5173",
+          "API_URL": "http://localhost:8080",
+          "actualWorkers": 1
+        },
+        "name": "ui",
+        "testDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/tests",
+        "snapshotDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/tests",
+        "testIgnore": [],
+        "testMatch": {},
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://localhost:5173",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "video": "off",
+          "browserName": "chromium",
+          "viewport": {
+            "width": 1280,
+            "height": 800
+          }
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "ui"
+      },
+      {
+        "grep": {},
+        "grepInvert": null,
+        "outputDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "FRONT_URL": "http://localhost:5173",
+          "API_URL": "http://localhost:8080",
+          "actualWorkers": 1
+        },
+        "name": "api",
+        "testDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/tests",
+        "snapshotDir": "/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/e2e/tests",
+        "testIgnore": [],
+        "testMatch": {},
+        "timeout": 45000,
+        "use": {
+          "baseURL": "http://localhost:8080",
+          "trace": "retain-on-failure",
+          "screenshot": "only-on-failure",
+          "video": "off"
+        },
+        "dependencies": [],
+        "ignoreSnapshots": false,
+        "__projectId": "api"
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "html",
+        {
+          "outputFolder": "reports/html",
+          "open": "never"
+        }
+      ],
+      [
+        "json",
+        {
+          "outputFile": "reports/resultados.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "default",
+    "updateSourceMethod": "patch",
+    "version": "1.64.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "ui.spec.js",
+      "file": "ui.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "UI-01 acceso a una ruta protegida sin sesión redirige a login",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "ui",
+              "projectName": "ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 249,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:10.406Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6cacfa4b79c1be8f210f-598218329947fe32261a",
+          "file": "ui.spec.js",
+          "line": 16,
+          "column": 5
+        },
+        {
+          "title": "UI-02 registro de un usuario nuevo muestra confirmación",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "ui",
+              "projectName": "ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1281,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:10.809Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6cacfa4b79c1be8f210f-7ada4821e8027d78d54f",
+          "file": "ui.spec.js",
+          "line": 22,
+          "column": 5
+        },
+        {
+          "title": "UI-03 credenciales incorrectas muestran un mensaje de error",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "ui",
+              "projectName": "ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1499,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:12.094Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6cacfa4b79c1be8f210f-69dc8c1f252db7ec7531",
+          "file": "ui.spec.js",
+          "line": 26,
+          "column": 5
+        },
+        {
+          "title": "UI-04 inicio de sesión correcto lleva a la página principal",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "ui",
+              "projectName": "ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1547,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:13.597Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6cacfa4b79c1be8f210f-d607092e4f545b7fc374",
+          "file": "ui.spec.js",
+          "line": 38,
+          "column": 5
+        },
+        {
+          "title": "UI-05 el catálogo muestra los productos obtenidos del BFF",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "ui",
+              "projectName": "ui",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 1459,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:15.148Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "6cacfa4b79c1be8f210f-cd99ba15c5fd59e9f998",
+          "file": "ui.spec.js",
+          "line": 47,
+          "column": 5
+        }
+      ]
+    },
+    {
+      "title": "api.spec.js",
+      "file": "api.spec.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "API-01 endpoint protegido sin token responde 401",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api",
+              "projectName": "api",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 5,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:16.785Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8747e39b871de0524be5-724785902e5ec911296a",
+          "file": "api.spec.js",
+          "line": 14,
+          "column": 5
+        },
+        {
+          "title": "API-02 listado de productos con token responde 200 con el catálogo",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api",
+              "projectName": "api",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 11,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:16.923Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8747e39b871de0524be5-52bf20039c7efa56f693",
+          "file": "api.spec.js",
+          "line": 19,
+          "column": 5
+        },
+        {
+          "title": "API-03 tipo de orden no soportado responde 400 con mensaje controlado",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api",
+              "projectName": "api",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 10,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:16.938Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8747e39b871de0524be5-39dd781d94a0170e4c05",
+          "file": "api.spec.js",
+          "line": 25,
+          "column": 5
+        },
+        {
+          "title": "API-04 actualizar estado de un pedido a través del BFF responde 200",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api",
+              "projectName": "api",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 21,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:16.951Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8747e39b871de0524be5-9b22dcf8dea8c99d9fab",
+          "file": "api.spec.js",
+          "line": 35,
+          "column": 5
+        },
+        {
+          "title": "API-05 parámetro obligatorio ausente responde 400 y no 500",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api",
+              "projectName": "api",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:16.975Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8747e39b871de0524be5-76b229741bc027def230",
+          "file": "api.spec.js",
+          "line": 48,
+          "column": 5
+        },
+        {
+          "title": "API-06 con token inválido se rechaza el acceso",
+          "ok": true,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 45000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "api",
+              "projectName": "api",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "passed",
+                  "duration": 4,
+                  "errors": [],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-10-15T01:07:16.983Z",
+                  "annotations": [],
+                  "attachments": []
+                }
+              ],
+              "status": "expected"
+            }
+          ],
+          "id": "8747e39b871de0524be5-461c4e4dae60fe60db17",
+          "file": "api.spec.js",
+          "line": 54,
+          "column": 5
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-10-15T01:07:10.236Z",
+    "duration": 6764.393,
+    "expected": 11,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,17 @@
+Ejecución de las pruebas E2E y de API contra la rama main (stack Docker del Encargo 2).
+Transcripción de la salida de consola de Playwright (npx playwright test --project=ui y --project=api).
+
+[ui] UI-01 acceso a una ruta protegida sin sesión redirige a login ............ PASA (475 ms)
+[ui] UI-02 registro de un usuario nuevo muestra confirmación ................. PASA (1.3 s)
+[ui] UI-03 credenciales incorrectas muestran un mensaje de error ............. FALLA (6.4 s)  -> "element(s) not found" (INC-18)
+[ui] UI-04 inicio de sesión correcto lleva a la página principal ............ PASA (1.6 s)
+[ui] UI-05 el catálogo muestra los productos obtenidos del BFF .............. PASA (1.5 s)
+     resultado UI: 4 aprobadas, 1 fallida
+[api] API-01 endpoint protegido sin token responde 401 ........................ PASA
+[api] API-02 listado de productos con token responde 200 ...................... PASA
+[api] API-03 tipo de orden no soportado responde 400 .......................... PASA
+[api] API-04 actualizar estado de un pedido a través del BFF responde 200 ..... FALLA  -> HTTP 503 (INC-19)
+[api] API-05 parámetro obligatorio ausente responde 400 y no 500 .............. FALLA  -> HTTP 500 (INC-20)
+[api] API-06 con token inválido se rechaza el acceso .......................... PASA
+     resultado API: 4 aprobadas, 2 fallidas
+Total: 8 aprobadas, 3 fallidas de 11.

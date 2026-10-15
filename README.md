@@ -2,7 +2,9 @@
 
 Sistema de comercio electrónico de perfumes con arquitectura de microservicios: Spring Boot 3.2 (Java 21), React 18 y Docker.
 
-Proyecto del caso semestral de **ISY1102 - Seguridad y calidad en el desarrollo de software**. Además del código, el repositorio contiene el plan de pruebas, las evidencias de ejecución y el informe del Encargo 2.
+Proyecto del caso semestral de **ISY1102 - Seguridad y calidad en el desarrollo de software**. Además del código, el repositorio contiene el plan de pruebas, las evidencias de ejecución y los informes de los Encargos 2 y 3.
+
+---
 
 ## Arquitectura
 
@@ -14,14 +16,37 @@ Proyecto del caso semestral de **ISY1102 - Seguridad y calidad en el desarrollo 
 | **Order Service** | Spring Boot 3.2, JPA, H2 | 8082 | Factory Method |
 | **Shipping Service** | Spring Boot 3.2, JPA, H2, Resilience4j | 8083 | Circuit Breaker |
 
-El frontend llama a `/api`. En desarrollo lo reenvía Vite al BFF; en Docker lo reenvía nginx. Los microservicios solo son accesibles dentro de la red de Docker, y el BFF es el único punto de entrada autenticado.
+El frontend llama a `/api`: en desarrollo lo reenvía Vite al BFF y en Docker lo reenvía nginx. El BFF es el único punto de entrada. Los microservicios no publican puertos fuera de la red de Docker y validan un JWT firmado en cada petición.
+
+### Patrones de diseño
+
+1. **Repository** (Inventory): `ProductRepository` con consultas JPQL personalizadas.
+2. **Factory Method** (Orders): `OrderFactory`, con `WebOrderFactory` (descuento 5 %, envío STANDARD) y `MarketplaceOrderFactory` (descuento 10 %, envío EXPRESS).
+3. **Circuit Breaker** (Shipping): Resilience4j con fallback en `ExternalCarrierService` (tracking `FBK-`, entrega en 7 días).
+4. **API Gateway / BFF**: autenticación JWT, proxy a los microservicios y traducción de errores.
+
+---
+
+## Evolución del proyecto
+
+El caso se desarrolló en tres entregas de la asignatura ISY1102, cada una sobre el mismo código y con un alcance mayor.
+
+| Entrega | Alcance | Resultados principales |
+|---|---|---|
+| **Encargo 1** (Evaluación Parcial 1) | Arquitectura de microservicios, plan de pruebas inicial y criterios de calidad (ISO/IEC 25010, OWASP y Ley 19.628). | Plan de pruebas con cobertura objetivo de JaCoCo ≥ 60 %. |
+| **Encargo 2** | Auditoría sobre el código real, despliegue en Docker y remediación. | Batería de 19 casos: 5/19 aprobados en la línea base y 18/19 en la versión mitigada. Cifrado de contraseñas con BCrypt, secreto JWT fuera del código y gate de JaCoCo activo. Registro de 18 incidentes. |
+| **Encargo 3** | Pruebas de seguridad, automatización y CI/CD. | Batería ampliada a 23 casos: 17/23 en la línea base y 22/23 en la versión final. 11 pruebas E2E y de API con Playwright (11/11, 6,8 s). DAST con OWASP ZAP, SAST con SpotBugs, ESLint y SonarQube, SCA con `npm audit`, pipeline en GitHub Actions y plan de mantenimiento. Registro de 24 incidentes (INC-01 a INC-25, sin el INC-17, documentado en el Encargo 2). |
+
+Los informes de cada entrega están en `docs/informe/` (ver [Documentación](#documentación)).
 
 ## Requisitos
 
-- Java 21 (JDK 25 funciona para compilar y probar, pero SpotBugs 4.8 no lee sus clases: los análisis estáticos deben ejecutarse con JDK 21)
-- Maven 3.9+
-- Node.js 18+ y npm 9+
-- Docker y Docker Compose (para el despliegue completo)
+- Java 21. JDK 25 sirve para compilar y probar, pero SpotBugs 4.8 no lee sus clases: los análisis estáticos deben ejecutarse con JDK 21.
+- Maven 3.9 o superior.
+- Node.js 18 o superior, y npm 9 o superior.
+- Docker y Docker Compose, para el despliegue completo.
+
+---
 
 ## Despliegue con Docker (recomendado)
 
@@ -50,6 +75,8 @@ cd bff-gateway       && mvn spring-boot:run    # 8080 (después de los anteriore
 cd frontend && npm install && npm run dev      # 5173
 ```
 
+---
+
 ## Pruebas
 
 ### Unitarias e integración (backend)
@@ -62,11 +89,11 @@ cd <servicio> && JWT_SECRET=<valor> mvn clean verify
 
 | Servicio | Pruebas | Cobertura de líneas |
 |---|---|---|
-| Inventory Service | 38 | 95,2 % |
-| Order Service | 26 | 88,7 % |
-| Shipping Service | 25 | 86,3 % |
-| BFF Gateway | 32 | 74,3 % |
-| **Total** | **121** | |
+| Inventory Service | 41 | 95,1 % |
+| Order Service | 29 | 93,8 % |
+| Shipping Service | 28 | 92,8 % |
+| BFF Gateway | 36 | 77,1 % |
+| **Total** | **134** | |
 
 ### Unitarias (frontend)
 
@@ -84,14 +111,14 @@ Con los servicios en ejecución (Docker o local):
 python3 docs/pruebas/ejecutar_casos.py <etiqueta>
 ```
 
-El script ejecuta 19 casos (`CP-01` a `CP-19`) contra el BFF con un token real, y escribe los resultados en `docs/evidencias/<etiqueta>/`. Cada caso registra requisito, datos de entrada, resultado esperado, criterio de aceptación, criticidad, responsable y fecha. Los tokens JWT se redactan antes de guardar la evidencia.
+El script ejecuta 23 casos (`CP-01` a `CP-23`) contra el BFF con un token real y escribe los resultados en `docs/evidencias/<etiqueta>/`. Cada caso registra requisito, datos de entrada, resultado esperado, criterio de aceptación, criticidad, responsable y fecha. Los tokens JWT se redactan antes de guardar la evidencia.
 
-Resultado de la última ejecución sobre el stack Docker: **18 de 19 casos aprobados**. El caso que falla (CP-16) corresponde a un riesgo residual documentado (ver "Estado de seguridad").
+Resultado de la última ejecución sobre el stack Docker (rama `v2`): **22 de 23 casos aprobados**. El caso que falla (CP-16) corresponde a un riesgo residual documentado (ver [Estado de seguridad](#estado-de-seguridad)).
 
 ### Análisis estático y dependencias
 
 ```bash
-# Backend (con JDK 21): SpotBugs + FindSecBugs, filtro documentado en bff-gateway/spotbugs-exclude.xml
+# Backend (con JDK 21): SpotBugs + FindSecBugs; filtros documentados en <servicio>/spotbugs-exclude.xml
 cd <servicio> && mvn -Psecurity com.github.spotbugs:spotbugs-maven-plugin:4.8.6.6:spotbugs
 
 # Frontend: ESLint con reglas de seguridad y auditoría de dependencias
@@ -99,43 +126,82 @@ cd frontend && npx eslint "src/**/*.{js,jsx}"
 cd frontend && npm audit
 ```
 
-## Documentación
+---
 
-- `docs/informe/Informe_EP3_ISY1102_SmartLogix.pdf` - informe de seguridad y calidad (Encargo 2): criterios, plan de pruebas, casos, ejecución, incidentes y análisis ético y normativo.
-- `docs/evidencias/` - resultados de ejecución (JSON y texto), logs de compilación y capturas.
-- `docs/pruebas/ejecutar_casos.py` - ejecutor reproducible de los casos de prueba.
-- `docs/informe/generar_informe.py` y `publicar_informe.sh` - regeneran el informe a partir de las evidencias (`publicar_informe.sh` requiere Microsoft Word en macOS).
-- `docs/diagrama-arquitectura.md`, `docs/descripcion-persistencia.md`, `docs/swagger-api.md` - arquitectura, persistencia y uso de Swagger.
-- `docs/TESTING.md` y `docs/informe-pruebas.md` - guías de pruebas de versiones anteriores; sus cifras no están actualizadas.
-- `postman/smartlogix-collection.json` - colección Postman.
+## Automatización, DAST y CI/CD
+
+### Pipeline de integración continua
+
+`.github/workflows/ci.yml` se ejecuta en cada push a `main` y `v2` y en cada pull request. Sus jobs son:
+
+- **Backend** (un job por servicio): pruebas, JaCoCo y SpotBugs.
+- **Frontend**: pruebas, ESLint y `npm audit --omit=dev`.
+- **E2E y API sobre Docker**: Playwright contra el stack levantado.
+- **DAST**: OWASP ZAP baseline sobre el frontend desplegado.
+
+Las puertas que bloquean el merge son: prioridad 1 de SpotBugs, critical o high en producción, y alertas de riesgo alto de ZAP.
+
+El pipeline requiere el secreto `JWT_SECRET` en *Settings → Secrets and variables → Actions*.
+
+### Pruebas E2E y de API
+
+Suite en `e2e/` con Playwright: 5 flujos de interfaz y 6 pruebas de API.
+
+```bash
+cd e2e && npm ci && npx playwright install chromium
+npx playwright test   # con el stack en ejecución
+```
+
+### DAST y SAST
+
+- **DAST:** `docs/seguridad/ejecutar_zap.sh <etiqueta>` ejecuta OWASP ZAP contra el stack local (solo `localhost`).
+- **SAST con SonarQube:** configuración en `docs/seguridad/sonarqube/`. El análisis corre en un servidor local en Docker y no se publican credenciales.
+- **Diagrama de controles:** `docs/seguridad/diagramas/pipeline.html`.
+
+---
 
 ## Estado de seguridad
 
-Hallazgos del análisis, con su estado al momento del informe. El detalle completo (criticidad, ubicación y tratamiento) está en la sección 5.3 del informe.
+Hallazgos del análisis, con su estado en la rama `v2`. El detalle completo (criticidad, ubicación, tratamiento y evidencia) está en el informe del Encargo 3.
 
 | Estado | Hallazgo |
 |---|---|
 | Corregido | Contraseñas almacenadas en texto plano (ahora BCrypt) |
 | Corregido | Secreto JWT literal en `application.yml` (ahora `${JWT_SECRET}`) |
-| Corregido | Microservicios accesibles directamente desde la red del host (ya no se publican puertos) |
-| Corregido | Gate de cobertura JaCoCo inactivo por `argLine` |
-| Corregido | Alta de productos con HTTP 500 por secuencia de IDs |
-| Abierto | 3 vulnerabilidades críticas y 6 altas en herramientas de desarrollo del frontend (vitest, vite, tailwind). Corregirlas exige saltos de versión mayor |
-| Abierto | Los microservicios no validan el JWT por sí mismos; dependen de la red y del BFF |
-| Abierto | El token JWT se guarda en `localStorage` |
-| Abierto | El endpoint de login no limita intentos |
-| Abierto | El secreto JWT original aparece en el historial de git: debe considerarse expuesto y rotarse |
-| Riesgo aceptado | Advertencia CSRF de SpotBugs en `SecurityConfig`: la API usa Bearer y sesiones stateless |
+| Corregido | Microservicios accesibles sin token desde la red (ahora validan JWT firmado en cada servicio) |
+| Corregido | Bloqueo de intentos de login tras 5 fallos (HTTP 429) |
+| Corregido | PATCH a través del BFF (503) y parámetro obligatorio ausente (500, ahora 400) |
+| Corregido | Valor de `status` concatenado en la URL del BFF (ahora codificado) |
+| Corregido | Error de login que no se mostraba en la interfaz |
+| Corregido | Ausencia de CSP y cabeceras de aislamiento (ahora en nginx) |
+| Corregido | Gate de cobertura JaCoCo inactivo por `argLine`; alta de productos con HTTP 500 |
+| Abierto | Secreto JWT original en el historial de git: debe considerarse expuesto y rotarse (SEG-01) |
+| Abierto | Token JWT en `localStorage` (SEG-02) |
+| Abierto | Duplicación de código entre microservicios: el quality gate de SonarQube falla (SEG-03) |
+| Abierto | Dependencias de build del frontend con vulnerabilidades críticas y altas (vitest, vite, tailwind) (SEG-05) |
+| Riesgo residual | `style-src 'unsafe-inline'` en la CSP por los estilos en línea de los componentes (SEG-04) |
+| Riesgo aceptado | CSRF deshabilitado (4 issues S4502 de SonarQube y prioridad 1 de SpotBugs): API stateless con Bearer, sin cookies |
 
 Los datos son de demostración: H2 en memoria y usuarios que se pierden al reiniciar el BFF.
 
-## Patrones de diseño
+---
 
-\## 📈 Evolución del Proyecto y Entregas Semestrales El desarrollo y aseguramiento de calidad de \*\*SmartLogix\*\* se estructuró en tres entregas semestrales correspondientes a la asignatura \*\*ISY1102 (Seguridad y Calidad en el Desarrollo de Software)\*\* [1, 2]: --- ### 🔹 Encargo 1 (Ev1) – Planteamiento del Marco, Arquitectura y Estrategia Inicial \* \*\*Enfoque\*\*: Definición de la arquitectura base de microservicios (React 18 + Spring Boot 3.2 / Java 21) y diseño del plan de pruebas inicial [1]. \* \*\*Marcos y Estándares\*\*: \* \*\*ISO/IEC 25010\*\*: Criterios de mantenibilidad, usabilidad y fiabilidad [1, 3]. \* \*\*OWASP Top 10\*\*: Seguridad en APIs REST y autenticación centralizada mediante BFF Gateway con JWT [1, 3]. \* \*\*Ley 19.628\*\*: Marco normativo chileno sobre Protección de la Vida Privada para el tratamiento de datos personales [3]. \* \*\*Estrategia propuesto\*\*: Enfoque mixto con pruebas unitarias en backend (JUnit 5 + Mockito) y frontend (Vitest), fijando una meta de cobertura JaCoCo \\\\(\\ge 60\\%\\\\) [1, 4, 5].
---- ### 🔹 Encargo 2 (EP2) – Auditoría sobre Código Real, Docker y Remediación \* \*\*Enfoque\*\*: Medición estricta sobre el código fuente, corrección de premisas iniciales y despliegue reproducible en contenedores Docker [6-8]. \* \*\*Línea Base vs. Versión Mitigada\*\*: \* \*\*Batería de Pruebas\*\*: De \*\*19 casos de prueba (CP-01 a CP-19)\*\*, la línea base aprobó solo \*\*5/19\*\*, mientras que la versión final mitigada en Docker alcanzó \*\*18/19 casos aprobados\*\* [9, 10]. \* \*\*Remediación de Vulnerabilidades\*\*: \* Implementación de \*\*BCrypt\*\* para cifrado de contraseñas (\`INC-01\`) [11, 12]. \* Extracción del secreto JWT a variables de entorno (\`${JWT\_SECRET}\`) fuera del código fuente (\`INC-02\`) [11, 12]. \* Corrección del parámetro \`argLine\` en Maven (\`INC-07\`), activando el gate de \*\*JaCoCo\*\* con coberturas finales entre \*\*74.3% y 95.2%\*\* en microservicios backend [13, 14]. \* \*\*Gestión de Incidentes\*\*: Registro y clasificación de \*\*18 incidentes (INC-01 a INC-18)\*\* [9, 15].
---- ### 🔹 Encargo 3 (EP3) – DevSecOps, Automatización E2E, CI/CD y Mantenimiento \* \*\*Enfoque\*\*: Integración de pruebas automatizadas E2E/API, análisis estático y dinámico de seguridad, pipeline de Integración Continua y plan de mantenimiento sostenible [16, 17]. \* \*\*Cierre de Pruebas y Automatización\*\*: \* Matriz extendida a \*\*23 casos de prueba (CP-01 a CP-23)\*\*, logrando \*\*22/23 casos aprobados\*\* en la versión final [18-20]. \* Suite de \*\*11 pruebas automatizadas E2E y de API con Playwright\*\* (\`e2e/\`), con \*\*100% de éxito (11/11)\*\* en 6.8 segundos [21-23]. \* \*\*Integración de Herramientas de Seguridad (DevSecOps)\*\*: \* \*\*SAST\*\*: SpotBugs + FindSecBugs, ESLint con reglas de seguridad y SonarQube [16, 24, 25]. \* \*\*DAST\*\*: Escaneos dinámicos automatizados sobre la API e interfaz con \*\*OWASP ZAP\*\* [16, 25]. \* \*\*SCA\*\*: Filtrado con \`npm audit --omit=dev\` garantizando 0 vulnerabilidades críticas/altas en producción [16, 24, 26]. \* \*\*CI/CD\*\*: Pipeline automatizado en \*\*GitHub Actions\*\* (\`.github/workflows/ci.yml\`) que ejecuta compilación, tests, Playwright y DAST en cada PR [16, 23]. \* \*\*Mantenimiento y Cumplimiento\*\*: Mapeo acumulado de \*\*25 incidentes (INC-01 a INC-25)\*\*, 7 propuestas de remediación continua (\*\*SEG-01 a SEG-07\*\*) y adecuación técnica ante la reforma de la \*\*Ley 21.719\*\* [20, 27, 28].
+## Documentación
 
-1. **Repository** (Inventory): `ProductRepository` con consultas JPQL personalizadas.
-2. **Factory Method** (Orders): `OrderFactory` → `WebOrderFactory` (5 %, STANDARD) / `MarketplaceOrderFactory` (10 %, EXPRESS).
-3. **Circuit Breaker** (Shipping): Resilience4j con fallback en `ExternalCarrierService` (tracking `FBK-`, entrega en 7 días).
-4. **API Gateway / BFF**: autenticación JWT, proxy a los microservicios y traducción de errores.
+### Informes
+
+- `docs/informe/Informe_Encargo3_ISY1102_SmartLogix.pdf`: Encargo 3. Pruebas de seguridad (DAST, SAST, SCA), automatización, CI/CD, incidentes, plan de mantenimiento y análisis ético y normativo.
+- `docs/informe/Informe_EP3_ISY1102_SmartLogix.pdf`: Encargo 2. Criterios, plan de pruebas, casos, ejecución, incidentes y análisis ético y normativo.
+
+### Evidencias y scripts
+
+- `docs/evidencias/`: resultados de ejecución (JSON y texto), logs de compilación, métricas y capturas.
+- `docs/pruebas/ejecutar_casos.py`: ejecutor reproducible de los casos de prueba.
+- `docs/informe/generar_informe_encargo3.py`: genera el informe del Encargo 3 a partir de las evidencias.
+- `docs/informe/generar_informe.py` y `publicar_informe.sh`: generan y publican el informe del Encargo 2 (`publicar_informe.sh` requiere Microsoft Word en macOS).
+
+### Referencias técnicas
+
+- `docs/diagrama-arquitectura.md`, `docs/descripcion-persistencia.md` y `docs/swagger-api.md`: arquitectura, persistencia y uso de Swagger.
+- `docs/TESTING.md` y `docs/informe-pruebas.md`: guías de pruebas de versiones anteriores. Sus cifras no están actualizadas.
+- `postman/smartlogix-collection.json`: colección Postman.
