@@ -31,3 +31,8 @@ coverage/
 # Los logs de evidencia (docs/evidencias) sí forman parte de la entrega
 !docs/evidencias/**/*.log
 __pycache__/
+
+# Reportes de Playwright
+e2e/reports/
+e2e/test-results/
+e2e/node_modules/
