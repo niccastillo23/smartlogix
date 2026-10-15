@@ -21,7 +21,7 @@ function ProductCatalog() {
   const { openDrawer } = useCartDrawer();
 
   useEffect(() => {
-    fetchProducts();
+    fetchProducts().catch(() => setError("No se pudieron cargar los productos."));
   }, []);
 
   const fetchProducts = async () => {
