@@ -1,0 +1,335 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< com.smartlogix:inventory-service >------------------
+[INFO] Building inventory-service 1.0.0
+[INFO]   from pom.xml
+[INFO] --------------------------------[ jar ]---------------------------------
+[INFO] 
+[INFO] --- clean:3.3.2:clean (default-clean) @ inventory-service ---
+[INFO] Deleting /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target
+[INFO] 
+[INFO] --- jacoco:0.8.15:prepare-agent (default) @ inventory-service ---
+[INFO] argLine set to -javaagent:/Users/nico/.m2/repository/org/jacoco/org.jacoco.agent/0.8.15/org.jacoco.agent-0.8.15-runtime.jar=destfile=/Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/jacoco.exec
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ inventory-service ---
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] Copying 1 resource from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ inventory-service ---
+[INFO] Changes detected - recompiling the module! :source
+[INFO] Compiling 12 source files with javac [debug release 21] to target/classes
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ inventory-service ---
+[INFO] skip non existing resourceDirectory /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ inventory-service ---
+[INFO] Changes detected - recompiling the module! :dependency
+[INFO] Compiling 6 source files with javac [debug release 21] to target/test-classes
+[INFO] 
+[INFO] --- surefire:3.1.2:test (default-test) @ inventory-service ---
+[INFO] Using auto detected provider org.apache.maven.surefire.junitplatform.JUnitPlatformProvider
+[INFO] 
+[INFO] -------------------------------------------------------
+[INFO]  T E S T S
+[INFO] -------------------------------------------------------
+[INFO] Running com.smartlogix.inventory.ProductRepositoryTest
+21:46:39.965 [main] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.smartlogix.inventory.ProductRepositoryTest]: ProductRepositoryTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+21:46:40.020 [main] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.smartlogix.inventory.InventoryServiceApplication for test class com.smartlogix.inventory.ProductRepositoryTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-10-14T21:46:40.214-03:00  INFO 37184 --- [inventory-service] [           main] c.s.inventory.ProductRepositoryTest      : Starting ProductRepositoryTest using Java 21.0.12.1 with PID 37184 (started by nico in /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service)
+2026-10-14T21:46:40.214-03:00  INFO 37184 --- [inventory-service] [           main] c.s.inventory.ProductRepositoryTest      : No active profile set, falling back to 1 default profile: "default"
+2026-10-14T21:46:40.372-03:00  INFO 37184 --- [inventory-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-14T21:46:40.399-03:00  INFO 37184 --- [inventory-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 23 ms. Found 1 JPA repository interface.
+2026-10-14T21:46:40.418-03:00  INFO 37184 --- [inventory-service] [           main] beddedDataSourceBeanFactoryPostProcessor : Replacing 'dataSource' DataSource bean with embedded version
+2026-10-14T21:46:40.472-03:00  INFO 37184 --- [inventory-service] [           main] o.s.j.d.e.EmbeddedDatabaseFactory        : Starting embedded database: url='jdbc:h2:mem:59afc143-1ba1-49ba-beda-d7eeb0cac23a;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=false', username='sa'
+2026-10-14T21:46:40.654-03:00  INFO 37184 --- [inventory-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-14T21:46:40.685-03:00  INFO 37184 --- [inventory-service] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.4.4.Final
+2026-10-14T21:46:40.701-03:00  INFO 37184 --- [inventory-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-14T21:46:40.805-03:00  INFO 37184 --- [inventory-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-14T21:46:40.831-03:00  WARN 37184 --- [inventory-service] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-14T21:46:41.213-03:00  INFO 37184 --- [inventory-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create table product (id bigint generated by default as identity, brand varchar(100) not null, created_at timestamp(6), description varchar(500), fragrance varchar(50), name varchar(150) not null, price numeric(10,2) not null, stock_quantity integer not null, updated_at timestamp(6), primary key (id))
+2026-10-14T21:46:41.241-03:00  INFO 37184 --- [inventory-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-14T21:46:41.367-03:00  INFO 37184 --- [inventory-service] [           main] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-10-14T21:46:41.548-03:00  INFO 37184 --- [inventory-service] [           main] c.s.inventory.ProductRepositoryTest      : Started ProductRepositoryTest in 1.499 seconds (process running for 1.984)
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+WARNING: A Java agent has been loaded dynamically (/Users/nico/.m2/repository/net/bytebuddy/byte-buddy-agent/1.14.13/byte-buddy-agent-1.14.13.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0 where p1_0.stock_quantity>0
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0 where upper(p1_0.name) like upper(?) escape '\'
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0 where p1_0.price between ? and ?
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0 where p1_0.fragrance=?
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0 where p1_0.brand=?
+[INFO] Tests run: 5, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 2.029 s -- in com.smartlogix.inventory.ProductRepositoryTest
+[INFO] Running com.smartlogix.inventory.ProductServiceTest
+[INFO] Tests run: 15, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.176 s -- in com.smartlogix.inventory.ProductServiceTest
+[INFO] Running com.smartlogix.inventory.SecurityIntegrationTest
+2026-10-14T21:46:42.095-03:00  INFO 37184 --- [inventory-service] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smartlogix.inventory.SecurityIntegrationTest]: SecurityIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T21:46:42.099-03:00  INFO 37184 --- [inventory-service] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smartlogix.inventory.InventoryServiceApplication for test class com.smartlogix.inventory.SecurityIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-10-14T21:46:42.132-03:00  INFO 37184 --- [inventory-service] [           main] c.s.inventory.SecurityIntegrationTest    : Starting SecurityIntegrationTest using Java 21.0.12.1 with PID 37184 (started by nico in /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service)
+2026-10-14T21:46:42.132-03:00  INFO 37184 --- [inventory-service] [           main] c.s.inventory.SecurityIntegrationTest    : No active profile set, falling back to 1 default profile: "default"
+2026-10-14T21:46:42.474-03:00  INFO 37184 --- [inventory-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-14T21:46:42.479-03:00  INFO 37184 --- [inventory-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 1 JPA repository interface.
+2026-10-14T21:46:42.603-03:00  INFO 37184 --- [inventory-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-14T21:46:42.604-03:00  INFO 37184 --- [inventory-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-14T21:46:42.606-03:00  INFO 37184 --- [inventory-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-14T21:46:42.607-03:00  INFO 37184 --- [inventory-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-10-14T21:46:42.613-03:00  INFO 37184 --- [inventory-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn8: url=jdbc:h2:mem:seguridad-test user=SA
+2026-10-14T21:46:42.613-03:00  INFO 37184 --- [inventory-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2026-10-14T21:46:42.617-03:00  WARN 37184 --- [inventory-service] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-14T21:46:42.643-03:00  INFO 37184 --- [inventory-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create table product (id bigint generated by default as identity, brand varchar(100) not null, created_at timestamp(6), description varchar(500), fragrance varchar(50), name varchar(150) not null, price numeric(10,2) not null, stock_quantity integer not null, updated_at timestamp(6), primary key (id))
+2026-10-14T21:46:42.649-03:00  INFO 37184 --- [inventory-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-14T21:46:42.759-03:00  WARN 37184 --- [inventory-service] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-14T21:46:42.771-03:00  WARN 37184 --- [inventory-service] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 450e83e9-07b7-4f5e-9c0f-438b3bde708d
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-14T21:46:42.957-03:00  INFO 37184 --- [inventory-service] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@2758386b, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3913408b, org.springframework.security.web.context.SecurityContextHolderFilter@68cb485e, org.springframework.security.web.header.HeaderWriterFilter@1ab2c934, org.springframework.web.filter.CorsFilter@2bb5fbdd, org.springframework.security.web.authentication.logout.LogoutFilter@24fa96f5, com.smartlogix.inventory.security.JwtAuthFilter@436d7543, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6c3a9a36, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@4d9f53df, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@5fc166b7, org.springframework.security.web.session.SessionManagementFilter@428454cb, org.springframework.security.web.access.ExceptionTranslationFilter@4a0e0211, org.springframework.security.web.access.intercept.AuthorizationFilter@7b1ca932]
+2026-10-14T21:46:43.123-03:00  INFO 37184 --- [inventory-service] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:seguridad-test'
+2026-10-14T21:46:43.153-03:00  INFO 37184 --- [inventory-service] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T21:46:43.154-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T21:46:43.154-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-10-14T21:46:43.164-03:00  INFO 37184 --- [inventory-service] [           main] c.s.inventory.SecurityIntegrationTest    : Started SecurityIntegrationTest in 1.057 seconds (process running for 3.599)
+Hibernate: select p1_0.id,p1_0.brand,p1_0.created_at,p1_0.description,p1_0.fragrance,p1_0.name,p1_0.price,p1_0.stock_quantity,p1_0.updated_at from product p1_0
+[INFO] Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 1.207 s -- in com.smartlogix.inventory.SecurityIntegrationTest
+[INFO] Running com.smartlogix.inventory.GlobalExceptionHandlerTest
+2026-10-14T21:46:43.309-03:00  INFO 37184 --- [inventory-service] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T21:46:43.309-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T21:46:43.309-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-10-14T21:46:43.375-03:00  INFO 37184 --- [inventory-service] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T21:46:43.375-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T21:46:43.375-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-10-14T21:46:43.379-03:00  INFO 37184 --- [inventory-service] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T21:46:43.379-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T21:46:43.379-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-10-14T21:46:43.384-03:00  INFO 37184 --- [inventory-service] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T21:46:43.384-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T21:46:43.384-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-10-14T21:46:43.385-03:00 ERROR 37184 --- [inventory-service] [           main] c.s.i.config.GlobalExceptionHandler      : Error no controlado
+
+java.lang.IllegalStateException: detalle-secreto-interno
+	at com.smartlogix.inventory.GlobalExceptionHandlerTest$FallaController.interno(GlobalExceptionHandlerTest.java:37) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:926) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:831) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1089) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:979) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.web.servlet.FrameworkServlet.doGet(FrameworkServlet.java:903) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:564) ~[tomcat-embed-core-10.1.20.jar:6.0]
+	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.1.6.jar:6.1.6]
+	at org.springframework.test.web.servlet.TestDispatcherServlet.service(TestDispatcherServlet.java:72) ~[spring-test-6.1.6.jar:6.1.6]
+	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.20.jar:6.0]
+	at org.springframework.mock.web.MockFilterChain$ServletFilterProxy.doFilter(MockFilterChain.java:165) ~[spring-test-6.1.6.jar:6.1.6]
+	at org.springframework.mock.web.MockFilterChain.doFilter(MockFilterChain.java:132) ~[spring-test-6.1.6.jar:6.1.6]
+	at org.springframework.test.web.servlet.MockMvc.perform(MockMvc.java:201) ~[spring-test-6.1.6.jar:6.1.6]
+	at com.smartlogix.inventory.GlobalExceptionHandlerTest.errorNoControlado_devuelve500SinExponerDetalle(GlobalExceptionHandlerTest.java:62) ~[test-classes/:na]
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:728) ~[junit-platform-commons-1.10.2.jar:1.10.2]
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$7(TestMethodTestDescriptor.java:218) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:214) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:139) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:69) ~[junit-jupiter-engine-5.10.2.jar:5.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:151) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596) ~[na:na]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:155) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:141) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:139) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:138) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:95) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54) ~[junit-platform-engine-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47) ~[junit-platform-launcher-1.10.2.jar:1.10.2]
+	at org.apache.maven.surefire.junitplatform.LazyLauncher.execute(LazyLauncher.java:56) ~[surefire-junit-platform-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.execute(JUnitPlatformProvider.java:184) ~[surefire-junit-platform-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invokeAllTests(JUnitPlatformProvider.java:148) ~[surefire-junit-platform-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.junitplatform.JUnitPlatformProvider.invoke(JUnitPlatformProvider.java:122) ~[surefire-junit-platform-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.runSuitesInProcess(ForkedBooter.java:385) ~[surefire-booter-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.execute(ForkedBooter.java:162) ~[surefire-booter-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.run(ForkedBooter.java:507) ~[surefire-booter-3.1.2.jar:3.1.2]
+	at org.apache.maven.surefire.booter.ForkedBooter.main(ForkedBooter.java:495) ~[surefire-booter-3.1.2.jar:3.1.2]
+
+2026-10-14T21:46:43.391-03:00  INFO 37184 --- [inventory-service] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T21:46:43.392-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T21:46:43.392-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+2026-10-14T21:46:43.395-03:00  INFO 37184 --- [inventory-service] [           main] o.s.mock.web.MockServletContext          : Initializing Spring TestDispatcherServlet ''
+2026-10-14T21:46:43.395-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T21:46:43.395-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 0 ms
+[INFO] Tests run: 6, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.097 s -- in com.smartlogix.inventory.GlobalExceptionHandlerTest
+[INFO] Running com.smartlogix.inventory.ProductControllerTest
+2026-10-14T21:46:43.402-03:00  INFO 37184 --- [inventory-service] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smartlogix.inventory.ProductControllerTest]: ProductControllerTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T21:46:43.405-03:00  INFO 37184 --- [inventory-service] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smartlogix.inventory.InventoryServiceApplication for test class com.smartlogix.inventory.ProductControllerTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-10-14T21:46:43.418-03:00  INFO 37184 --- [inventory-service] [           main] c.s.inventory.ProductControllerTest      : Starting ProductControllerTest using Java 21.0.12.1 with PID 37184 (started by nico in /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service)
+2026-10-14T21:46:43.418-03:00  INFO 37184 --- [inventory-service] [           main] c.s.inventory.ProductControllerTest      : No active profile set, falling back to 1 default profile: "default"
+2026-10-14T21:46:43.501-03:00 ERROR 37184 --- [inventory-service] [           main] c.s.inventory.security.JwtAuthFilter     : JWT_SECRET no configurado o demasiado corto: las peticiones protegidas serán rechazadas
+2026-10-14T21:46:43.563-03:00  WARN 37184 --- [inventory-service] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: 1f92cf54-ed60-45c0-b283-437807d23e6b
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-14T21:46:43.583-03:00  INFO 37184 --- [inventory-service] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@aa30858, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@384fe909, org.springframework.security.web.context.SecurityContextHolderFilter@beec55f, org.springframework.security.web.header.HeaderWriterFilter@65a9acc3, org.springframework.web.filter.CorsFilter@6d216335, org.springframework.security.web.csrf.CsrfFilter@24477307, org.springframework.security.web.authentication.logout.LogoutFilter@28eed10d, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@6e54a659, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@21c25d05, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@297b25d3, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@57f26d97, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@142e406e, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@9252756, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@3b08196c, org.springframework.security.web.access.ExceptionTranslationFilter@7d0c135e, org.springframework.security.web.access.intercept.AuthorizationFilter@747132ca]
+2026-10-14T21:46:43.586-03:00  INFO 37184 --- [inventory-service] [           main] o.s.b.t.m.w.SpringBootMockServletContext : Initializing Spring TestDispatcherServlet ''
+2026-10-14T21:46:43.586-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Initializing Servlet ''
+2026-10-14T21:46:43.587-03:00  INFO 37184 --- [inventory-service] [           main] o.s.t.web.servlet.TestDispatcherServlet  : Completed initialization in 1 ms
+2026-10-14T21:46:43.592-03:00  INFO 37184 --- [inventory-service] [           main] c.s.inventory.ProductControllerTest      : Started ProductControllerTest in 0.186 seconds (process running for 4.027)
+[INFO] Tests run: 11, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.257 s -- in com.smartlogix.inventory.ProductControllerTest
+[INFO] Running com.smartlogix.inventory.ProductSeedIdIntegrationTest
+2026-10-14T21:46:43.660-03:00  INFO 37184 --- [inventory-service] [           main] t.c.s.AnnotationConfigContextLoaderUtils : Could not detect default configuration classes for test class [com.smartlogix.inventory.ProductSeedIdIntegrationTest]: ProductSeedIdIntegrationTest does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+2026-10-14T21:46:43.661-03:00  INFO 37184 --- [inventory-service] [           main] .b.t.c.SpringBootTestContextBootstrapper : Found @SpringBootConfiguration com.smartlogix.inventory.InventoryServiceApplication for test class com.smartlogix.inventory.ProductSeedIdIntegrationTest
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.5)
+
+2026-10-14T21:46:43.675-03:00  INFO 37184 --- [inventory-service] [           main] c.s.i.ProductSeedIdIntegrationTest       : Starting ProductSeedIdIntegrationTest using Java 21.0.12.1 with PID 37184 (started by nico in /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service)
+2026-10-14T21:46:43.675-03:00  INFO 37184 --- [inventory-service] [           main] c.s.i.ProductSeedIdIntegrationTest       : No active profile set, falling back to 1 default profile: "default"
+2026-10-14T21:46:43.784-03:00  INFO 37184 --- [inventory-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-10-14T21:46:43.789-03:00  INFO 37184 --- [inventory-service] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 4 ms. Found 1 JPA repository interface.
+2026-10-14T21:46:43.856-03:00  INFO 37184 --- [inventory-service] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-10-14T21:46:43.857-03:00  INFO 37184 --- [inventory-service] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-10-14T21:46:43.860-03:00  INFO 37184 --- [inventory-service] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-10-14T21:46:43.860-03:00  INFO 37184 --- [inventory-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Starting...
+2026-10-14T21:46:43.862-03:00  INFO 37184 --- [inventory-service] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-2 - Added connection conn18: url=jdbc:h2:mem:inventorydb user=SA
+2026-10-14T21:46:43.862-03:00  INFO 37184 --- [inventory-service] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-2 - Start completed.
+2026-10-14T21:46:43.862-03:00  WARN 37184 --- [inventory-service] [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-10-14T21:46:43.886-03:00  INFO 37184 --- [inventory-service] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+Hibernate: create table product (id bigint generated by default as identity, brand varchar(100) not null, created_at timestamp(6), description varchar(500), fragrance varchar(50), name varchar(150) not null, price numeric(10,2) not null, stock_quantity integer not null, updated_at timestamp(6), primary key (id))
+2026-10-14T21:46:43.888-03:00  INFO 37184 --- [inventory-service] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-10-14T21:46:43.890-03:00 ERROR 37184 --- [inventory-service] [           main] c.s.inventory.security.JwtAuthFilter     : JWT_SECRET no configurado o demasiado corto: las peticiones protegidas serán rechazadas
+2026-10-14T21:46:43.956-03:00  WARN 37184 --- [inventory-service] [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-10-14T21:46:43.962-03:00  WARN 37184 --- [inventory-service] [           main] .s.s.UserDetailsServiceAutoConfiguration : 
+
+Using generated security password: d3e5e9b1-4a8f-4b30-af35-56fd496eb385
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2026-10-14T21:46:44.011-03:00  INFO 37184 --- [inventory-service] [           main] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@3f22fec4, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3650c2cf, org.springframework.security.web.context.SecurityContextHolderFilter@134b7eb3, org.springframework.security.web.header.HeaderWriterFilter@351b3194, org.springframework.web.filter.CorsFilter@f5341c6, org.springframework.security.web.authentication.logout.LogoutFilter@78be38af, com.smartlogix.inventory.security.JwtAuthFilter@3daedde2, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@6fd48c08, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@32f87f7, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@30744ef6, org.springframework.security.web.session.SessionManagementFilter@437e1544, org.springframework.security.web.access.ExceptionTranslationFilter@34390b51, org.springframework.security.web.access.intercept.AuthorizationFilter@4cae76cc]
+2026-10-14T21:46:44.069-03:00  INFO 37184 --- [inventory-service] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:inventorydb'
+2026-10-14T21:46:44.088-03:00  INFO 37184 --- [inventory-service] [           main] c.s.i.ProductSeedIdIntegrationTest       : Started ProductSeedIdIntegrationTest in 0.426 seconds (process running for 4.524)
+Hibernate: select count(*) from product p1_0
+Hibernate: insert into product (brand,created_at,description,fragrance,name,price,stock_quantity,updated_at,id) values (?,?,?,?,?,?,?,?,default)
+Hibernate: select count(*) from product p1_0
+[INFO] Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.454 s -- in com.smartlogix.inventory.ProductSeedIdIntegrationTest
+[INFO] 
+[INFO] Results:
+[INFO] 
+[INFO] Tests run: 41, Failures: 0, Errors: 0, Skipped: 0
+[INFO] 
+[INFO] 
+[INFO] --- jacoco:0.8.15:report (report) @ inventory-service ---
+[INFO] Loading execution data file /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/jacoco.exec
+[INFO] Analyzed bundle 'inventory-service' with 9 classes
+[INFO] 
+[INFO] --- jar:3.3.0:jar (default-jar) @ inventory-service ---
+[INFO] Building jar: /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/inventory-service-1.0.0.jar
+[INFO] 
+[INFO] --- spring-boot:3.2.5:repackage (repackage) @ inventory-service ---
+[INFO] Replacing main artifact /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/inventory-service-1.0.0.jar with repackaged archive, adding nested dependencies in BOOT-INF/.
+[INFO] The original artifact has been renamed to /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/inventory-service-1.0.0.jar.original
+[INFO] 
+[INFO] --- jacoco:0.8.15:check (check) @ inventory-service ---
+[INFO] Loading execution data file /Users/nico/Desktop/proyectos/ev3fulstack/smartlogix/inventory-service/target/jacoco.exec
+[INFO] Analyzed bundle 'inventory-service' with 9 classes
+[INFO] All coverage checks have been met.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  6.149 s
+[INFO] Finished at: 2026-10-14T21:46:44-03:00
+[INFO] ------------------------------------------------------------------------

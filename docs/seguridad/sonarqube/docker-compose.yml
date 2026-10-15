@@ -1,0 +1,24 @@
+# SonarQube Community local para el análisis estático del Encargo 3.
+# Solo para uso local; no expone credenciales. Cambiar la contraseña de admin tras el primer inicio.
+services:
+  sonarqube:
+    image: sonarqube:community
+    ports:
+      - "9000:9000"
+    environment:
+      SONAR_ES_BOOTSTRAP_CHECKS_DISABLE: "true"
+      SONAR_SEARCH_JAVAOPTS: "-Xms512m -Xmx1g"
+      SONAR_WEB_JAVAOPTS: "-Xmx768m"
+      SONAR_CE_JAVAOPTS: "-Xmx768m"
+    deploy:
+      resources:
+        limits:
+          memory: 2600m
+    volumes:
+      - sonar_data:/opt/sonarqube/data
+      - sonar_logs:/opt/sonarqube/logs
+      - sonar_ext:/opt/sonarqube/extensions
+volumes:
+  sonar_data:
+  sonar_logs:
+  sonar_ext:
